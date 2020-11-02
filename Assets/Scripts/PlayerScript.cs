@@ -15,6 +15,9 @@ public class PlayerScript : MonoBehaviour
 
     //Player attributes
     public float speed;
+    public bool isIdle;
+    public bool isMovingRight;
+    private string currentState;
 
     private void Start()
     {
@@ -24,6 +27,29 @@ public class PlayerScript : MonoBehaviour
 
     private void Update()
     {
-        
+        //Movement Attributes
+        if (inputManager.move.x >= 0)
+            isMovingRight = true;
+        else
+            isMovingRight = false;
+
+        if (inputManager.move.x == 0 && inputManager.move.y == 0)
+            isIdle = true;
+        else
+            isIdle = false;
+
+        //--------------------------------------------------------
+
+    }
+    public void ChangeAnimationState(string newState)
+    {
+        //Stops current anim from interrupting itself
+        if (currentState == newState) return;
+
+        //Play anim
+        anim.Play(newState);
+
+        //Reassign current state
+        currentState = newState;
     }
 }

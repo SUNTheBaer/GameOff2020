@@ -6,11 +6,6 @@ using UnityEngine.InputSystem;
 public class PlayerMovement : MonoBehaviour
 {
     [SerializeField] private PlayerScript playerScript;
-    
-    private void Start()
-    {
-        
-    }
 
     private void FixedUpdate()
     {
