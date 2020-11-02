@@ -11,6 +11,7 @@ public class PlayerScript : MonoBehaviour
 
     //Components
     [HideInInspector] public Rigidbody2D rb;
+    [HideInInspector] public SpriteRenderer spriteRenderer;
     private Animator anim;
 
     //Player attributes
@@ -23,12 +24,14 @@ public class PlayerScript : MonoBehaviour
     {
         rb = gameObject.GetComponent<Rigidbody2D>();
         anim = gameObject.GetComponent<Animator>();
+        spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
     }
 
     private void Update()
     {
         //Movement Attributes
-        if (inputManager.move.x >= 0)
+        
+        if (inputManager.move.x > 0)
             isMovingRight = true;
         else
             isMovingRight = false;

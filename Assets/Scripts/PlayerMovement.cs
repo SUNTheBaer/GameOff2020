@@ -5,7 +5,24 @@ using UnityEngine.InputSystem;
 
 public class PlayerMovement : MonoBehaviour
 {
-    [SerializeField] private PlayerScript playerScript;
+    [SerializeField] private PlayerScript playerScript = null;
+
+    private void Update()
+    {
+        if (playerScript.inputManager.move.x == 0 && playerScript.inputManager.move.y == 0)
+            playerScript.isIdle = true;
+        else
+            playerScript.isIdle = false;
+
+        //Flip Character
+
+        if (playerScript.inputManager.move.x > 0)
+             transform.eulerAngles = new Vector3 (0, 0, 0);
+         else if (playerScript.inputManager.move.x < 0)
+             transform.eulerAngles = new Vector3 (0, 180, 0);
+        
+        //--------------------------------------------------------
+    }
 
     private void FixedUpdate()
     {
