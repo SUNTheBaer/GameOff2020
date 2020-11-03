@@ -33,6 +33,14 @@ public class @Inputs : IInputActionCollection, IDisposable
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""ManaRegenPotion"",
+                    ""type"": ""Button"",
+                    ""id"": ""25c20070-510a-41d0-9bb9-51f91b95a44f"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -134,6 +142,28 @@ public class @Inputs : IInputActionCollection, IDisposable
                     ""action"": ""TimeSlow"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""7f41d2bd-cb6b-4ef2-b310-e8d71f7373ed"",
+                    ""path"": ""<Keyboard>/space"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""KeyboardMouse"",
+                    ""action"": ""ManaRegenPotion"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""a3e200b8-6601-486b-8c8f-70f42221733f"",
+                    ""path"": ""<Gamepad>/rightShoulder"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Controller"",
+                    ""action"": ""ManaRegenPotion"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -172,6 +202,7 @@ public class @Inputs : IInputActionCollection, IDisposable
         m_Player = asset.FindActionMap("Player", throwIfNotFound: true);
         m_Player_Movement = m_Player.FindAction("Movement", throwIfNotFound: true);
         m_Player_TimeSlow = m_Player.FindAction("TimeSlow", throwIfNotFound: true);
+        m_Player_ManaRegenPotion = m_Player.FindAction("ManaRegenPotion", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -223,12 +254,14 @@ public class @Inputs : IInputActionCollection, IDisposable
     private IPlayerActions m_PlayerActionsCallbackInterface;
     private readonly InputAction m_Player_Movement;
     private readonly InputAction m_Player_TimeSlow;
+    private readonly InputAction m_Player_ManaRegenPotion;
     public struct PlayerActions
     {
         private @Inputs m_Wrapper;
         public PlayerActions(@Inputs wrapper) { m_Wrapper = wrapper; }
         public InputAction @Movement => m_Wrapper.m_Player_Movement;
         public InputAction @TimeSlow => m_Wrapper.m_Player_TimeSlow;
+        public InputAction @ManaRegenPotion => m_Wrapper.m_Player_ManaRegenPotion;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -244,6 +277,9 @@ public class @Inputs : IInputActionCollection, IDisposable
                 @TimeSlow.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnTimeSlow;
                 @TimeSlow.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnTimeSlow;
                 @TimeSlow.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnTimeSlow;
+                @ManaRegenPotion.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnManaRegenPotion;
+                @ManaRegenPotion.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnManaRegenPotion;
+                @ManaRegenPotion.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnManaRegenPotion;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -254,6 +290,9 @@ public class @Inputs : IInputActionCollection, IDisposable
                 @TimeSlow.started += instance.OnTimeSlow;
                 @TimeSlow.performed += instance.OnTimeSlow;
                 @TimeSlow.canceled += instance.OnTimeSlow;
+                @ManaRegenPotion.started += instance.OnManaRegenPotion;
+                @ManaRegenPotion.performed += instance.OnManaRegenPotion;
+                @ManaRegenPotion.canceled += instance.OnManaRegenPotion;
             }
         }
     }
@@ -280,5 +319,6 @@ public class @Inputs : IInputActionCollection, IDisposable
     {
         void OnMovement(InputAction.CallbackContext context);
         void OnTimeSlow(InputAction.CallbackContext context);
+        void OnManaRegenPotion(InputAction.CallbackContext context);
     }
 }

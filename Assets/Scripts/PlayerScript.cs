@@ -9,6 +9,7 @@ public class PlayerScript : MonoBehaviour
     public PlayerMovement playerMovement;
     public PlayerCollision playerCollision;
     [SerializeField] private ZeeTimeSlow zeeTimeSlow = null;
+    public ZeeManaRegenPotion zeeManaRegenPotion = null;
 
     [Header("Components")]
     [HideInInspector] public Rigidbody2D rb;
@@ -17,11 +18,11 @@ public class PlayerScript : MonoBehaviour
 
     [Header("Player Attributes")]
     public float speed;
-    public float mana;
+    public float currentMana;
     [HideInInspector] public bool isIdle;
     [HideInInspector] public bool isMovingRight;
     private string currentState;
-    [SerializeField] private float maxMana = 0;
+    public float maxMana = 0;
 
     private void Start()
     {
@@ -29,18 +30,19 @@ public class PlayerScript : MonoBehaviour
         anim = gameObject.GetComponent<Animator>();
         spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
 
-        mana = maxMana;
+        currentMana = maxMana;
     }
 
     private void Update()
     {
-        if (inputManager.onTimeSlow && mana > 0)
+        if (inputManager.onTimeSlow && currentMana > 0)
             zeeTimeSlow.SlowTime();
         else
             zeeTimeSlow.NormalTime();
 
         //Make mana regen potion
-        Debug.Log(mana);
+        Debug.Log(inputManager.onManaRegenPotion);
+        Debug.Log(currentMana);
     }
 
     public void ChangeAnimationState(string newState)
