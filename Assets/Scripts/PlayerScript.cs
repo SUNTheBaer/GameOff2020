@@ -14,7 +14,7 @@ public class PlayerScript : MonoBehaviour
     [Header("Components")]
     [HideInInspector] public Rigidbody2D rb;
     [HideInInspector] public SpriteRenderer spriteRenderer;
-    private Animator anim;
+    [HideInInspector] public Animator anim;
 
     [Header("Player Attributes")]
     public float speed;
