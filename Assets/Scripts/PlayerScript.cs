@@ -22,6 +22,9 @@ public class PlayerScript : MonoBehaviour
     [HideInInspector] public bool isIdle;
     [HideInInspector] public bool isMovingRight;
     private string currentState;
+    public int maxHealth = 100;
+    public int currentHealth;
+    public HealthBar healthBar;
     public float maxMana = 0;
 
     private void Start()
