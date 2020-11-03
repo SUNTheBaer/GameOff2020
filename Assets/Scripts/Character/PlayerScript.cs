@@ -14,7 +14,7 @@ public class PlayerScript : MonoBehaviour
     [Header("Components")]
     [HideInInspector] public Rigidbody2D rb;
     [HideInInspector] public SpriteRenderer spriteRenderer;
-    [HideInInspector] public Animator anim;
+    private Animator anim;
 
     [Header("Player Attributes")]
     public float speed;
@@ -43,7 +43,6 @@ public class PlayerScript : MonoBehaviour
         else
             zeeTimeSlow.NormalTime();
 
-        //Make mana regen potion
         Debug.Log(inputManager.onManaRegenPotion);
         Debug.Log(currentMana);
     }
