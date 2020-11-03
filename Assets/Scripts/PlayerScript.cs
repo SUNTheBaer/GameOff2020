@@ -19,6 +19,9 @@ public class PlayerScript : MonoBehaviour
     public bool isIdle;
     public bool isMovingRight;
     private string currentState;
+    public int maxHealth = 100;
+    public int currentHealth;
+    public HealthBar healthBar;
 
     private void Start()
     {
