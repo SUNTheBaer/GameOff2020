@@ -26,6 +26,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        playerScript.rb.velocity = new Vector2(playerScript.inputManager.move.x, playerScript.inputManager.move.y) * playerScript.speed;
+        //Dividing by time scale to make it seem like character movement speed hasn't changed
+        playerScript.rb.velocity = new Vector2(playerScript.inputManager.move.x / Time.timeScale, playerScript.inputManager.move.y / Time.timeScale) * playerScript.speed;
     }
 }
