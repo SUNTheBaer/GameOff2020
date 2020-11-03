@@ -27,7 +27,6 @@ public class PlayerCollision : MonoBehaviour
             Perish();
     }
     
-    // PERISH FUNCTION
     private void Perish()
     {
         // playerScript.ChangeAnimationState("Death");
