@@ -10,9 +10,23 @@ public class PlayerMovement : MonoBehaviour
     private void Update()
     {
         if (playerScript.inputManager.move.x == 0 && playerScript.inputManager.move.y == 0)
+        {
+            playerScript.ChangeAnimationState("Idle");
             playerScript.isIdle = true;
+        }
+            
         else
             playerScript.isIdle = false;
+
+        if(playerScript.inputManager.move.y < 0 && playerScript.inputManager.move.x == 0)
+            playerScript.ChangeAnimationState("down");
+        if (playerScript.inputManager.move.y > 0 && playerScript.inputManager.move.x == 0)
+            playerScript.ChangeAnimationState("Up");
+        if (playerScript.inputManager.move.x != 0 && (playerScript.inputManager.move.y == 0 || playerScript.inputManager.move.y <0))
+            playerScript.ChangeAnimationState("Side");
+        if (playerScript.inputManager.move.x != 0 && (playerScript.inputManager.move.y > 0))
+            playerScript.ChangeAnimationState("Up Side");
+
 
         //Flip Character
 
