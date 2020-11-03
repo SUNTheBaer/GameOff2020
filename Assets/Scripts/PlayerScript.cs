@@ -4,20 +4,21 @@ using UnityEngine;
 
 public class PlayerScript : MonoBehaviour
 {
-    //Scripts
+    [Header("Scripts")]
     public InputManager inputManager;
     public PlayerMovement playerMovement;
     public PlayerCollision playerCollision;
+    [SerializeField] private ZeeTimeSlow zeeTimeSlow = null;
 
-    //Components
+    [Header("Components")]
     [HideInInspector] public Rigidbody2D rb;
     [HideInInspector] public SpriteRenderer spriteRenderer;
     private Animator anim;
 
-    //Player attributes
+    [Header("Player Attributes")]
     public float speed;
-    public bool isIdle;
-    public bool isMovingRight;
+    [HideInInspector] public bool isIdle;
+    [HideInInspector] public bool isMovingRight;
     private string currentState;
 
     private void Start()
@@ -29,21 +30,12 @@ public class PlayerScript : MonoBehaviour
 
     private void Update()
     {
-        //Movement Attributes
-        
-        if (inputManager.move.x > 0)
-            isMovingRight = true;
+        if (inputManager.onTimeSlow)
+            zeeTimeSlow.SlowTime();
         else
-            isMovingRight = false;
-
-        if (inputManager.move.x == 0 && inputManager.move.y == 0)
-            isIdle = true;
-        else
-            isIdle = false;
-
-        //--------------------------------------------------------
-
+            zeeTimeSlow.NormalTime();
     }
+
     public void ChangeAnimationState(string newState)
     {
         //Stops current anim from interrupting itself
