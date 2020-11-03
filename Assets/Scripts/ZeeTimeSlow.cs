@@ -4,10 +4,12 @@ using UnityEngine;
 
 public class ZeeTimeSlow : MonoBehaviour
 {
+    [SerializeField] private PlayerScript playerScript = null;
+    [SerializeField] private float manaPerSecond;
     public void SlowTime()
     {
         Time.timeScale = 0.5f;
-        //Deplete mana meter
+        playerScript.mana -= manaPerSecond / 60;
     }
 
     public void NormalTime()
