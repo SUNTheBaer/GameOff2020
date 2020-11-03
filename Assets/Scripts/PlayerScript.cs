@@ -4,49 +4,50 @@ using UnityEngine;
 
 public class PlayerScript : MonoBehaviour
 {
-    //Scripts
+    [Header("Scripts")]
     public InputManager inputManager;
     public PlayerMovement playerMovement;
     public PlayerCollision playerCollision;
+    [SerializeField] private ZeeTimeSlow zeeTimeSlow = null;
+    public ZeeManaRegenPotion zeeManaRegenPotion = null;
 
-    //Components
+    [Header("Components")]
     [HideInInspector] public Rigidbody2D rb;
     [HideInInspector] public SpriteRenderer spriteRenderer;
     private Animator anim;
 
-    //Player attributes
+    [Header("Player Attributes")]
     public float speed;
-    public bool isIdle;
-    public bool isMovingRight;
+    public float currentMana;
+    [HideInInspector] public bool isIdle;
+    [HideInInspector] public bool isMovingRight;
     private string currentState;
     public int maxHealth = 100;
     public int currentHealth;
     public HealthBar healthBar;
+    public float maxMana = 0;
 
     private void Start()
     {
         rb = gameObject.GetComponent<Rigidbody2D>();
         anim = gameObject.GetComponent<Animator>();
         spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
+
+        currentMana = maxMana;
     }
 
     private void Update()
     {
-        //Movement Attributes
-        
-        if (inputManager.move.x > 0)
-            isMovingRight = true;
+        if (inputManager.onTimeSlow && currentMana > 0)
+            zeeTimeSlow.SlowTime();
         else
-            isMovingRight = false;
+            zeeTimeSlow.NormalTime();
 
-        if (inputManager.move.x == 0 && inputManager.move.y == 0)
-            isIdle = true;
-        else
-            isIdle = false;
-
-        //--------------------------------------------------------
-
+        //Make mana regen potion
+        Debug.Log(inputManager.onManaRegenPotion);
+        Debug.Log(currentMana);
     }
+
     public void ChangeAnimationState(string newState)
     {
         //Stops current anim from interrupting itself

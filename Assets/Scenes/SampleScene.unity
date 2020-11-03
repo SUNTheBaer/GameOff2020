@@ -316,7 +316,10 @@ MonoBehaviour:
   playerMovement: {fileID: 223611180}
   playerCollision: {fileID: 223611185}
   rb: {fileID: 0}
+  spriteRenderer: {fileID: 0}
   speed: 2
+  isIdle: 0
+  isMovingRight: 0
 --- !u!1 &253015021
 GameObject:
   m_ObjectHideFlags: 3
@@ -464,7 +467,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 339161005}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.5462191, y: -1.8044701, z: 24.872158}
+  m_LocalPosition: {x: 0.8510002, y: -1.8044701, z: 24.872158}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 253015022}
@@ -583,7 +586,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 519420028}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.5462191, y: -1.8044701, z: 24.872158}
+  m_LocalPosition: {x: 0.8510002, y: -1.8044701, z: 24.872158}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1410651481}
@@ -613,7 +616,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1410651480}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2.124781, y: 1.8044701, z: -34.872158}
+  m_LocalPosition: {x: 1.82, y: 1.8044701, z: -34.872158}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 519420032}
