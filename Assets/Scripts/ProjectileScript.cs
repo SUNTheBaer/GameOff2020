@@ -17,7 +17,7 @@ public class ProjectileScript : MonoBehaviour
         rb2d.velocity = new Vector2(3,0);
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
         if(collision.gameObject.CompareTag("Wall"))
         {
