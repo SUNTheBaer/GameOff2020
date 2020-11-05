@@ -28,6 +28,14 @@
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": ""
+                },
+                {
+                    "name": "ManaRegenPotion",
+                    "type": "Button",
+                    "id": "25c20070-510a-41d0-9bb9-51f91b95a44f",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
                 }
             ],
             "bindings": [
@@ -143,12 +151,34 @@
                 },
                 {
                     "name": "",
+                    "id": "7f41d2bd-cb6b-4ef2-b310-e8d71f7373ed",
+                    "path": "<Keyboard>/space",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "KeyboardMouse",
+                    "action": "ManaRegenPotion",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "3e06a1bd-2368-417f-9a0a-26ce936849bb",
                     "path": "<Keyboard>/space",
                     "interactions": "Press",
                     "processors": "",
                     "groups": "KeyboardMouse",
                     "action": "Shoot",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "a3e200b8-6601-486b-8c8f-70f42221733f",
+                    "path": "<Gamepad>/rightShoulder",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Controller",
+                    "action": "ManaRegenPotion",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

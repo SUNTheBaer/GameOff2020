@@ -150,8 +150,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 229f5a098cf2ade42aea1d336ffe826d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerScript: {fileID: 1485491585}
   move: {x: 0, y: 0}
   onTimeSlow: 0
+  onManaRegenPotion: 0
 --- !u!4 &203569649
 Transform:
   m_ObjectHideFlags: 0
@@ -309,7 +311,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 366764921}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.8510002, y: -1.8044701, z: 24.872158}
+  m_LocalPosition: {x: 0.85099995, y: -1.8044701, z: 24.872158}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1684817760}
@@ -474,11 +476,13 @@ GameObject:
   m_Component:
   - component: {fileID: 1485491586}
   - component: {fileID: 1485491585}
+  - component: {fileID: 1485491588}
   - component: {fileID: 1485491584}
   - component: {fileID: 1485491583}
-  - component: {fileID: 1485491582}
-  - component: {fileID: 1485491581}
+  - component: {fileID: 1485491587}
   - component: {fileID: 1485491580}
+  - component: {fileID: 1485491581}
+  - component: {fileID: 1485491582}
   - component: {fileID: 1485491579}
   m_Layer: 0
   m_Name: Zee
@@ -594,7 +598,7 @@ Animator:
   m_GameObject: {fileID: 1485491578}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: fb3bdc61294bbdb4f89e65d15482f629, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -644,11 +648,16 @@ MonoBehaviour:
   inputManager: {fileID: 203569648}
   playerMovement: {fileID: 1485491584}
   playerCollision: {fileID: 1485491583}
+  zeeTimeSlow: {fileID: 1485491587}
+  zeeManaRegenPotion: {fileID: 1485491588}
   rb: {fileID: 0}
   spriteRenderer: {fileID: 0}
+  anim: {fileID: 0}
   speed: 2
+  currentMana: 0
   isIdle: 0
   isMovingRight: 0
+  maxMana: 100
 --- !u!4 &1485491586
 Transform:
   m_ObjectHideFlags: 0
@@ -663,6 +672,35 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1485491587
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1485491578}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8f987527b595f6247a5cd28a4ec68451, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerScript: {fileID: 1485491585}
+  manaPerSecond: 50
+--- !u!114 &1485491588
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1485491578}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 40b659d9ff91c0f488bc1eb6ce51f377, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerScript: {fileID: 1485491585}
+  movementPenaltyMultiplier: 0.6
+  movementPenaltyTime: 2
 --- !u!1 &1684817759
 GameObject:
   m_ObjectHideFlags: 3

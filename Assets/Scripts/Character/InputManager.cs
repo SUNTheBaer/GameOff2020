@@ -6,9 +6,11 @@ using UnityEngine.InputSystem;
 public class InputManager : MonoBehaviour
 {
     private Inputs inputs;
+    [SerializeField] private PlayerScript playerScript = null;
     [HideInInspector] public Vector2 move;
     [HideInInspector] public bool onTimeSlow;
     [HideInInspector] public bool onShoot;
+    [HideInInspector] public bool onManaRegenPotion;
     
     private void Awake()
     {
@@ -22,6 +24,8 @@ public class InputManager : MonoBehaviour
 
         inputs.Player.Shoot.started += context => onShoot = true;
         inputs.Player.Shoot.canceled += context => onShoot = false;
+
+        inputs.Player.ManaRegenPotion.started += context => StartCoroutine(playerScript.zeeManaRegenPotion.DrinkPotion());
     }
 
     private void OnEnable()
