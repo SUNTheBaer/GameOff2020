@@ -9,10 +9,24 @@ public class ProjectileScript : MonoBehaviour
     void Start()
     {
         rb2d = GetComponent<Rigidbody2D>();
+        Invoke("DestroySelf", .5f);
     }
 
     void FixedUpdate()
     {
-        rb2d.AddForce(new Vector2(2,0));
+        rb2d.velocity = new Vector2(3,0);
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if(collision.gameObject.CompareTag("Wall"))
+        {
+            Destroy(gameObject);
+        }
+    }
+
+    private void DestroySelf()
+    {
+        Destroy(gameObject);
     }
 }

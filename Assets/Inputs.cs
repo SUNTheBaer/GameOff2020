@@ -33,6 +33,14 @@ public class @Inputs : IInputActionCollection, IDisposable
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""Shoot"",
+                    ""type"": ""Button"",
+                    ""id"": ""8388c638-19d6-4a6a-87a3-8bbcc830303f"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -134,6 +142,28 @@ public class @Inputs : IInputActionCollection, IDisposable
                     ""action"": ""TimeSlow"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""91be92ea-f7cb-4150-8e2b-5b4e8df478f7"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""KeyboardMouse"",
+                    ""action"": ""Shoot"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""3e06a1bd-2368-417f-9a0a-26ce936849bb"",
+                    ""path"": ""<Keyboard>/space"",
+                    ""interactions"": ""Press"",
+                    ""processors"": """",
+                    ""groups"": ""KeyboardMouse"",
+                    ""action"": ""Shoot"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -172,6 +202,7 @@ public class @Inputs : IInputActionCollection, IDisposable
         m_Player = asset.FindActionMap("Player", throwIfNotFound: true);
         m_Player_Movement = m_Player.FindAction("Movement", throwIfNotFound: true);
         m_Player_TimeSlow = m_Player.FindAction("TimeSlow", throwIfNotFound: true);
+        m_Player_Shoot = m_Player.FindAction("Shoot", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -223,12 +254,14 @@ public class @Inputs : IInputActionCollection, IDisposable
     private IPlayerActions m_PlayerActionsCallbackInterface;
     private readonly InputAction m_Player_Movement;
     private readonly InputAction m_Player_TimeSlow;
+    private readonly InputAction m_Player_Shoot;
     public struct PlayerActions
     {
         private @Inputs m_Wrapper;
         public PlayerActions(@Inputs wrapper) { m_Wrapper = wrapper; }
         public InputAction @Movement => m_Wrapper.m_Player_Movement;
         public InputAction @TimeSlow => m_Wrapper.m_Player_TimeSlow;
+        public InputAction @Shoot => m_Wrapper.m_Player_Shoot;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -244,6 +277,9 @@ public class @Inputs : IInputActionCollection, IDisposable
                 @TimeSlow.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnTimeSlow;
                 @TimeSlow.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnTimeSlow;
                 @TimeSlow.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnTimeSlow;
+                @Shoot.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnShoot;
+                @Shoot.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnShoot;
+                @Shoot.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnShoot;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -254,6 +290,9 @@ public class @Inputs : IInputActionCollection, IDisposable
                 @TimeSlow.started += instance.OnTimeSlow;
                 @TimeSlow.performed += instance.OnTimeSlow;
                 @TimeSlow.canceled += instance.OnTimeSlow;
+                @Shoot.started += instance.OnShoot;
+                @Shoot.performed += instance.OnShoot;
+                @Shoot.canceled += instance.OnShoot;
             }
         }
     }
@@ -280,5 +319,6 @@ public class @Inputs : IInputActionCollection, IDisposable
     {
         void OnMovement(InputAction.CallbackContext context);
         void OnTimeSlow(InputAction.CallbackContext context);
+        void OnShoot(InputAction.CallbackContext context);
     }
 }

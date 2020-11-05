@@ -8,6 +8,7 @@ public class InputManager : MonoBehaviour
     private Inputs inputs;
     [HideInInspector] public Vector2 move;
     [HideInInspector] public bool onTimeSlow;
+    [HideInInspector] public bool onShoot;
     
     private void Awake()
     {
@@ -18,6 +19,9 @@ public class InputManager : MonoBehaviour
 
         inputs.Player.TimeSlow.started += context => onTimeSlow = true;
         inputs.Player.TimeSlow.canceled += context => onTimeSlow = false;
+
+        inputs.Player.Shoot.started += context => onShoot = true;
+        inputs.Player.Shoot.canceled += context => onShoot = false;
     }
 
     private void OnEnable()

@@ -4,24 +4,23 @@ using UnityEngine;
 
 public class ShootProjectile : MonoBehaviour
 {
-    Animator animator;
     Object projectileRef;
+    public InputManager inputManager;
+
 
     // Start is called before the first frame update
     void Start()
     {
         projectileRef = Resources.Load("Basic_Projectile");
-        animator = GetComponent<Animator>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetButtonDown("Fire1"))
+        if(inputManager.onShoot)
         {
-            animator.Play("Zee");
             GameObject projectile = (GameObject)Instantiate(projectileRef);
-            projectile.transform.position = new Vector3(transform.position.x + .4f, transform.position.y + 2f, -1);
-        }   
+            projectile.transform.position = new Vector3(transform.position.x + .2f, transform.position.y + .1f, -1);
+        }
     }
 }
