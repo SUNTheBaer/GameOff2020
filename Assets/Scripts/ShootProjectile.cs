@@ -11,7 +11,7 @@ public class ShootProjectile : MonoBehaviour
     private float timeStamp;
 
     [SerializeField] private GameObject projectileBox;
-     Vector3 projectilePos;
+    Vector3 projectilePos;
 
 
     // Start is called before the first frame update
