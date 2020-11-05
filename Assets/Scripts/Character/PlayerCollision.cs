@@ -5,6 +5,7 @@ using UnityEngine;
 public class PlayerCollision : MonoBehaviour
 {
     [SerializeField] private PlayerScript playerScript = null;
+    [SerializeField] private GameManager gameManager = null;
 
     private void Start() 
     {
@@ -13,11 +14,11 @@ public class PlayerCollision : MonoBehaviour
     }
 
     private void OnTriggerEnter2D(Collider2D collision) {
-        if (collision.gameObject.CompareTag("DoesDamage"))
-            TakeDamage(20);
+        if (collision.gameObject.CompareTag("BossAttack"))
+            TakeDamage(gameManager.bossManager.bossAttackDamage);
     }
 
-    private void TakeDamage(int damage)
+    public void TakeDamage(float damage)
     {
         playerScript.currentHealth -= damage;
 
