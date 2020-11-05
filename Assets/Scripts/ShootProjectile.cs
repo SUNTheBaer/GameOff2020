@@ -7,6 +7,12 @@ public class ShootProjectile : MonoBehaviour
     Object projectileRef;
     public InputManager inputManager;
 
+    [SerializeField] private float cooldownTime = 0.05f;
+    private float timeStamp;
+
+    [SerializeField] private GameObject projectileBox;
+     Vector3 projectilePos;
+
 
     // Start is called before the first frame update
     void Start()
@@ -16,11 +22,22 @@ public class ShootProjectile : MonoBehaviour
 
     // Update is called once per frame
     void Update()
-    {
-        if(inputManager.onShoot)
+    {           
+        ProjectileTip bt = projectileBox.GetComponent<ProjectileTip>();
+        if (bt != null)
+        {
+            projectilePos = bt.transform.position;
+        }
+        else
+        {
+            projectilePos = transform.position;
+        }
+        if (inputManager.onShoot && Time.time > timeStamp)
         {
             GameObject projectile = (GameObject)Instantiate(projectileRef);
-            projectile.transform.position = new Vector3(transform.position.x + .2f, transform.position.y + .1f, -1);
+            // projectile.transform.position = new Vector3(transform.position.x + .2f, transform.position.y + 0, -1);
+            projectile.transform.position = projectilePos;
+            timeStamp = Time.time + cooldownTime;
         }
     }
 }
