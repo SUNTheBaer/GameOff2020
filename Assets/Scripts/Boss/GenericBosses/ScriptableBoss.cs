@@ -7,4 +7,6 @@ public class ScriptableBoss : ScriptableObject
 {
     public float bossHealth;
     public string bossName;
+    public float[] attackChances;
+    public int colliderPriority;
 }

@@ -10,7 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: af9cc0255461e98418e2fa9cfe18afd9, type: 3}
-  m_Name: BombLord
+  m_Name: GarbombzoSam
   m_EditorClassIdentifier: 
   bossHealth: 100
-  bossName: Bomb Lord
+  bossName: Garbombzo Sam
+  attackChances:
+  - 0
+  - 0.8
+  - 0.2
+  - 0
+  colliderPriority: 0
