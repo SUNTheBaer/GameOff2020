@@ -61,12 +61,14 @@ public class GarbombzoSam : MonoBehaviour
     private IEnumerator Whirlwind()
     {
         gameManager.bossManager.bossAttackDamage = 20;
+        anim.SetBool("whirlwind", true);
+        yield return new WaitForSeconds(1.5f);
         whirlwindAttack.SetActive(true);
-        //anim.Play("");
-        //yield return WaitForSeconds(anim[""].length);.
-        yield return null;
+        yield return new WaitForSeconds(3);
+        //yield return null;
         whirlwindAttack.SetActive(false);
-        //yield return new WaitForSeconds();
+        anim.SetBool("whirlwind", false);
+        yield return new WaitForSeconds(.75f);
         PickAttack(whirlwind, bombThrow, circleZones, hammerSwipe);
     }
 
