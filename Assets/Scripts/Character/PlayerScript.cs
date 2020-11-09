@@ -16,6 +16,7 @@ public class PlayerScript : MonoBehaviour
     [HideInInspector] public Rigidbody2D rb;
     [HideInInspector] public SpriteRenderer spriteRenderer;
     private Animator anim;
+    public GameObject aimIndicator;
     [SerializeField] GameObject blueTintPanel;
     [SerializeField] CinemachineVirtualCamera slowCam;
 

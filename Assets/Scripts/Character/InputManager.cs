@@ -11,6 +11,7 @@ public class InputManager : MonoBehaviour
     [HideInInspector] public bool onTimeSlow;
     [HideInInspector] public bool onShoot;
     [HideInInspector] public bool onManaRegenPotion;
+    [HideInInspector] public Vector2 aimPosition;
     
     private void Awake()
     {
@@ -26,6 +27,10 @@ public class InputManager : MonoBehaviour
         inputs.Player.Shoot.canceled += context => onShoot = false;
 
         inputs.Player.ManaRegenPotion.started += context => StartCoroutine(playerScript.zeeManaRegenPotion.DrinkPotion());
+
+        inputs.Player.Aim.started += context => aimPosition = context.ReadValue<Vector2>();
+        inputs.Player.Aim.performed += context => aimPosition = context.ReadValue<Vector2>();
+        inputs.Player.Aim.canceled += context => aimPosition = Vector2.zero;
     }
 
     private void OnEnable()

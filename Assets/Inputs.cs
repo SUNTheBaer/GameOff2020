@@ -49,6 +49,14 @@ public class @Inputs : IInputActionCollection, IDisposable
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""Aim"",
+                    ""type"": ""Value"",
+                    ""id"": ""341f9ab7-cd3f-4bb2-bfe0-de75b54ffb39"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -194,6 +202,28 @@ public class @Inputs : IInputActionCollection, IDisposable
                     ""action"": ""ManaRegenPotion"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""d449e98e-5c52-4db8-b193-d1a3c84d8c56"",
+                    ""path"": ""<Mouse>/position"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""KeyboardMouse"",
+                    ""action"": ""Aim"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""8ac6c5ad-4b7f-4409-88a2-68a8e9e3f74a"",
+                    ""path"": ""<Gamepad>/rightStick"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Controller"",
+                    ""action"": ""Aim"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -234,6 +264,7 @@ public class @Inputs : IInputActionCollection, IDisposable
         m_Player_TimeSlow = m_Player.FindAction("TimeSlow", throwIfNotFound: true);
         m_Player_Shoot = m_Player.FindAction("Shoot", throwIfNotFound: true);
         m_Player_ManaRegenPotion = m_Player.FindAction("ManaRegenPotion", throwIfNotFound: true);
+        m_Player_Aim = m_Player.FindAction("Aim", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -287,6 +318,7 @@ public class @Inputs : IInputActionCollection, IDisposable
     private readonly InputAction m_Player_TimeSlow;
     private readonly InputAction m_Player_Shoot;
     private readonly InputAction m_Player_ManaRegenPotion;
+    private readonly InputAction m_Player_Aim;
     public struct PlayerActions
     {
         private @Inputs m_Wrapper;
@@ -295,6 +327,7 @@ public class @Inputs : IInputActionCollection, IDisposable
         public InputAction @TimeSlow => m_Wrapper.m_Player_TimeSlow;
         public InputAction @Shoot => m_Wrapper.m_Player_Shoot;
         public InputAction @ManaRegenPotion => m_Wrapper.m_Player_ManaRegenPotion;
+        public InputAction @Aim => m_Wrapper.m_Player_Aim;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -316,6 +349,9 @@ public class @Inputs : IInputActionCollection, IDisposable
                 @ManaRegenPotion.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnManaRegenPotion;
                 @ManaRegenPotion.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnManaRegenPotion;
                 @ManaRegenPotion.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnManaRegenPotion;
+                @Aim.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnAim;
+                @Aim.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnAim;
+                @Aim.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnAim;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -332,6 +368,9 @@ public class @Inputs : IInputActionCollection, IDisposable
                 @ManaRegenPotion.started += instance.OnManaRegenPotion;
                 @ManaRegenPotion.performed += instance.OnManaRegenPotion;
                 @ManaRegenPotion.canceled += instance.OnManaRegenPotion;
+                @Aim.started += instance.OnAim;
+                @Aim.performed += instance.OnAim;
+                @Aim.canceled += instance.OnAim;
             }
         }
     }
@@ -360,5 +399,6 @@ public class @Inputs : IInputActionCollection, IDisposable
         void OnTimeSlow(InputAction.CallbackContext context);
         void OnShoot(InputAction.CallbackContext context);
         void OnManaRegenPotion(InputAction.CallbackContext context);
+        void OnAim(InputAction.CallbackContext context);
     }
 }
