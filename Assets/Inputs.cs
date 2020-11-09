@@ -35,6 +35,14 @@ public class @Inputs : IInputActionCollection, IDisposable
                     ""interactions"": """"
                 },
                 {
+                    ""name"": ""Shoot"",
+                    ""type"": ""Button"",
+                    ""id"": ""8388c638-19d6-4a6a-87a3-8bbcc830303f"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
                     ""name"": ""ManaRegenPotion"",
                     ""type"": ""Button"",
                     ""id"": ""25c20070-510a-41d0-9bb9-51f91b95a44f"",
@@ -145,12 +153,34 @@ public class @Inputs : IInputActionCollection, IDisposable
                 },
                 {
                     ""name"": """",
+                    ""id"": ""91be92ea-f7cb-4150-8e2b-5b4e8df478f7"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""KeyboardMouse"",
+                    ""action"": ""Shoot"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
                     ""id"": ""7f41d2bd-cb6b-4ef2-b310-e8d71f7373ed"",
                     ""path"": ""<Keyboard>/space"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""KeyboardMouse"",
                     ""action"": ""ManaRegenPotion"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""3e06a1bd-2368-417f-9a0a-26ce936849bb"",
+                    ""path"": ""<Keyboard>/space"",
+                    ""interactions"": ""Press"",
+                    ""processors"": """",
+                    ""groups"": ""KeyboardMouse"",
+                    ""action"": ""Shoot"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -202,6 +232,7 @@ public class @Inputs : IInputActionCollection, IDisposable
         m_Player = asset.FindActionMap("Player", throwIfNotFound: true);
         m_Player_Movement = m_Player.FindAction("Movement", throwIfNotFound: true);
         m_Player_TimeSlow = m_Player.FindAction("TimeSlow", throwIfNotFound: true);
+        m_Player_Shoot = m_Player.FindAction("Shoot", throwIfNotFound: true);
         m_Player_ManaRegenPotion = m_Player.FindAction("ManaRegenPotion", throwIfNotFound: true);
     }
 
@@ -254,6 +285,7 @@ public class @Inputs : IInputActionCollection, IDisposable
     private IPlayerActions m_PlayerActionsCallbackInterface;
     private readonly InputAction m_Player_Movement;
     private readonly InputAction m_Player_TimeSlow;
+    private readonly InputAction m_Player_Shoot;
     private readonly InputAction m_Player_ManaRegenPotion;
     public struct PlayerActions
     {
@@ -261,6 +293,7 @@ public class @Inputs : IInputActionCollection, IDisposable
         public PlayerActions(@Inputs wrapper) { m_Wrapper = wrapper; }
         public InputAction @Movement => m_Wrapper.m_Player_Movement;
         public InputAction @TimeSlow => m_Wrapper.m_Player_TimeSlow;
+        public InputAction @Shoot => m_Wrapper.m_Player_Shoot;
         public InputAction @ManaRegenPotion => m_Wrapper.m_Player_ManaRegenPotion;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
@@ -277,6 +310,9 @@ public class @Inputs : IInputActionCollection, IDisposable
                 @TimeSlow.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnTimeSlow;
                 @TimeSlow.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnTimeSlow;
                 @TimeSlow.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnTimeSlow;
+                @Shoot.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnShoot;
+                @Shoot.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnShoot;
+                @Shoot.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnShoot;
                 @ManaRegenPotion.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnManaRegenPotion;
                 @ManaRegenPotion.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnManaRegenPotion;
                 @ManaRegenPotion.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnManaRegenPotion;
@@ -290,6 +326,9 @@ public class @Inputs : IInputActionCollection, IDisposable
                 @TimeSlow.started += instance.OnTimeSlow;
                 @TimeSlow.performed += instance.OnTimeSlow;
                 @TimeSlow.canceled += instance.OnTimeSlow;
+                @Shoot.started += instance.OnShoot;
+                @Shoot.performed += instance.OnShoot;
+                @Shoot.canceled += instance.OnShoot;
                 @ManaRegenPotion.started += instance.OnManaRegenPotion;
                 @ManaRegenPotion.performed += instance.OnManaRegenPotion;
                 @ManaRegenPotion.canceled += instance.OnManaRegenPotion;
@@ -319,6 +358,7 @@ public class @Inputs : IInputActionCollection, IDisposable
     {
         void OnMovement(InputAction.CallbackContext context);
         void OnTimeSlow(InputAction.CallbackContext context);
+        void OnShoot(InputAction.CallbackContext context);
         void OnManaRegenPotion(InputAction.CallbackContext context);
     }
 }

@@ -4,7 +4,8 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - DoesDamage
+  - PlayerAttack
+  - BossAttack
   layers:
   - Default
   - TransparentFX
@@ -14,7 +15,7 @@ TagManager:
   - UI
   - 
   - 
-  - 
+  - Test
   - 
   - 
   - 
