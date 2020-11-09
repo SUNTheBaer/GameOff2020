@@ -2,13 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ZeeManaRegenPotion : MonoBehaviour
+public class ZeeMana : MonoBehaviour
 {
     [SerializeField] private PlayerScript playerScript = null;
     [SerializeField] private float movementPenaltyMultiplier = 0;
     [SerializeField] private float movementPenaltyTime = 0;
     [SerializeField] private float manaPerSecond = 0;
-    [SerializeField] float timeMultiplier = 0;
+    [SerializeField] private float timeMultiplier = 0;
 
     private void Start()
     {

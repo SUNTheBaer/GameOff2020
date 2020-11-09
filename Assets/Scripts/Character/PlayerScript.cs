@@ -9,16 +9,16 @@ public class PlayerScript : MonoBehaviour
     public InputManager inputManager;
     public PlayerMovement playerMovement;
     public PlayerCollision playerCollision;
-    [SerializeField] private ZeeTimeSlow zeeTimeSlow = null;
-    public ZeeManaRegenPotion zeeManaRegenPotion = null;
+    public ZeeMana zeeMana = null;
+    public Aiming aimingScript = null;
 
     [Header("Components")]
     [HideInInspector] public Rigidbody2D rb;
     [HideInInspector] public SpriteRenderer spriteRenderer;
     private Animator anim;
     public GameObject aimIndicator;
-    [SerializeField] GameObject blueTintPanel;
-    [SerializeField] CinemachineVirtualCamera slowCam;
+    [SerializeField] private GameObject blueTintPanel = null;
+    [SerializeField] private CinemachineVirtualCamera slowCam = null;
 
     [Header("Player Attributes")]
     public float speed;
@@ -47,13 +47,13 @@ public class PlayerScript : MonoBehaviour
         {
             slowCam.Priority = 20;
             blueTintPanel.SetActive(true);
-            zeeManaRegenPotion.SlowTime();
+            zeeMana.SlowTime();
         }
         else
         {
             slowCam.Priority = 0;
             blueTintPanel.SetActive(false);
-            zeeManaRegenPotion.NormalTime();
+            zeeMana.NormalTime();
         }    
     }
 
