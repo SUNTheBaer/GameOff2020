@@ -8,6 +8,7 @@ public class ShootProjectile : MonoBehaviour
     [SerializeField] private PlayerScript playerScript = null;
     [SerializeField] private PlayerProjectile projectileScript = null;
     [SerializeField] private float cooldownTime = 0.05f;
+    [SerializeField] private float speed = 0;
     private bool isShooting = false;
 
     void Start()
@@ -24,10 +25,10 @@ public class ShootProjectile : MonoBehaviour
     private IEnumerator OnShoot()
     {
         isShooting = true;
-        //projectileScript.direction = playerScript.
-        //projectileScript.rotation = new Quaternion (0, 0, Vector2.Angle(playerScript., Vector2.right), 0);
-        //GameObject projectile = (GameObject)Instantiate(projectileRef);
-        //projectile.transform.position = gameObject.transform.position;
+        projectileScript.direction = Vector3.Normalize(playerScript.aimingScript.dir) * speed;
+        projectileScript.rotation = Quaternion.AngleAxis(playerScript.aimingScript.angle, Vector3.forward); /*new Quaternion (0, 0, playerScript.aimingScript.angle, 1);*/
+        GameObject projectile = (GameObject)Instantiate(projectileRef);
+        projectile.transform.position = gameObject.transform.position;
         yield return new WaitForSeconds(cooldownTime);
         isShooting = false;
     }

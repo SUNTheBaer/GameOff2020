@@ -26,7 +26,7 @@ public class InputManager : MonoBehaviour
         inputs.Player.Shoot.started += context => onShoot = true;
         inputs.Player.Shoot.canceled += context => onShoot = false;
 
-        inputs.Player.ManaRegenPotion.started += context => StartCoroutine(playerScript.zeeManaRegenPotion.DrinkPotion());
+        inputs.Player.ManaRegenPotion.started += context => StartCoroutine(playerScript.zeeMana.DrinkPotion());
 
         inputs.Player.Aim.started += context => aimPosition = context.ReadValue<Vector2>();
         inputs.Player.Aim.performed += context => aimPosition = context.ReadValue<Vector2>();

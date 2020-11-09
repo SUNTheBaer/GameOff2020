@@ -144,5 +144,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rb2d: {fileID: 808040022032421031}
-  speed: 5
-  selfDestructTime: 1
+  direction: {x: 1.5592679, y: 1.2503873}
+  rotation: {x: -0, y: -0, z: -0.4326652, w: 0.90155464}
+  selfDestructTime: 0.6

@@ -9,7 +9,7 @@ public class PlayerProjectile : MonoBehaviour
     public Quaternion rotation;
     public float selfDestructTime;
 
-    void Start()
+    private void Start()
     {
         rb2d = GetComponent<Rigidbody2D>();
         rb2d.velocity = direction;
