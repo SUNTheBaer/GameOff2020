@@ -5,29 +5,31 @@ using UnityEngine;
 public class ShootProjectile : MonoBehaviour
 {
     Object projectileRef;
-    public InputManager inputManager;
-
+    [SerializeField] private PlayerScript playerScript = null;
+    [SerializeField] private PlayerProjectile projectileScript = null;
     [SerializeField] private float cooldownTime = 0.05f;
-    private float timeStamp;
+    private bool isShooting = false;
 
-    // Start is called before the first frame update
     void Start()
     {
         projectileRef = Resources.Load("Basic_Projectile");
     }
 
-    // Update is called once per frame
     void Update()
     {
-        if (inputManager.onShoot && Time.time > timeStamp)
-        {
-            GameObject projectile = (GameObject)Instantiate(projectileRef); //, transform.position, Quaternion.identity); // , inputManager.mousePosition
-            // Rigidbody2D projectileRB = projectile.GetComponent<Rigidbody2D>();
-            // projectileRB.AddForce(gameObject.transform.position * 5);
-            // projectile.transform.position = new Vector3(transform.position.x + .2f, transform.position.y + 0, -1);
-            // projectile.transform.position = inputManager.mousePosition;
-            projectile.transform.position = gameObject.transform.position;
-            timeStamp = Time.time + cooldownTime;
-        }
+=======
+        if (playerScript.inputManager.onShoot && !isShooting)
+            StartCoroutine(OnShoot());
+    }
+
+    private IEnumerator OnShoot()
+    {
+        isShooting = true;
+        //projectileScript.direction = playerScript.
+        //projectileScript.rotation = new Quaternion (0, 0, Vector2.Angle(playerScript., Vector2.right), 0);
+        //GameObject projectile = (GameObject)Instantiate(projectileRef);
+        //projectile.transform.position = gameObject.transform.position;
+        yield return new WaitForSeconds(cooldownTime);
+        isShooting = false;
     }
 }
