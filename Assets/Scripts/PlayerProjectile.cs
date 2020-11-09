@@ -19,11 +19,11 @@ public class PlayerProjectile : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.gameObject.CompareTag("Wall") || collision.gameObject.CompareTag("Enemy"))
-            StartCoroutine(DestorySelf());
+        if (collision.gameObject.CompareTag("Wall") || collision.gameObject.CompareTag("Enemy"))
+            StartCoroutine(DestroySelfCoroutine());
     }
 
-    private IEnumerator DestorySelf()
+    private IEnumerator DestroySelfCoroutine()
     {
         yield return new WaitForEndOfFrame();
         DestroySelf();

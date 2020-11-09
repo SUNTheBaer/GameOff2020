@@ -39,8 +39,6 @@ public class PlayerScript : MonoBehaviour
 
     private void Update()
     {
-        Aim();
-        // var projectedMousePosition = mainCamera.ScreenToWorldPoint(mousePosition);
         if (inputManager.onTimeSlow && currentMana > 0)
             zeeTimeSlow.SlowTime();
         else
@@ -57,16 +55,5 @@ public class PlayerScript : MonoBehaviour
 
         //Reassign current state
         currentState = newState;
-    }
-
-    public void Aim()
-    {
-        Debug.Log(inputManager.mousePosition);
-
-        aimIndicator.transform.localPosition = inputManager.mousePosition;
-
-        // Camera.main.ScreenToWorldPoint(inputManager.mousePosition);
-        
-        // inputs.Player.Aim.performed += context => Debug.Log(context.ReadValue<Vector2>());
     }
 }

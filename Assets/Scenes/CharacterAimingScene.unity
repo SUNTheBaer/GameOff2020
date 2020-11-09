@@ -233,8 +233,8 @@ GameObject:
   - component: {fileID: 225906904}
   - component: {fileID: 225906907}
   - component: {fileID: 225906906}
-  - component: {fileID: 225906913}
   - component: {fileID: 225906905}
+  - component: {fileID: 225906913}
   - component: {fileID: 225906912}
   - component: {fileID: 225906911}
   - component: {fileID: 225906910}
@@ -473,8 +473,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 83fc114f2df55470e90b4d92d57ce043, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inputManager: {fileID: 999578400}
-  cooldownTime: 0.5
+  playerScript: {fileID: 225906903}
+  projectileScript: {fileID: 808040022032421049, guid: 92c30dfbadad34a30bcfb6e2e793cedb,
+    type: 3}
+  cooldownTime: 0.05
 --- !u!1 &312535084
 GameObject:
   m_ObjectHideFlags: 0
@@ -1036,7 +1038,7 @@ MonoBehaviour:
   onTimeSlow: 0
   onShoot: 0
   onManaRegenPotion: 0
-  mousePosition: {x: 0, y: 0}
+  aimPosition: {x: 0, y: 0}
 --- !u!4 &999578401
 Transform:
   m_ObjectHideFlags: 0
@@ -1550,6 +1552,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1878242998}
   - component: {fileID: 1878242999}
+  - component: {fileID: 1878243000}
   m_Layer: 0
   m_Name: AimIndicator
   m_TagString: Untagged
@@ -1565,8 +1568,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1878242997}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.227, y: -0.001, z: 0}
-  m_LocalScale: {x: 0.42579153, y: 0.3860367, z: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1.4746306, y: 1.1442987, z: 1}
   m_Children: []
   m_Father: {fileID: 225906908}
   m_RootOrder: 0
@@ -1610,7 +1613,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 87165b346f7f7564795bf06477248450, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 6c1effc944a25604389925041bbc00b4, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -1621,6 +1624,19 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &1878243000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1878242997}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3b3fab66f590ab146a72ee1d4d9542a8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  inputManager: {fileID: 999578400}
 --- !u!1 &1990652290
 GameObject:
   m_ObjectHideFlags: 0

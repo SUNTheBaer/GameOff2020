@@ -17,7 +17,6 @@ public class ShootProjectile : MonoBehaviour
 
     void Update()
     {
-=======
         if (playerScript.inputManager.onShoot && !isShooting)
             StartCoroutine(OnShoot());
     }
