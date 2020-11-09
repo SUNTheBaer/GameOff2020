@@ -797,7 +797,6 @@ MonoBehaviour:
   zeeManaRegenPotion: {fileID: 1485491588}
   rb: {fileID: 0}
   spriteRenderer: {fileID: 0}
-  anim: {fileID: 0}
   speed: 2
   currentMana: 0
   isIdle: 0
