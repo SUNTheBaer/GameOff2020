@@ -6,10 +6,15 @@ public class GarbombzoSam : MonoBehaviour
 {
     [SerializeField] private GameManager gameManager = null;
     [SerializeField] private ScriptableBoss garbombzoSam = null;
+    [SerializeField] private Animator anim = null;
+
+    [SerializeField] private GameObject whirlwindAttack = null;
+
     private AttackChances whirlwind = new AttackChances(0.0f, "Whirlwind");
     private AttackChances bombThrow = new AttackChances(0.8f, "BombThrow");
     private AttackChances circleZones = new AttackChances(0.2f, "CircleZones");
     private AttackChances hammerSwipe = new AttackChances(0.0f, "HammerSwipe");
+
     private int colliderPriority;
 
     private void Start()
@@ -56,7 +61,14 @@ public class GarbombzoSam : MonoBehaviour
     private IEnumerator Whirlwind()
     {
         gameManager.bossManager.bossAttackDamage = 20;
-        yield return null;
+        anim.SetBool("whirlwind", true);
+        yield return new WaitForSeconds(1.5f);
+        whirlwindAttack.SetActive(true);
+        yield return new WaitForSeconds(3);
+        //yield return null;
+        whirlwindAttack.SetActive(false);
+        anim.SetBool("whirlwind", false);
+        yield return new WaitForSeconds(.75f);
         PickAttack(whirlwind, bombThrow, circleZones, hammerSwipe);
     }
 

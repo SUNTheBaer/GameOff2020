@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Cinemachine;
 
 public class PlayerScript : MonoBehaviour
 {
@@ -16,6 +17,8 @@ public class PlayerScript : MonoBehaviour
     [HideInInspector] public SpriteRenderer spriteRenderer;
     private Animator anim;
     public GameObject aimIndicator;
+    [SerializeField] GameObject blueTintPanel;
+    [SerializeField] CinemachineVirtualCamera slowCam;
 
     [Header("Player Attributes")]
     public float speed;
@@ -25,7 +28,8 @@ public class PlayerScript : MonoBehaviour
     private string currentState;
     public float maxHealth = 100;
     public float currentHealth;
-    public HealthBar healthBar;
+    public Bar healthBar;
+    public Bar manaBar;
     public float maxMana = 0;
 
     private void Start()
@@ -40,9 +44,17 @@ public class PlayerScript : MonoBehaviour
     private void Update()
     {
         if (inputManager.onTimeSlow && currentMana > 0)
-            zeeTimeSlow.SlowTime();
+        {
+            slowCam.Priority = 20;
+            blueTintPanel.SetActive(true);
+            zeeManaRegenPotion.SlowTime();
+        }
         else
-            zeeTimeSlow.NormalTime();
+        {
+            slowCam.Priority = 0;
+            blueTintPanel.SetActive(false);
+            zeeManaRegenPotion.NormalTime();
+        }    
     }
 
     public void ChangeAnimationState(string newState)
