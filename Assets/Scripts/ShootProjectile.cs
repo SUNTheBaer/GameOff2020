@@ -21,8 +21,11 @@ public class ShootProjectile : MonoBehaviour
     {
         if (inputManager.onShoot && Time.time > timeStamp)
         {
-            GameObject projectile = (GameObject)Instantiate(projectileRef);
+            GameObject projectile = (GameObject)Instantiate(projectileRef); //, transform.position, Quaternion.identity); // , inputManager.mousePosition
+            // Rigidbody2D projectileRB = projectile.GetComponent<Rigidbody2D>();
+            // projectileRB.AddForce(gameObject.transform.position * 5);
             // projectile.transform.position = new Vector3(transform.position.x + .2f, transform.position.y + 0, -1);
+            // projectile.transform.position = inputManager.mousePosition;
             projectile.transform.position = gameObject.transform.position;
             timeStamp = Time.time + cooldownTime;
         }

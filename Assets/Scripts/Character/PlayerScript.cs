@@ -15,6 +15,7 @@ public class PlayerScript : MonoBehaviour
     [HideInInspector] public Rigidbody2D rb;
     [HideInInspector] public SpriteRenderer spriteRenderer;
     private Animator anim;
+    public GameObject aimIndicator;
 
     [Header("Player Attributes")]
     public float speed;
@@ -38,6 +39,8 @@ public class PlayerScript : MonoBehaviour
 
     private void Update()
     {
+        Aim();
+        // var projectedMousePosition = mainCamera.ScreenToWorldPoint(mousePosition);
         if (inputManager.onTimeSlow && currentMana > 0)
             zeeTimeSlow.SlowTime();
         else
@@ -54,5 +57,16 @@ public class PlayerScript : MonoBehaviour
 
         //Reassign current state
         currentState = newState;
+    }
+
+    public void Aim()
+    {
+        Debug.Log(inputManager.mousePosition);
+
+        aimIndicator.transform.localPosition = inputManager.mousePosition;
+
+        // Camera.main.ScreenToWorldPoint(inputManager.mousePosition);
+        
+        // inputs.Player.Aim.performed += context => Debug.Log(context.ReadValue<Vector2>());
     }
 }
