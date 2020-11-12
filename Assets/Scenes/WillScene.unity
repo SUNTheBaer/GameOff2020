@@ -322,10 +322,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerScript: {fileID: 1485491585}
   move: {x: 0, y: 0}
-  onTimeSlow: 0
   onShoot: 0
-  onManaRegenPotion: 0
-  aimPosition: {x: 0, y: 0}
+  mouseAimPosition: {x: 0, y: 0}
+  padAimPosition: {x: 0, y: 0}
+  onController: 0
+  testing: 0
 --- !u!4 &203569649
 Transform:
   m_ObjectHideFlags: 0
@@ -1827,6 +1828,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerScript: {fileID: 1485491585}
+  spriteRenderer: {fileID: 1485491579}
 --- !u!114 &1485491585
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1847,8 +1849,6 @@ MonoBehaviour:
   rb: {fileID: 0}
   spriteRenderer: {fileID: 0}
   aimIndicator: {fileID: 1683391876}
-  blueTintPanel: {fileID: 1905579976}
-  slowCam: {fileID: 1379344172}
   speed: 2
   currentMana: 0
   isIdle: 0
@@ -1886,10 +1886,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerScript: {fileID: 1485491585}
+  blueTintPanel: {fileID: 1905579976}
+  slowCam: {fileID: 1379344172}
+  timeScale: 0.5
+  slowDownTime: 2
+  slowDownCost: 50
   movementPenaltyMultiplier: 0.6
   movementPenaltyTime: 2
-  manaPerSecond: 25
-  timeMultiplier: 0.8
 --- !u!114 &1485491589
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1951,8 +1954,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b3fab66f590ab146a72ee1d4d9542a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inputManager: {fileID: 203569648}
-  dir: {x: 0, y: 0, z: 0}
+  playerScript: {fileID: 1485491585}
+  player: {fileID: 1485491578}
+  direction: {x: 0, y: 0}
   angle: 0
 --- !u!212 &1683391879
 SpriteRenderer:

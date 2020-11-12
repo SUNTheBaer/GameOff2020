@@ -25,7 +25,7 @@ public class ShootProjectile : MonoBehaviour
     private IEnumerator OnShoot()
     {
         isShooting = true;
-        projectileScript.direction = Vector3.Normalize(playerScript.aimingScript.dir) * speed;
+        projectileScript.direction = Vector3.Normalize(playerScript.aimingScript.direction) * speed;
         projectileScript.rotation = Quaternion.AngleAxis(playerScript.aimingScript.angle, Vector3.forward); /*new Quaternion (0, 0, playerScript.aimingScript.angle, 1);*/
         GameObject projectile = (GameObject)Instantiate(projectileRef);
         projectile.transform.position = gameObject.transform.position;
