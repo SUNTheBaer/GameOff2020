@@ -17,9 +17,7 @@ public class PlayerScript : MonoBehaviour
     [HideInInspector] public SpriteRenderer spriteRenderer;
     private Animator anim;
     public GameObject aimIndicator;
-    [SerializeField] private GameObject blueTintPanel = null;
-    [SerializeField] private CinemachineVirtualCamera slowCam = null;
-
+    
     [Header("Player Attributes")]
     public float speed;
     public float currentMana;
@@ -37,24 +35,7 @@ public class PlayerScript : MonoBehaviour
         rb = gameObject.GetComponent<Rigidbody2D>();
         anim = gameObject.GetComponent<Animator>();
         spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
-
         currentMana = maxMana;
-    }
-
-    private void Update()
-    {
-        if (inputManager.onTimeSlow && currentMana > 0)
-        {
-            slowCam.Priority = 20;
-            blueTintPanel.SetActive(true);
-            zeeMana.SlowTime();
-        }
-        else
-        {
-            slowCam.Priority = 0;
-            blueTintPanel.SetActive(false);
-            zeeMana.NormalTime();
-        }    
     }
 
     public void ChangeAnimationState(string newState)

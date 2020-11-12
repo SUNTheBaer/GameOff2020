@@ -23,7 +23,7 @@ public class @Inputs : IInputActionCollection, IDisposable
                     ""type"": ""Value"",
                     ""id"": ""f3a034c0-d2f0-47cd-b1b2-a2571ea8342a"",
                     ""expectedControlType"": ""Vector2"",
-                    ""processors"": """",
+                    ""processors"": ""StickDeadzone"",
                     ""interactions"": """"
                 },
                 {
@@ -51,9 +51,17 @@ public class @Inputs : IInputActionCollection, IDisposable
                     ""interactions"": """"
                 },
                 {
-                    ""name"": ""Aim"",
+                    ""name"": ""MouseAim"",
                     ""type"": ""Value"",
                     ""id"": ""341f9ab7-cd3f-4bb2-bfe0-de75b54ffb39"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""PadAim"",
+                    ""type"": ""Value"",
+                    ""id"": ""f3e8be14-c59d-4ebf-b7a7-e3f32251ac56"",
                     ""expectedControlType"": ""Vector2"",
                     ""processors"": """",
                     ""interactions"": """"
@@ -205,23 +213,23 @@ public class @Inputs : IInputActionCollection, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""d449e98e-5c52-4db8-b193-d1a3c84d8c56"",
+                    ""id"": ""6ce5b875-639d-4bbc-8347-aa0331c59ab3"",
                     ""path"": ""<Mouse>/position"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""KeyboardMouse"",
-                    ""action"": ""Aim"",
+                    ""action"": ""MouseAim"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
                 {
                     ""name"": """",
-                    ""id"": ""8ac6c5ad-4b7f-4409-88a2-68a8e9e3f74a"",
+                    ""id"": ""dd9f8a63-b62f-49c2-8ce5-6a36de9420ee"",
                     ""path"": ""<Gamepad>/rightStick"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Controller"",
-                    ""action"": ""Aim"",
+                    ""action"": ""PadAim"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -264,7 +272,8 @@ public class @Inputs : IInputActionCollection, IDisposable
         m_Player_TimeSlow = m_Player.FindAction("TimeSlow", throwIfNotFound: true);
         m_Player_Shoot = m_Player.FindAction("Shoot", throwIfNotFound: true);
         m_Player_ManaRegenPotion = m_Player.FindAction("ManaRegenPotion", throwIfNotFound: true);
-        m_Player_Aim = m_Player.FindAction("Aim", throwIfNotFound: true);
+        m_Player_MouseAim = m_Player.FindAction("MouseAim", throwIfNotFound: true);
+        m_Player_PadAim = m_Player.FindAction("PadAim", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -318,7 +327,8 @@ public class @Inputs : IInputActionCollection, IDisposable
     private readonly InputAction m_Player_TimeSlow;
     private readonly InputAction m_Player_Shoot;
     private readonly InputAction m_Player_ManaRegenPotion;
-    private readonly InputAction m_Player_Aim;
+    private readonly InputAction m_Player_MouseAim;
+    private readonly InputAction m_Player_PadAim;
     public struct PlayerActions
     {
         private @Inputs m_Wrapper;
@@ -327,7 +337,8 @@ public class @Inputs : IInputActionCollection, IDisposable
         public InputAction @TimeSlow => m_Wrapper.m_Player_TimeSlow;
         public InputAction @Shoot => m_Wrapper.m_Player_Shoot;
         public InputAction @ManaRegenPotion => m_Wrapper.m_Player_ManaRegenPotion;
-        public InputAction @Aim => m_Wrapper.m_Player_Aim;
+        public InputAction @MouseAim => m_Wrapper.m_Player_MouseAim;
+        public InputAction @PadAim => m_Wrapper.m_Player_PadAim;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -349,9 +360,12 @@ public class @Inputs : IInputActionCollection, IDisposable
                 @ManaRegenPotion.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnManaRegenPotion;
                 @ManaRegenPotion.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnManaRegenPotion;
                 @ManaRegenPotion.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnManaRegenPotion;
-                @Aim.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnAim;
-                @Aim.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnAim;
-                @Aim.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnAim;
+                @MouseAim.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMouseAim;
+                @MouseAim.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMouseAim;
+                @MouseAim.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMouseAim;
+                @PadAim.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPadAim;
+                @PadAim.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPadAim;
+                @PadAim.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPadAim;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -368,9 +382,12 @@ public class @Inputs : IInputActionCollection, IDisposable
                 @ManaRegenPotion.started += instance.OnManaRegenPotion;
                 @ManaRegenPotion.performed += instance.OnManaRegenPotion;
                 @ManaRegenPotion.canceled += instance.OnManaRegenPotion;
-                @Aim.started += instance.OnAim;
-                @Aim.performed += instance.OnAim;
-                @Aim.canceled += instance.OnAim;
+                @MouseAim.started += instance.OnMouseAim;
+                @MouseAim.performed += instance.OnMouseAim;
+                @MouseAim.canceled += instance.OnMouseAim;
+                @PadAim.started += instance.OnPadAim;
+                @PadAim.performed += instance.OnPadAim;
+                @PadAim.canceled += instance.OnPadAim;
             }
         }
     }
@@ -399,6 +416,7 @@ public class @Inputs : IInputActionCollection, IDisposable
         void OnTimeSlow(InputAction.CallbackContext context);
         void OnShoot(InputAction.CallbackContext context);
         void OnManaRegenPotion(InputAction.CallbackContext context);
-        void OnAim(InputAction.CallbackContext context);
+        void OnMouseAim(InputAction.CallbackContext context);
+        void OnPadAim(InputAction.CallbackContext context);
     }
 }

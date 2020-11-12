@@ -6,6 +6,7 @@ using UnityEngine.InputSystem;
 public class PlayerMovement : MonoBehaviour
 {
     [SerializeField] private PlayerScript playerScript = null;
+    [SerializeField] private SpriteRenderer spriteRenderer = null;
 
     private void Update()
     {
@@ -31,9 +32,9 @@ public class PlayerMovement : MonoBehaviour
         //Flip Character
 
         if (playerScript.inputManager.move.x > 0)
-             transform.eulerAngles = new Vector3 (0, 0, 0);
+            spriteRenderer.flipX = false;
          else if (playerScript.inputManager.move.x < 0)
-             transform.eulerAngles = new Vector3 (0, 180, 0);
+            spriteRenderer.flipX = true;
         
         //--------------------------------------------------------
     }
