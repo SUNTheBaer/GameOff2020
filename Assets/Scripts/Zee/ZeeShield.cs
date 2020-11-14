@@ -5,32 +5,40 @@ using UnityEngine;
 public class ZeeShield : MonoBehaviour
 {
     [SerializeField] private PlayerScript playerScript = null;
-    [SerializeField] private float manaGained = 0;
-    private bool attackBlocked = false;
-    public bool blockingCoroutine = false;
     [SerializeField] private float blockInvincibility = 0;
-    public int blockPhase = 0;
+    [SerializeField] private float manaGained = 0;
+    [SerializeField] private float manaCost;
+
     public IEnumerator coroutine;
+    public int blockPhase = 0;
+
+    private void Update()
+    {
+        print(blockPhase);
+    }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.tag == "BossAttack")
+        if (other.tag == "BossAttack" && blockPhase > 0)
         {
             if (blockPhase == 1)
-                StartCoroutine(JustBlock());
+                JustBlock();
             else if (blockPhase == 2)
-                StartCoroutine(NormalBlock());
+                NormalBlock();
             else if (blockPhase == 3)
-                StartCoroutine(ChipBlock());
-        }
-    }
+                ChipBlock();
 
-    private void Update() {
-        print(blockPhase);
+            StartCoroutine(GeneralBlock());
+        }
     }
 
     public IEnumerator StartShieldCoroutine()
     {
+        print("start shield coroutine");
+        playerScript.playerCollision.damagable = false;
+        playerScript.currentMana -= manaCost;
+        playerScript.manaBar.SetCurrent(playerScript.currentMana);
+        
         blockPhase = 1;
         yield return new WaitForSeconds(1.0f);
         if (blockPhase == 0)
@@ -43,30 +51,29 @@ public class ZeeShield : MonoBehaviour
         yield return new WaitUntil(() => blockPhase == 0);
     }
 
-    private IEnumerator JustBlock()
+    private IEnumerator GeneralBlock()
     {
-        //print("justblocking");
+        print("start general block");
         StopCoroutine(coroutine);
         blockPhase = 0;
-        //playerScript.currentMana += manaGained;
-        //playerScript.manaBar.SetCurrent(playerScript.currentMana);
         yield return new WaitForSeconds(blockInvincibility);
-        //playerScript.playerCollision.damagable = true;
+        playerScript.playerCollision.damagable = true;
     }
 
-    private IEnumerator NormalBlock()
+    private void JustBlock()
     {
-        print("normalblocking");
-        StopCoroutine(coroutine);
-        blockPhase = 0;
-        yield return new WaitForSeconds(0.0f);
+        print("start just block");
+        playerScript.currentMana += manaGained;
+        playerScript.manaBar.SetCurrent(playerScript.currentMana);
     }
 
-    private IEnumerator ChipBlock()
+    private void NormalBlock()
     {
-        print("chipblocking");
-        StopCoroutine(coroutine);
-        blockPhase = 0;
-        yield return new WaitForSeconds(0.0f);
+        print("start normal block");
+    }
+
+    private void ChipBlock()
+    {
+        print("start chip block");
     }
 }
