@@ -14,7 +14,7 @@
                     "interactions": ""
                 },
                 {
-                    "name": "TimeSlow",
+                    "name": "Shield",
                     "type": "Button",
                     "id": "dd10284d-21ea-48b1-ac20-34b98682adce",
                     "expectedControlType": "Button",
@@ -135,11 +135,11 @@
                 {
                     "name": "",
                     "id": "68223ba9-a9c2-4c58-8f51-c89d0075ee49",
-                    "path": "<Keyboard>/shift",
+                    "path": "<Mouse>/rightButton",
                     "interactions": "",
                     "processors": "",
                     "groups": "KeyboardMouse",
-                    "action": "TimeSlow",
+                    "action": "Shield",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -150,7 +150,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Controller",
-                    "action": "TimeSlow",
+                    "action": "Shield",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -189,8 +189,19 @@
                 },
                 {
                     "name": "",
-                    "id": "a3e200b8-6601-486b-8c8f-70f42221733f",
+                    "id": "b8b471e4-1621-4356-bb05-a82c2022beab",
                     "path": "<Gamepad>/rightShoulder",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Shoot",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "a3e200b8-6601-486b-8c8f-70f42221733f",
+                    "path": "<Gamepad>/buttonWest",
                     "interactions": "",
                     "processors": "",
                     "groups": "Controller",

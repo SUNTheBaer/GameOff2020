@@ -7,7 +7,7 @@ public class PlayerCollision : MonoBehaviour
     [SerializeField] private PlayerScript playerScript = null;
     [SerializeField] private GameManager gameManager = null;
     [SerializeField] private float iFrames = 0;
-    private bool damagable = true;
+    public bool damagable = true;
     private bool insideAttack = false;
 
     private void Start() 

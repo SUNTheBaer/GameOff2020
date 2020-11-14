@@ -10,6 +10,7 @@ public class PlayerScript : MonoBehaviour
     public PlayerMovement playerMovement;
     public PlayerCollision playerCollision;
     public ZeeMana zeeMana = null;
+    public ZeeShield zeeShield = null;
     public Aiming aimingScript = null;
 
     [Header("Components")]
