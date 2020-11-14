@@ -2,15 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-#pragma warning disable 0649 // Disable Color never assigned warning
-
 public class SpriteFlashing : MonoBehaviour
 {
     private SpriteRenderer spriteRenderer;
     private Shader shaderGUItext;
     private Shader shaderSpritesDefault;
     [SerializeField] private bool spriteFlashColorActive = false;
-    [SerializeField] private Color spriteFlashColor;
+    [SerializeField] private Color spriteFlashColor = Color.white;
 
     private void Start () 
     {
