@@ -7,7 +7,7 @@ public class ZeeShield : MonoBehaviour
     [SerializeField] private PlayerScript playerScript = null;
     [SerializeField] private float blockInvincibility = 0;
     [SerializeField] private float manaGained = 0;
-    [SerializeField] private float manaCost;
+    [SerializeField] private float manaCost = 0;
 
     public IEnumerator coroutine;
     public int blockPhase = 0;
@@ -35,7 +35,7 @@ public class ZeeShield : MonoBehaviour
     public IEnumerator StartShieldCoroutine()
     {
         print("start shield coroutine");
-        playerScript.playerCollision.damagable = false;
+        playerScript.playerCollision.isDamagable = false;
         playerScript.currentMana -= manaCost;
         playerScript.manaBar.SetCurrent(playerScript.currentMana);
         
@@ -57,7 +57,7 @@ public class ZeeShield : MonoBehaviour
         StopCoroutine(coroutine);
         blockPhase = 0;
         yield return new WaitForSeconds(blockInvincibility);
-        playerScript.playerCollision.damagable = true;
+        playerScript.playerCollision.isDamagable = true;
     }
 
     private void JustBlock()

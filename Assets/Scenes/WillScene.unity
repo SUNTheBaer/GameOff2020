@@ -326,7 +326,7 @@ MonoBehaviour:
   mouseAimPosition: {x: 0, y: 0}
   padAimPosition: {x: 0, y: 0}
   onController: 0
-  testing: 0
+  holdingShield: 0
 --- !u!4 &203569649
 Transform:
   m_ObjectHideFlags: 0
@@ -1673,6 +1673,7 @@ GameObject:
   - component: {fileID: 1485491584}
   - component: {fileID: 1485491583}
   - component: {fileID: 1485491589}
+  - component: {fileID: 1485491587}
   - component: {fileID: 1485491580}
   - component: {fileID: 1485491581}
   - component: {fileID: 1485491582}
@@ -1814,7 +1815,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerScript: {fileID: 1485491585}
   gameManager: {fileID: 203569650}
-  iFrames: 0.5
+  invulTime: 2
+  isDamagable: 1
 --- !u!114 &1485491584
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1845,6 +1847,7 @@ MonoBehaviour:
   playerMovement: {fileID: 1485491584}
   playerCollision: {fileID: 1485491583}
   zeeMana: {fileID: 1485491588}
+  zeeShield: {fileID: 1485491587}
   aimingScript: {fileID: 1683391878}
   rb: {fileID: 0}
   spriteRenderer: {fileID: 0}
@@ -1873,6 +1876,24 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1485491587
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1485491578}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ffda71dcce92a9a479d02f7a2b6a0103, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerScript: {fileID: 1485491585}
+  gameManager: {fileID: 203569650}
+  blockInvincibility: 1
+  manaGained: 20
+  chipBlockMultiplier: 0.5
+  manaCost: 10
 --- !u!114 &1485491588
 MonoBehaviour:
   m_ObjectHideFlags: 0
