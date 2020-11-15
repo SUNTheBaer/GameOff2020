@@ -6,8 +6,8 @@ public class PlayerCollision : MonoBehaviour
 {
     [SerializeField] private PlayerScript playerScript = null;
     [SerializeField] private GameManager gameManager = null;
-    [SerializeField] private float iFrames = 0;
-    private bool damagable = true;
+    [SerializeField] private float invulTime = 0;
+    public bool isDamagable = true;
     private bool insideAttack = false;
 
     private void Start() 
@@ -15,25 +15,28 @@ public class PlayerCollision : MonoBehaviour
         playerScript.currentHealth = playerScript.maxHealth;
         playerScript.healthBar.SetMax(playerScript.maxHealth);
     }
+
     private void Update()
     {
-        if(insideAttack && damagable)
-            StartCoroutine(TakeDamage(gameManager.bossManager.bossAttackDamage));
+        if(insideAttack && isDamagable)
+            StartCoroutine(TakeDamage(gameManager.bossManager.bossAttackDamage, invulTime));
     }
+
     private void OnTriggerEnter2D(Collider2D collision) 
     {
         if (collision.gameObject.CompareTag("BossAttack"))
             insideAttack = true; 
     }
+
     private void OnTriggerExit2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag("BossAttack"))
             insideAttack = false;
     }
 
-    public IEnumerator TakeDamage(float damage)
+    public IEnumerator TakeDamage(float damage, float invulTime)
     {
-        damagable = false;
+        isDamagable = false;
         playerScript.currentHealth -= damage;
 
         playerScript.healthBar.SetCurrent(playerScript.currentHealth);
@@ -41,8 +44,8 @@ public class PlayerCollision : MonoBehaviour
         if (playerScript.currentHealth <= 0)
             Perish();
 
-        yield return new WaitForSeconds(iFrames);
-        damagable = true;
+        yield return new WaitForSeconds(invulTime);
+        isDamagable = true;
     }
     
     private void Perish()
