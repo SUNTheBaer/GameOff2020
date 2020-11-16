@@ -7,33 +7,33 @@ public class PlayerMovement : MonoBehaviour
 {
     [SerializeField] private PlayerScript playerScript = null;
     [SerializeField] private SpriteRenderer spriteRenderer = null;
+    private float angle;
 
     private void Update()
     {
+        angle = Vector2.Angle(new Vector2(playerScript.inputManager.move.x, playerScript.inputManager.move.y), Vector2.right);
+
         if (playerScript.inputManager.move.x == 0 && playerScript.inputManager.move.y == 0)
         {
             playerScript.ChangeAnimationState("Idle");
-            playerScript.isIdle = true;
+            //playerScript.isIdle = true;
         }
-            
-        else
-            playerScript.isIdle = false;
 
-        if(playerScript.inputManager.move.y < 0 && playerScript.inputManager.move.x == 0)
+        else if(playerScript.inputManager.move.y < 0 && angle <= 105 && angle >= 75)
             playerScript.ChangeAnimationState("down");
-        if (playerScript.inputManager.move.y > 0 && playerScript.inputManager.move.x == 0)
+        else if (playerScript.inputManager.move.y > 0 && angle <= 105 && angle >= 75)
             playerScript.ChangeAnimationState("Up");
-        if (playerScript.inputManager.move.x != 0 && (playerScript.inputManager.move.y == 0 || playerScript.inputManager.move.y <0))
+        else if (angle >= 165 || angle <= 15 || ((angle < 75 || angle > 105) && playerScript.inputManager.move.y < 0))
             playerScript.ChangeAnimationState("Side");
-        if (playerScript.inputManager.move.x != 0 && (playerScript.inputManager.move.y > 0))
+        else if (playerScript.inputManager.move.y > 0 && ((angle < 75 && angle > 15) || (angle < 165 && angle > 105)))
             playerScript.ChangeAnimationState("Up Side");
 
 
         //Flip Character
 
-        if (playerScript.inputManager.move.x > 0)
+        if (angle <= 105)
             spriteRenderer.flipX = false;
-         else if (playerScript.inputManager.move.x < 0)
+        else
             spriteRenderer.flipX = true;
         
         //--------------------------------------------------------

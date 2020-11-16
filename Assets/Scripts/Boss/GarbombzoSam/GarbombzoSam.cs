@@ -7,6 +7,7 @@ public class GarbombzoSam : MonoBehaviour
     [SerializeField] private GameManager gameManager = null;
     [SerializeField] private ScriptableBoss garbombzoSam = null;
     [SerializeField] private Animator anim = null;
+    [SerializeField] private GameObject player = null;
 
     [SerializeField] private GameObject whirlwindAttack = null;
 
@@ -32,6 +33,8 @@ public class GarbombzoSam : MonoBehaviour
 
     private void Update()
     {
+        print(Vector2.Angle(gameObject.transform.position, player.transform.position));
+
         whirlwind.chance = garbombzoSam.attackChances[0];
         bombThrow.chance = garbombzoSam.attackChances[1];
         circleZones.chance = garbombzoSam.attackChances[2];
@@ -88,8 +91,11 @@ public class GarbombzoSam : MonoBehaviour
 
     private IEnumerator HammerSwipe()
     {
+        
         gameManager.bossManager.bossAttackDamage = 20;
-        yield return null;
+        anim.SetTrigger("hammer reel");
+        yield return new WaitForSeconds(1.5f);
+        anim.SetTrigger("hammer punch");
         PickAttack(whirlwind, bombThrow, circleZones, hammerSwipe);
     }
     // ------------------------------------------------------------------
