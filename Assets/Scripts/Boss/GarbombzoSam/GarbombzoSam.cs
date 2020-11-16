@@ -16,12 +16,19 @@ public class GarbombzoSam : MonoBehaviour
     private AttackChances circleZones = new AttackChances(0.2f, "CircleZones");
     private AttackChances hammerSwipe = new AttackChances(0.0f, "HammerSwipe");
 
+    private Vector2 playerPos;
+    private Vector2 bossPos;
+    private float deltaX;
+    private float deltaY;
+    private float angle;
+    private bool swingingHammer = false;
+
     private int colliderPriority;
 
     private void Start()
     {
         gameManager.bossManager.bossHealth = garbombzoSam.bossHealth;
-
+        bossPos = transform.position;
         PickAttack(whirlwind, bombThrow, circleZones, hammerSwipe);
     }
 
@@ -33,7 +40,11 @@ public class GarbombzoSam : MonoBehaviour
 
     private void Update()
     {
-        print(Vector2.Angle(gameObject.transform.position, player.transform.position));
+        if (swingingHammer)
+            HammerLerp();
+        else
+            transform.rotation = Quaternion.AngleAxis(0, Vector3.forward);
+        
 
         whirlwind.chance = garbombzoSam.attackChances[0];
         bombThrow.chance = garbombzoSam.attackChances[1];
@@ -91,12 +102,18 @@ public class GarbombzoSam : MonoBehaviour
 
     private IEnumerator HammerSwipe()
     {
-        
+        swingingHammer = true;
         gameManager.bossManager.bossAttackDamage = 20;
         anim.SetTrigger("hammer reel");
         yield return new WaitForSeconds(1.5f);
         anim.SetTrigger("hammer punch");
+        swingingHammer = false;
         PickAttack(whirlwind, bombThrow, circleZones, hammerSwipe);
+    }
+
+    private void HammerLerp()
+    {
+
     }
     // ------------------------------------------------------------------
 
