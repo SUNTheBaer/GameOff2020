@@ -16,11 +16,15 @@ public class GarbombzoSam : MonoBehaviour
     private AttackChances circleZones = new AttackChances(0.2f, "CircleZones");
     private AttackChances hammerSwipe = new AttackChances(0.0f, "HammerSwipe");
 
+    [SerializeField] private float duration = 0;
+    [SerializeField] private float reverseDuration = 0;
     private Vector2 playerPos;
     private Vector2 bossPos;
+    private float time;
     private float deltaX;
     private float deltaY;
     private float angle;
+    private float angleAxis;
     private bool swingingHammer = false;
 
     private int colliderPriority;
@@ -40,11 +44,17 @@ public class GarbombzoSam : MonoBehaviour
 
     private void Update()
     {
+        time += Time.deltaTime;
+
+
         if (swingingHammer)
             HammerLerp();
         else
-            transform.rotation = Quaternion.AngleAxis(0, Vector3.forward);
-        
+        {
+            angleAxis = Mathf.Lerp(angle, 0, time / reverseDuration);
+
+            transform.rotation = Quaternion.AngleAxis(angleAxis, Vector3.forward);
+        }
 
         whirlwind.chance = garbombzoSam.attackChances[0];
         bombThrow.chance = garbombzoSam.attackChances[1];
@@ -103,17 +113,29 @@ public class GarbombzoSam : MonoBehaviour
     private IEnumerator HammerSwipe()
     {
         swingingHammer = true;
+        time = 0;
         gameManager.bossManager.bossAttackDamage = 20;
         anim.SetTrigger("hammer reel");
         yield return new WaitForSeconds(1.5f);
         anim.SetTrigger("hammer punch");
+        yield return new WaitForSeconds(.9f);
         swingingHammer = false;
+        time = 0;
+        yield return new WaitForSeconds(1f);
         PickAttack(whirlwind, bombThrow, circleZones, hammerSwipe);
     }
 
     private void HammerLerp()
     {
+        angleAxis = 0;
+        angleAxis = Mathf.Lerp(0, angle, time/duration);
+        playerPos = player.transform.position;
+        deltaX = bossPos.x - playerPos.x;
+        deltaY = bossPos.y - playerPos.y;
 
+        angle = Mathf.Atan2(deltaY, deltaX) * Mathf.Rad2Deg - 83;
+
+        transform.rotation = Quaternion.AngleAxis(angleAxis, Vector3.forward);
     }
     // ------------------------------------------------------------------
 
