@@ -7,17 +7,35 @@ public class GenericBoss : MonoBehaviour
     [SerializeField] private GameManager gameManager = null;
     //[SerializeField] private ScriptableBoss bossName;
     // private AttackChances attackOne = new AttackChances(0.0f, "AttackOne");
+    // public Bar bossHealthBar;
+    // private bool playerHitBoss = false;
 
     private void Start()
     {
         //gameManager.bossManager.bossHealth = bossName.bossHealth;
+        // gameManager.bossManager.bossCurrentHealth = bossName.bossMaxHealth;
+        // bossHealthBar.SetMax(bossName.bossMaxHealth);
+
+        // gameManager.bossManager.playerAttackDamage = 10;
         //PickAttack(attackOne);
     }
 
-    private void OnTriggerEnter2D(Collider2D other)
+    // private void OnTriggerEnter2D(Collider2D other)
+    // {
+    //     if (other.tag == "PlayerAttack")
+    //         playerHitBoss = true;
+    // }
+
+    // private void OnTriggerEnter2D(Collider2D other)
+    // {
+    //     if (other.gameObject.CompareTag("PlayerAttack"))
+    //         playerHitBoss = false;
+    // }
+
+    private void Update()
     {
-        if (other.tag == "PlayerAttack")
-            StartCoroutine(TakeDamage());
+        // if(playerHitBoss)
+        //     StartCoroutine(TakeDamage());
     }
 
     /*private void PickAttack(AttackChances attackOne, ...)
@@ -48,9 +66,12 @@ public class GenericBoss : MonoBehaviour
 
     private IEnumerator TakeDamage()
     {
-        gameManager.bossManager.bossHealth -= gameManager.bossManager.playerAttackDamage;
+        gameManager.bossManager.bossCurrentHealth -= gameManager.bossManager.playerAttackDamage;
         yield return null;
-        if (gameManager.bossManager.bossHealth <= 0)
+
+        // bossHealthBar.SetCurrent(gameManager.bossManager.bossCurrentHealth);
+
+        if (gameManager.bossManager.bossCurrentHealth <= 0)
             StartCoroutine(Death());
     }
 
