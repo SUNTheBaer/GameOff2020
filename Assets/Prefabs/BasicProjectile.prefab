@@ -14,8 +14,13 @@ GameObject:
   - component: {fileID: 808040022032421031}
   - component: {fileID: 808040022032421030}
   m_Layer: 0
+<<<<<<< HEAD:Assets/Prefabs/BasicProjectile.prefab
   m_Name: BasicProjectile
   m_TagString: Untagged
+=======
+  m_Name: Basic_Projectile
+  m_TagString: PlayerAttack
+>>>>>>> develop:Assets/Resources/Basic_Projectile.prefab
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -147,3 +152,22 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.32, y: 0.32}
   m_EdgeRadius: 0
+<<<<<<< HEAD:Assets/Prefabs/BasicProjectile.prefab
+=======
+--- !u!114 &808040022032421049
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 808040022032421048}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fcda02a36dcb34d1292542cd32178eed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rb2d: {fileID: 808040022032421031}
+  direction: {x: -0.21492088, y: 1.9884188}
+  rotation: {x: 0, y: 0, z: 0.05380817, w: 0.9985513}
+  selfDestructTime: 0.6
+>>>>>>> develop:Assets/Resources/Basic_Projectile.prefab

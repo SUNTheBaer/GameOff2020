@@ -9,6 +9,7 @@ public class GarbombzoSam : MonoBehaviour
     [SerializeField] private Animator anim = null;
     [SerializeField] private GameObject player = null;
     [SerializeField] private GameObject garbomzoSamProjectile = null;
+    public Bar bossHealthBar;
 
     [SerializeField] private GameObject whirlwindAttack = null;
 
@@ -30,17 +31,29 @@ public class GarbombzoSam : MonoBehaviour
 
     private int colliderPriority;
 
+    private bool playerHitBoss = false;
+
     private void Start()
     {
-        gameManager.bossManager.bossHealth = garbombzoSam.bossHealth;
         bossPos = transform.position;
         PickAttack(whirlwind, bombThrow, circleZones, hammerSwipe);
+
+        gameManager.bossManager.bossCurrentHealth = garbombzoSam.bossMaxHealth;
+        bossHealthBar.SetMax(garbombzoSam.bossMaxHealth);
+
+        gameManager.bossManager.playerAttackDamage = 10;
     }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.tag == "PlayerAttack")
-            StartCoroutine(TakeDamage());
+            playerHitBoss = true;
+    }
+
+    private void OnTriggerExit2D(Collider2D other)
+    {
+        if (other.gameObject.CompareTag("PlayerAttack"))
+            playerHitBoss = false;
     }
 
     private void Update()
@@ -67,6 +80,9 @@ public class GarbombzoSam : MonoBehaviour
         circleZones.chance = garbombzoSam.attackChances[2];
         hammerSwipe.chance = garbombzoSam.attackChances[3];
         colliderPriority = garbombzoSam.colliderPriority;
+
+        if(playerHitBoss)
+            StartCoroutine(TakeDamage());
     }
 
     private void PickAttack(AttackChances whirlwind, AttackChances bombThrow, AttackChances circleZones, AttackChances hammerSwipe)
@@ -152,9 +168,12 @@ public class GarbombzoSam : MonoBehaviour
 
     private IEnumerator TakeDamage()
     {
-        gameManager.bossManager.bossHealth -= gameManager.bossManager.playerAttackDamage;
+        gameManager.bossManager.bossCurrentHealth -= gameManager.bossManager.playerAttackDamage;
         yield return null;
-        if (gameManager.bossManager.bossHealth <= 0)
+
+        bossHealthBar.SetCurrent(gameManager.bossManager.bossCurrentHealth);
+        
+        if (gameManager.bossManager.bossCurrentHealth <= 0)
             StartCoroutine(Death());
     }
 

@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: af9cc0255461e98418e2fa9cfe18afd9, type: 3}
   m_Name: GarbombzoSam
   m_EditorClassIdentifier: 
-  bossHealth: 100
+  bossMaxHealth: 300
+  bossCurrentHealth: 0
   bossName: Garbombzo Sam
   attackChances:
   - 0
