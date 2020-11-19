@@ -23,13 +23,21 @@ public class @Inputs : IInputActionCollection, IDisposable
                     ""type"": ""Value"",
                     ""id"": ""f3a034c0-d2f0-47cd-b1b2-a2571ea8342a"",
                     ""expectedControlType"": ""Vector2"",
+                    ""processors"": ""StickDeadzone"",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""Shield"",
+                    ""type"": ""Button"",
+                    ""id"": ""dd10284d-21ea-48b1-ac20-34b98682adce"",
+                    ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
                 },
                 {
-                    ""name"": ""TimeSlow"",
+                    ""name"": ""Shoot"",
                     ""type"": ""Button"",
-                    ""id"": ""dd10284d-21ea-48b1-ac20-34b98682adce"",
+                    ""id"": ""8388c638-19d6-4a6a-87a3-8bbcc830303f"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
@@ -39,6 +47,22 @@ public class @Inputs : IInputActionCollection, IDisposable
                     ""type"": ""Button"",
                     ""id"": ""25c20070-510a-41d0-9bb9-51f91b95a44f"",
                     ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""MouseAim"",
+                    ""type"": ""Value"",
+                    ""id"": ""341f9ab7-cd3f-4bb2-bfe0-de75b54ffb39"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""PadAim"",
+                    ""type"": ""Value"",
+                    ""id"": ""f3e8be14-c59d-4ebf-b7a7-e3f32251ac56"",
+                    ""expectedControlType"": ""Vector2"",
                     ""processors"": """",
                     ""interactions"": """"
                 }
@@ -124,11 +148,11 @@ public class @Inputs : IInputActionCollection, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""68223ba9-a9c2-4c58-8f51-c89d0075ee49"",
-                    ""path"": ""<Keyboard>/shift"",
+                    ""path"": ""<Mouse>/rightButton"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""KeyboardMouse"",
-                    ""action"": ""TimeSlow"",
+                    ""action"": ""Shield"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -139,14 +163,25 @@ public class @Inputs : IInputActionCollection, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Controller"",
-                    ""action"": ""TimeSlow"",
+                    ""action"": ""Shield"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""91be92ea-f7cb-4150-8e2b-5b4e8df478f7"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""KeyboardMouse"",
+                    ""action"": ""Shoot"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
                 {
                     ""name"": """",
                     ""id"": ""7f41d2bd-cb6b-4ef2-b310-e8d71f7373ed"",
-                    ""path"": ""<Keyboard>/space"",
+                    ""path"": ""<Keyboard>/e"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""KeyboardMouse"",
@@ -156,12 +191,56 @@ public class @Inputs : IInputActionCollection, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""a3e200b8-6601-486b-8c8f-70f42221733f"",
+                    ""id"": ""3e06a1bd-2368-417f-9a0a-26ce936849bb"",
+                    ""path"": ""<Keyboard>/space"",
+                    ""interactions"": ""Press"",
+                    ""processors"": """",
+                    ""groups"": ""KeyboardMouse"",
+                    ""action"": ""Shoot"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b8b471e4-1621-4356-bb05-a82c2022beab"",
                     ""path"": ""<Gamepad>/rightShoulder"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Shoot"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""a3e200b8-6601-486b-8c8f-70f42221733f"",
+                    ""path"": ""<Gamepad>/buttonWest"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Controller"",
                     ""action"": ""ManaRegenPotion"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""6ce5b875-639d-4bbc-8347-aa0331c59ab3"",
+                    ""path"": ""<Mouse>/position"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""KeyboardMouse"",
+                    ""action"": ""MouseAim"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""dd9f8a63-b62f-49c2-8ce5-6a36de9420ee"",
+                    ""path"": ""<Gamepad>/rightStick"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Controller"",
+                    ""action"": ""PadAim"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -201,8 +280,11 @@ public class @Inputs : IInputActionCollection, IDisposable
         // Player
         m_Player = asset.FindActionMap("Player", throwIfNotFound: true);
         m_Player_Movement = m_Player.FindAction("Movement", throwIfNotFound: true);
-        m_Player_TimeSlow = m_Player.FindAction("TimeSlow", throwIfNotFound: true);
+        m_Player_Shield = m_Player.FindAction("Shield", throwIfNotFound: true);
+        m_Player_Shoot = m_Player.FindAction("Shoot", throwIfNotFound: true);
         m_Player_ManaRegenPotion = m_Player.FindAction("ManaRegenPotion", throwIfNotFound: true);
+        m_Player_MouseAim = m_Player.FindAction("MouseAim", throwIfNotFound: true);
+        m_Player_PadAim = m_Player.FindAction("PadAim", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -253,15 +335,21 @@ public class @Inputs : IInputActionCollection, IDisposable
     private readonly InputActionMap m_Player;
     private IPlayerActions m_PlayerActionsCallbackInterface;
     private readonly InputAction m_Player_Movement;
-    private readonly InputAction m_Player_TimeSlow;
+    private readonly InputAction m_Player_Shield;
+    private readonly InputAction m_Player_Shoot;
     private readonly InputAction m_Player_ManaRegenPotion;
+    private readonly InputAction m_Player_MouseAim;
+    private readonly InputAction m_Player_PadAim;
     public struct PlayerActions
     {
         private @Inputs m_Wrapper;
         public PlayerActions(@Inputs wrapper) { m_Wrapper = wrapper; }
         public InputAction @Movement => m_Wrapper.m_Player_Movement;
-        public InputAction @TimeSlow => m_Wrapper.m_Player_TimeSlow;
+        public InputAction @Shield => m_Wrapper.m_Player_Shield;
+        public InputAction @Shoot => m_Wrapper.m_Player_Shoot;
         public InputAction @ManaRegenPotion => m_Wrapper.m_Player_ManaRegenPotion;
+        public InputAction @MouseAim => m_Wrapper.m_Player_MouseAim;
+        public InputAction @PadAim => m_Wrapper.m_Player_PadAim;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -274,12 +362,21 @@ public class @Inputs : IInputActionCollection, IDisposable
                 @Movement.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMovement;
                 @Movement.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMovement;
                 @Movement.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMovement;
-                @TimeSlow.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnTimeSlow;
-                @TimeSlow.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnTimeSlow;
-                @TimeSlow.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnTimeSlow;
+                @Shield.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnShield;
+                @Shield.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnShield;
+                @Shield.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnShield;
+                @Shoot.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnShoot;
+                @Shoot.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnShoot;
+                @Shoot.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnShoot;
                 @ManaRegenPotion.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnManaRegenPotion;
                 @ManaRegenPotion.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnManaRegenPotion;
                 @ManaRegenPotion.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnManaRegenPotion;
+                @MouseAim.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMouseAim;
+                @MouseAim.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMouseAim;
+                @MouseAim.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMouseAim;
+                @PadAim.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPadAim;
+                @PadAim.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPadAim;
+                @PadAim.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPadAim;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -287,12 +384,21 @@ public class @Inputs : IInputActionCollection, IDisposable
                 @Movement.started += instance.OnMovement;
                 @Movement.performed += instance.OnMovement;
                 @Movement.canceled += instance.OnMovement;
-                @TimeSlow.started += instance.OnTimeSlow;
-                @TimeSlow.performed += instance.OnTimeSlow;
-                @TimeSlow.canceled += instance.OnTimeSlow;
+                @Shield.started += instance.OnShield;
+                @Shield.performed += instance.OnShield;
+                @Shield.canceled += instance.OnShield;
+                @Shoot.started += instance.OnShoot;
+                @Shoot.performed += instance.OnShoot;
+                @Shoot.canceled += instance.OnShoot;
                 @ManaRegenPotion.started += instance.OnManaRegenPotion;
                 @ManaRegenPotion.performed += instance.OnManaRegenPotion;
                 @ManaRegenPotion.canceled += instance.OnManaRegenPotion;
+                @MouseAim.started += instance.OnMouseAim;
+                @MouseAim.performed += instance.OnMouseAim;
+                @MouseAim.canceled += instance.OnMouseAim;
+                @PadAim.started += instance.OnPadAim;
+                @PadAim.performed += instance.OnPadAim;
+                @PadAim.canceled += instance.OnPadAim;
             }
         }
     }
@@ -318,7 +424,10 @@ public class @Inputs : IInputActionCollection, IDisposable
     public interface IPlayerActions
     {
         void OnMovement(InputAction.CallbackContext context);
-        void OnTimeSlow(InputAction.CallbackContext context);
+        void OnShield(InputAction.CallbackContext context);
+        void OnShoot(InputAction.CallbackContext context);
         void OnManaRegenPotion(InputAction.CallbackContext context);
+        void OnMouseAim(InputAction.CallbackContext context);
+        void OnPadAim(InputAction.CallbackContext context);
     }
 }

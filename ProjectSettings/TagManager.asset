@@ -4,7 +4,10 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - DoesDamage
+  - PlayerAttack
+  - BossAttack
+  - Wall
+  - Enemy
   layers:
   - Default
   - TransparentFX
@@ -14,7 +17,7 @@ TagManager:
   - UI
   - 
   - 
-  - 
+  - Test
   - 
   - 
   - 
@@ -39,6 +42,9 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: Background
+    uniqueID: 3655310183
+    locked: 0
   - name: Default
     uniqueID: 0
     locked: 0

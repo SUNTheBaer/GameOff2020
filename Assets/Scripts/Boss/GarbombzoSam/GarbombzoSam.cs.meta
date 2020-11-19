@@ -1,0 +1,13 @@
+fileFormatVersion: 2
+guid: 6853f67ce94bc8343907a83628145fe9
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - gameManager: {instanceID: 0}
+  - garbombzoSam: {fileID: 11400000, guid: 882492277770c8a488c0f9cdba1db50f, type: 2}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
