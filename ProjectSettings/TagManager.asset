@@ -8,6 +8,7 @@ TagManager:
   - BossAttack
   - Wall
   - Enemy
+  - GameManager
   layers:
   - Default
   - TransparentFX

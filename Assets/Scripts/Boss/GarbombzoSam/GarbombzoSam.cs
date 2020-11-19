@@ -8,6 +8,7 @@ public class GarbombzoSam : MonoBehaviour
     [SerializeField] private ScriptableBoss garbombzoSam = null;
     [SerializeField] private Animator anim = null;
     [SerializeField] private GameObject player = null;
+    [SerializeField] private GameObject garbomzoSamProjectile = null;
 
     [SerializeField] private GameObject whirlwindAttack = null;
 
@@ -44,8 +45,8 @@ public class GarbombzoSam : MonoBehaviour
 
     private void Update()
     {
+        //Hammer Lerping
         time += Time.deltaTime;
-
 
         if (swingingHammer)
             HammerLerp();
@@ -55,6 +56,11 @@ public class GarbombzoSam : MonoBehaviour
 
             transform.rotation = Quaternion.AngleAxis(angleAxis, Vector3.forward);
         }
+        //----------------------------------------------------------------------------
+
+        //Player and Boss positions
+        gameManager.bossManager.playerPosition = player.transform.position;
+        gameManager.bossManager.bossPosition = transform.position;
 
         whirlwind.chance = garbombzoSam.attackChances[0];
         bombThrow.chance = garbombzoSam.attackChances[1];
@@ -99,7 +105,12 @@ public class GarbombzoSam : MonoBehaviour
     private IEnumerator BombThrow()
     {
         gameManager.bossManager.bossAttackDamage = 20;
-        yield return null;
+        anim.SetTrigger("throw");
+        yield return new WaitForSeconds(0.5f);
+        GameObject projectile = Instantiate(garbomzoSamProjectile, new Vector2(transform.position.x, transform.position.y - 1), Quaternion.identity);
+        StartCoroutine(projectile.GetComponent<GarbombzoSamProjectile>().Shoot(new Vector2
+            (player.transform.position.x - transform.position.x, player.transform.position.y - transform.position.y + 1)));
+        yield return new WaitForSeconds(2.0f);
         PickAttack(whirlwind, bombThrow, circleZones, hammerSwipe);
     }
 
