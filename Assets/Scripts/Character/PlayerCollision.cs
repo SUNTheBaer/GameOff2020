@@ -22,20 +22,22 @@ public class PlayerCollision : MonoBehaviour
 
     private void Update()
     {
+        print(insideAttack);
         if(insideAttack && isDamagable)
             StartCoroutine(TakeDamage(gameManager.bossManager.bossAttackDamage, invulTime));
+    }
+
+    private void LateUpdate()
+    {
+        //Limits colliders but necessary
+        if (insideAttack)
+            insideAttack = false;
     }
 
     private void OnTriggerEnter2D(Collider2D collision) 
     {
         if (collision.gameObject.CompareTag("BossAttack"))
             insideAttack = true; 
-    }
-
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-        if (collision.gameObject.CompareTag("BossAttack"))
-            insideAttack = false;
     }
 
     public IEnumerator TakeDamage(float damage, float invulTime)

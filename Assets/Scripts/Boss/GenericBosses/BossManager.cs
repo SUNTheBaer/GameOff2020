@@ -20,4 +20,6 @@ public class BossManager
     public float bossCurrentHealth;
     public float bossAttackDamage;
     public float playerAttackDamage;
+    public Vector2 playerPosition;
+    public Vector2 bossPosition;
 }

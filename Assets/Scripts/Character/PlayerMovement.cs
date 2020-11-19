@@ -14,10 +14,7 @@ public class PlayerMovement : MonoBehaviour
         angle = Vector2.Angle(new Vector2(playerScript.inputManager.move.x, playerScript.inputManager.move.y), Vector2.right);
 
         if (playerScript.inputManager.move.x == 0 && playerScript.inputManager.move.y == 0)
-        {
             playerScript.ChangeAnimationState("Idle");
-            //playerScript.isIdle = true;
-        }
 
         else if(playerScript.inputManager.move.y < 0 && angle <= 105 && angle >= 75)
             playerScript.ChangeAnimationState("down");
