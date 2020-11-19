@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerCollision : MonoBehaviour
 {
@@ -14,6 +15,9 @@ public class PlayerCollision : MonoBehaviour
     {
         playerScript.currentHealth = playerScript.maxHealth;
         playerScript.healthBar.SetMax(playerScript.maxHealth);
+
+        playerScript.audioSrc = GetComponent<AudioSource>();
+        playerScript.audioSrc.volume = 0f;
     }
 
     private void Update()
@@ -42,15 +46,21 @@ public class PlayerCollision : MonoBehaviour
         playerScript.healthBar.SetCurrent(playerScript.currentHealth);
 
         if (playerScript.currentHealth <= 0)
-            Perish();
+            StartCoroutine(Perish());
 
         yield return new WaitForSeconds(invulTime);
         isDamagable = true;
     }
     
-    private void Perish()
+    private IEnumerator Perish()
     {
         // playerScript.ChangeAnimationState("Death");
+        playerScript.audioSrc.volume = 0.25f;
+        playerScript.audioSrc.Play();
+        yield return new WaitForSeconds(1.5f);
+        
         gameObject.SetActive(false); // Custom death
+
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 }

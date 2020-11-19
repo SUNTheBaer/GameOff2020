@@ -18,6 +18,7 @@ public class PlayerScript : MonoBehaviour
     [HideInInspector] public SpriteRenderer spriteRenderer;
     private Animator anim;
     public GameObject aimIndicator;
+    [HideInInspector] public AudioSource audioSrc;
     
     [Header("Player Attributes")]
     public float speed;
