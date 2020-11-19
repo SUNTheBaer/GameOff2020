@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 808040022032421049}
   m_Layer: 0
   m_Name: Basic_Projectile
-  m_TagString: Untagged
+  m_TagString: PlayerAttack
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -144,6 +144,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rb2d: {fileID: 808040022032421031}
-  direction: {x: 1.5592679, y: 1.2503873}
-  rotation: {x: -0, y: -0, z: -0.4326652, w: 0.90155464}
+  direction: {x: -0.21492088, y: 1.9884188}
+  rotation: {x: 0, y: 0, z: 0.05380817, w: 0.9985513}
   selfDestructTime: 0.6
