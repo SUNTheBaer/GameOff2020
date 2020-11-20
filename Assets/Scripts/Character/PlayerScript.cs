@@ -40,6 +40,12 @@ public class PlayerScript : MonoBehaviour
         currentMana = maxMana;
     }
 
+    private void FixedUpdate()
+    {
+        if (currentMana > maxMana)
+            currentMana = maxMana;
+    }
+
     public void ChangeAnimationState(string newState)
     {
         //Stops current anim from interrupting itself

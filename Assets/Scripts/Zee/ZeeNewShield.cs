@@ -6,20 +6,23 @@ public class ZeeNewShield : MonoBehaviour
 {
     [SerializeField] private PlayerScript playerScript = null;
     [SerializeField] private GameManager gameManager = null;
+    [SerializeField] private GameObject shield;
+
     [SerializeField] private float blockInvincibility = 0;
     [SerializeField] private float manaGained = 0;
     [SerializeField] private float chipBlockMultiplier = 0;
     public float manaCost = 0;
     private float t;
+    private float shieldHoldDelay = 0;
     private bool chipBlocked = false;
 
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.tag == "BossAttack" && playerScript.inputManager.holdingShield)
         {
-            if (t < 1)
+            if (t < .10)
                 JustBlock();
-            else if (t < 2)
+            else if (t < .25)
                 NormalBlock();
             else
                 ChipBlock();
@@ -30,11 +33,21 @@ public class ZeeNewShield : MonoBehaviour
 
     private void Update()
     {
-        //print(t);
         if (playerScript.inputManager.holdingShield)
             t += Time.deltaTime;
         else
             t = 0;
+        
+        if (!playerScript.inputManager.holdingShield)
+        {
+            shieldHoldDelay += Time.deltaTime;
+            if(shieldHoldDelay > .20)
+            {
+                shield.SetActive(false);
+                playerScript.playerCollision.isDamagable = true;
+                shieldHoldDelay = 0;
+            }
+        }
     }
 
     private IEnumerator GeneralBlock()
@@ -50,6 +63,7 @@ public class ZeeNewShield : MonoBehaviour
     private void JustBlock()
     {
         //Debug.LogWarning("just blocked");
+
         playerScript.currentMana += manaGained;
         playerScript.manaBar.SetCurrent(playerScript.currentMana);
     }
@@ -68,9 +82,13 @@ public class ZeeNewShield : MonoBehaviour
 
     public void StartShield()
     {
-        playerScript.inputManager.holdingShield = true;
-        playerScript.playerCollision.isDamagable = false;
-        playerScript.currentMana -= playerScript.zeeShield.manaCost;
-        playerScript.manaBar.SetCurrent(playerScript.currentMana);
+        if (playerScript.currentMana > 0 && playerScript.zeeMana.canDoMagic)
+        {
+            shield.SetActive(true);
+            playerScript.inputManager.holdingShield = true;
+            playerScript.playerCollision.isDamagable = false;
+            playerScript.currentMana -= playerScript.zeeShield.manaCost;
+            playerScript.manaBar.SetCurrent(playerScript.currentMana);
+        }
     }
 }

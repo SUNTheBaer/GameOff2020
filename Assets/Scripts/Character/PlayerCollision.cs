@@ -16,20 +16,20 @@ public class PlayerCollision : MonoBehaviour
         playerScript.currentHealth = playerScript.maxHealth;
         playerScript.healthBar.SetMax(playerScript.maxHealth);
 
-        playerScript.audioSrc = GetComponent<AudioSource>();
-        playerScript.audioSrc.volume = 0f;
+        //playerScript.audioSrc = GetComponent<AudioSource>();
+        //playerScript.audioSrc.volume = 0f;
     }
 
     private void Update()
     {
-        print(insideAttack);
+        //print(insideAttack);
         if(insideAttack && isDamagable)
             StartCoroutine(TakeDamage(gameManager.bossManager.bossAttackDamage, invulTime));
     }
 
     private void LateUpdate()
     {
-        //Limits colliders but necessary
+        //Limits colliders but necessary ... not
         if (insideAttack)
             insideAttack = false;
     }
@@ -57,8 +57,8 @@ public class PlayerCollision : MonoBehaviour
     private IEnumerator Perish()
     {
         // playerScript.ChangeAnimationState("Death");
-        playerScript.audioSrc.volume = 0.25f;
-        playerScript.audioSrc.Play();
+      //  playerScript.audioSrc.volume = 0.25f;
+       // playerScript.audioSrc.Play();
         yield return new WaitForSeconds(1.5f);
         
         gameObject.SetActive(false); // Custom death

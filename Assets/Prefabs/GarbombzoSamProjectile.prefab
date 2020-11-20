@@ -10,9 +10,11 @@ GameObject:
   m_Component:
   - component: {fileID: 808040022032421029}
   - component: {fileID: -942789887308560307}
+  - component: {fileID: -5026225407243454825}
   - component: {fileID: 5100992331684660740}
   - component: {fileID: 808040022032421031}
   - component: {fileID: 808040022032421028}
+  - component: {fileID: -1057744203294056917}
   m_Layer: 0
   m_Name: GarbombzoSamProjectile
   m_TagString: BossAttack
@@ -48,7 +50,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rb: {fileID: 808040022032421031}
   destroyTime: 2
-  homingDuration: 0
+  homingDuration: 25
+--- !u!114 &-5026225407243454825
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 808040022032421048}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 781bed02b026ce34e9c087fa5b81a59a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!70 &5100992331684660740
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -136,3 +150,22 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!95 &-1057744203294056917
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 808040022032421048}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 0c982ffb7fce26f41a2709b77bf78652, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
