@@ -18,7 +18,7 @@ public class ZeeNewShield : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.tag == "BossAttack" && playerScript.inputManager.holdingShield)
+        if ((other.tag == "ProjectileAttack" || other.tag == "BossAttack") && playerScript.inputManager.holdingShield)
         {
             if (t < .10)
                 JustBlock();

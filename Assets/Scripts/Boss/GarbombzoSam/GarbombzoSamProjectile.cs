@@ -34,7 +34,7 @@ public class GarbombzoSamProjectile : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.tag == "Player" || other.tag == "Wall")
+        if (other.tag == "Wall")
             Destroy(gameObject);
     }
 

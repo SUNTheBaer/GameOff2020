@@ -10,6 +10,7 @@ TagManager:
   - Enemy
   - GameManager
   - Shield
+  - ProjectileAttack
   layers:
   - Default
   - TransparentFX

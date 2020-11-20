@@ -5,11 +5,17 @@ using UnityEngine.SceneManagement;
 
 public class PlayerCollision : MonoBehaviour
 {
+    public bool isDamagable = true;
+
     [SerializeField] private PlayerScript playerScript = null;
     [SerializeField] private GameManager gameManager = null;
     [SerializeField] private float invulTime = 0;
-    public bool isDamagable = true;
-    private bool insideAttack = false;
+    [SerializeField] private float knockbackDuration = 0;
+    private float t = 0;
+    private Vector2 startPos;
+
+    public bool knockback = false;
+
 
     private void Start() 
     {
@@ -22,22 +28,37 @@ public class PlayerCollision : MonoBehaviour
 
     private void Update()
     {
-        //print(insideAttack);
-        if(insideAttack && isDamagable)
-            StartCoroutine(TakeDamage(gameManager.bossManager.bossAttackDamage, invulTime));
-    }
+        if (knockback)
+        {
+            print(startPos);
+            t += Time.deltaTime;
 
-    private void LateUpdate()
+            gameObject.transform.position = Vector3.Lerp(gameObject.transform.position, startPos + new Vector2(0,-2), t / knockbackDuration);
+        }
+        if (t > 2)
+        {
+            knockback = false;
+            t = 0;
+        }
+    }
+    private void Knockback()
     {
-        //Limits colliders but necessary ... not
-        if (insideAttack)
-            insideAttack = false;
+        startPos = gameObject.transform.position;
+        knockback = true;
     }
-
     private void OnTriggerEnter2D(Collider2D collision) 
     {
-        if (collision.gameObject.CompareTag("BossAttack"))
-            insideAttack = true; 
+        if (collision.gameObject.CompareTag("BossAttack") && isDamagable)
+        {
+            Knockback();
+            StartCoroutine(TakeDamage(gameManager.bossManager.bossAttackDamage, invulTime));
+        }
+        if (collision.gameObject.CompareTag("ProjectileAttack"))
+        {
+            if(isDamagable)
+                StartCoroutine(TakeDamage(gameManager.bossManager.bossAttackDamage, invulTime));
+            Destroy(collision.gameObject);
+        }
     }
 
     public IEnumerator TakeDamage(float damage, float invulTime)

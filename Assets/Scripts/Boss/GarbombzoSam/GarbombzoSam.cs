@@ -20,6 +20,7 @@ public class GarbombzoSam : MonoBehaviour
 
     [SerializeField] private float duration = 0;
     [SerializeField] private float reverseDuration = 0;
+    [SerializeField] private Vector2 hammerForce = Vector2.zero;
     private Vector2 playerPos;
     private Vector2 bossPos;
     private float time;
@@ -144,11 +145,15 @@ public class GarbombzoSam : MonoBehaviour
         gameManager.bossManager.bossAttackDamage = 20;
         anim.SetTrigger("hammer reel");
         yield return new WaitForSeconds(1.5f);
+        
         anim.SetTrigger("hammer punch");
+        gameManager.bossManager.knockback = hammerForce;
         yield return new WaitForSeconds(.9f);
+       
         swingingHammer = false;
         time = 0;
         yield return new WaitForSeconds(1f);
+        
         PickAttack(whirlwind, bombThrow, circleZones, hammerSwipe);
     }
 

@@ -22,4 +22,5 @@ public class BossManager
     public float playerAttackDamage;
     public Vector2 playerPosition;
     public Vector2 bossPosition;
+    public Vector2 knockback;
 }

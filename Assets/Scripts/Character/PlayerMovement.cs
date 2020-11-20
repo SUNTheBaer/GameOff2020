@@ -38,7 +38,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        //Dividing by time scale to make it seem like character movement speed hasn't changed
-        playerScript.rb.velocity = new Vector2(playerScript.inputManager.move.x, playerScript.inputManager.move.y) * playerScript.speed / Time.timeScale;
+        if(!playerScript.playerCollision.knockback)
+            playerScript.rb.velocity = new Vector2(playerScript.inputManager.move.x, playerScript.inputManager.move.y) * playerScript.speed;
     }
 }
