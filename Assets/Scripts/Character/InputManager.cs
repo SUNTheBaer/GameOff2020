@@ -23,6 +23,7 @@ public class InputManager : MonoBehaviour
 
         inputs.Player.Shield.started += context => playerScript.zeeShield.StartShield();
         inputs.Player.Shield.canceled += context => holdingShield = false;
+        inputs.Player.Shield.canceled += context => playerScript.zeeMana.canDoMagic = true;
 
         inputs.Player.Shoot.started += context => onShoot = true;
         inputs.Player.Shoot.canceled += context => onShoot = false;

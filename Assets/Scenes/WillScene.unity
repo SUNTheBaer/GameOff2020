@@ -799,7 +799,7 @@ GameObject:
   - component: {fileID: 395721057}
   m_Layer: 0
   m_Name: GenericBoss
-  m_TagString: Enemy
+  m_TagString: Boss
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -867,16 +867,28 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameManager: {fileID: 203569650}
+  playerScript: {fileID: 1485491585}
   garbombzoSam: {fileID: 11400000, guid: 882492277770c8a488c0f9cdba1db50f, type: 2}
   anim: {fileID: 395721058}
   player: {fileID: 1485491578}
+  whirlwindAttack: {fileID: 2141452992}
+  whirlwindDamage: 15
+  whirlwindKnockbackTime: 0.25
+  whirlwindKnockbackForce: 3
   garbomzoSamProjectile: {fileID: 808040022032421048, guid: f13add5a31d790d45a5ae21032ba2c6e,
     type: 3}
+  bombThrowDamage: 30
+  bombThrowKnockbackTime: 0.25
+  bombThrowKnockbackForce: 2
+  hammerDamage: 20
+  hammerKnockbackTime: 0.5
+  hammerKnockbackForce: 5
+  circleZonesDamage: 0
+  circleZonesKnockbackTime: 0
+  circleZonesKnockbackForce: 0
   bossHealthBar: {fileID: 553821503}
-  whirlwindAttack: {fileID: 2141452992}
-  duration: 1
-  reverseDuration: 0.5
-  hammerForce: {x: 0, y: -10}
+  lerpDuration: 0.75
+  reverseLerpDuration: 0.5
 --- !u!4 &395721056
 Transform:
   m_ObjectHideFlags: 0
@@ -1901,7 +1913,7 @@ GameObject:
   - component: {fileID: 1220900391}
   m_Layer: 0
   m_Name: Arena1 collider
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2129,12 +2141,12 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 10
-  m_LinearDrag: 0
+  m_Mass: 8
+  m_LinearDrag: 25
   m_AngularDrag: 0.05
   m_GravityScale: 0
   m_Material: {fileID: 0}
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
@@ -2171,9 +2183,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isDamagable: 1
   playerScript: {fileID: 1485491585}
-  gameManager: {fileID: 203569650}
   invulTime: 0.2
-  knockbackDuration: 2
   knockback: 0
 --- !u!114 &1485491584
 MonoBehaviour:
@@ -2204,22 +2214,21 @@ MonoBehaviour:
   inputManager: {fileID: 203569648}
   playerMovement: {fileID: 1485491584}
   playerCollision: {fileID: 1485491583}
+  gameManager: {fileID: 203569650}
   zeeMana: {fileID: 1485491588}
   zeeShield: {fileID: 1485491587}
   aimingScript: {fileID: 1683391878}
-  rb: {fileID: 0}
-  spriteRenderer: {fileID: 0}
-  aimIndicator: {fileID: 1683391876}
-  audioSrc: {fileID: 0}
+  rb: {fileID: 1485491581}
+  anim: {fileID: 1485491582}
   speed: 2
-  currentMana: 0
-  isIdle: 0
-  isMovingRight: 0
-  maxHealth: 100
   currentHealth: 0
+  maxHealth: 100
   healthBar: {fileID: 2136979311}
-  manaBar: {fileID: 1643066587}
+  currentMana: 0
   maxMana: 100
+  manaBar: {fileID: 1643066587}
+  aimIndicator: {fileID: 1683391876}
+  angle: 0
 --- !u!4 &1485491586
 Transform:
   m_ObjectHideFlags: 0

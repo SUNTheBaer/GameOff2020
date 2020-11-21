@@ -20,6 +20,7 @@ public class GarbombzoSamProjectile : MonoBehaviour
         gameManagerScript = gameManager.GetComponent<GameManager>();
     }
 
+    //Homing properties
     private void FixedUpdate()
     {
         distanceBetweenPlayerAndBoss = Mathf.Abs(Vector2.Distance(gameManagerScript.bossManager.bossPosition, gameManagerScript.bossManager.playerPosition));
@@ -42,6 +43,8 @@ public class GarbombzoSamProjectile : MonoBehaviour
     {
         rb.velocity = velocity;
         yield return new WaitForSeconds(destroyTime);
-        Destroy(gameObject);
+        //Check to see if object has already been destroyed
+        try { Destroy(gameObject); }
+        catch(MissingReferenceException) {}
     }
 }

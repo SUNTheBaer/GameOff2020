@@ -4,39 +4,53 @@ using UnityEngine;
 
 public class GarbombzoSam : MonoBehaviour
 {
+    [Header("Scripts and Refs")]
     [SerializeField] private GameManager gameManager = null;
+    [SerializeField] private PlayerScript playerScript = null;  
     [SerializeField] private ScriptableBoss garbombzoSam = null;
     [SerializeField] private Animator anim = null;
     [SerializeField] private GameObject player = null;
-    [SerializeField] private GameObject garbomzoSamProjectile = null;
-    public Bar bossHealthBar;
+    private int colliderPriority;
 
+    [Header("Whirlwind Attack")]
     [SerializeField] private GameObject whirlwindAttack = null;
-
+    [SerializeField] private float whirlwindDamage = 0;
+    [SerializeField] private float whirlwindKnockbackTime = 0;
+    [SerializeField] private float whirlwindKnockbackForce = 0;
     private AttackChances whirlwind = new AttackChances(0.0f, "Whirlwind");
+
+    [Header("Bomb Throw Attack")]
+    [SerializeField] private GameObject garbomzoSamProjectile = null;
+    [SerializeField] private float bombThrowDamage = 0;
+    [SerializeField] private float bombThrowKnockbackTime = 0;
+    [SerializeField] private float bombThrowKnockbackForce = 0;
     private AttackChances bombThrow = new AttackChances(0.8f, "BombThrow");
-    private AttackChances circleZones = new AttackChances(0.2f, "CircleZones");
+
+    [Header("Hammer Attack")]
+    [SerializeField] private float hammerDamage = 0;
+    [SerializeField] private float hammerKnockbackTime = 0;
+    [SerializeField] private float hammerKnockbackForce = 0;
     private AttackChances hammerSwipe = new AttackChances(0.0f, "HammerSwipe");
 
-    [SerializeField] private float duration = 0;
-    [SerializeField] private float reverseDuration = 0;
-    [SerializeField] private Vector2 hammerForce = Vector2.zero;
-    private Vector2 playerPos;
-    private Vector2 bossPos;
+    [Header("Circle Zones Attack")]
+    [SerializeField] private float circleZonesDamage = 0;
+    [SerializeField] private float circleZonesKnockbackTime = 0;
+    [SerializeField] private float circleZonesKnockbackForce = 0;
+    private AttackChances circleZones = new AttackChances(0.2f, "CircleZones");
+
+    [Header("Health")]
+    [SerializeField] private Bar bossHealthBar = null;
+    private bool playerHitBoss = false;
+    
+    [Header("Lerp")]
+    [SerializeField] private float lerpDuration = 0;
+    [SerializeField] private float reverseLerpDuration = 0;
     private float time;
-    private float deltaX;
-    private float deltaY;
-    private float angle;
     private float angleAxis;
     private bool swingingHammer = false;
 
-    private int colliderPriority;
-
-    private bool playerHitBoss = false;
-
     private void Start()
     {
-        bossPos = transform.position;
         PickAttack(whirlwind, bombThrow, circleZones, hammerSwipe);
 
         gameManager.bossManager.bossCurrentHealth = garbombzoSam.bossMaxHealth;
@@ -63,16 +77,18 @@ public class GarbombzoSam : MonoBehaviour
         time += Time.deltaTime;
 
         if (swingingHammer)
-            HammerLerp();
+        {
+            angleAxis = 0;
+            angleAxis = Mathf.Lerp(0, playerScript.angle + 5, time / lerpDuration);
+            transform.rotation = Quaternion.AngleAxis(angleAxis, Vector3.forward);
+        }
         else
         {
-            angleAxis = Mathf.Lerp(angle, 0, time / reverseDuration);
-
+            angleAxis = Mathf.Lerp(playerScript.angle + 5, 0, time / reverseLerpDuration);
             transform.rotation = Quaternion.AngleAxis(angleAxis, Vector3.forward);
         }
         //----------------------------------------------------------------------------
 
-        //Player and Boss positions
         gameManager.bossManager.playerPosition = player.transform.position;
         gameManager.bossManager.bossPosition = transform.position;
 
@@ -84,6 +100,7 @@ public class GarbombzoSam : MonoBehaviour
 
         if(playerHitBoss)
             StartCoroutine(TakeDamage());
+        
     }
 
     private void PickAttack(AttackChances whirlwind, AttackChances bombThrow, AttackChances circleZones, AttackChances hammerSwipe)
@@ -107,7 +124,11 @@ public class GarbombzoSam : MonoBehaviour
     // Attacks
     private IEnumerator Whirlwind()
     {
-        gameManager.bossManager.bossAttackDamage = 20;
+        gameManager.bossManager.bossAttackDamage = whirlwindDamage;
+        gameManager.bossManager.knockbackTime = whirlwindKnockbackTime;
+        gameManager.bossManager.knockbackForce = whirlwindKnockbackForce;
+        gameManager.bossManager.knockbackDirection = Vector2.zero;
+
         anim.SetBool("whirlwind", true);
         yield return new WaitForSeconds(1.5f);
         whirlwindAttack.SetActive(true);
@@ -121,7 +142,10 @@ public class GarbombzoSam : MonoBehaviour
 
     private IEnumerator BombThrow()
     {
-        gameManager.bossManager.bossAttackDamage = 20;
+        gameManager.bossManager.bossAttackDamage = bombThrowDamage;
+        gameManager.bossManager.knockbackTime = bombThrowKnockbackTime;
+        gameManager.bossManager.knockbackForce = bombThrowKnockbackForce;
+        gameManager.bossManager.knockbackDirection = Vector2.zero;
         anim.SetTrigger("throw");
         yield return new WaitForSeconds(0.5f);
         GameObject projectile = Instantiate(garbomzoSamProjectile, new Vector2(transform.position.x, transform.position.y - 1), Quaternion.identity);
@@ -131,43 +155,38 @@ public class GarbombzoSam : MonoBehaviour
         PickAttack(whirlwind, bombThrow, circleZones, hammerSwipe);
     }
 
-    private IEnumerator CircleZones()
-    {
-        gameManager.bossManager.bossAttackDamage = 20;
-        yield return null;
-        PickAttack(whirlwind, bombThrow, circleZones, hammerSwipe);
-    }
-
     private IEnumerator HammerSwipe()
     {
         swingingHammer = true;
         time = 0;
-        gameManager.bossManager.bossAttackDamage = 20;
+        gameManager.bossManager.bossAttackDamage = hammerDamage;
+        gameManager.bossManager.knockbackTime = hammerKnockbackTime;
+        gameManager.bossManager.knockbackForce = hammerKnockbackForce;
         anim.SetTrigger("hammer reel");
+
         yield return new WaitForSeconds(1.5f);
         
         anim.SetTrigger("hammer punch");
-        gameManager.bossManager.knockback = hammerForce;
+        gameManager.bossManager.knockbackDirection = new Vector2(Mathf.Cos((angleAxis - 90) * Mathf.Deg2Rad), Mathf.Sin((angleAxis - 90) * Mathf.Deg2Rad));
+
         yield return new WaitForSeconds(.9f);
-       
+
         swingingHammer = false;
         time = 0;
+
         yield return new WaitForSeconds(1f);
-        
+
         PickAttack(whirlwind, bombThrow, circleZones, hammerSwipe);
     }
 
-    private void HammerLerp()
+    private IEnumerator CircleZones()
     {
-        angleAxis = 0;
-        angleAxis = Mathf.Lerp(0, angle, time/duration);
-        playerPos = player.transform.position;
-        deltaX = bossPos.x - playerPos.x;
-        deltaY = bossPos.y - playerPos.y;
-
-        angle = Mathf.Atan2(deltaY, deltaX) * Mathf.Rad2Deg - 83;
-
-        transform.rotation = Quaternion.AngleAxis(angleAxis, Vector3.forward);
+        gameManager.bossManager.bossAttackDamage = circleZonesDamage;
+        gameManager.bossManager.knockbackTime = circleZonesKnockbackTime;
+        gameManager.bossManager.knockbackForce = circleZonesKnockbackForce;
+        gameManager.bossManager.knockbackDirection = Vector2.zero;
+        yield return null;
+        PickAttack(whirlwind, bombThrow, circleZones, hammerSwipe);
     }
     // ------------------------------------------------------------------
 
