@@ -41,6 +41,6 @@ public class PlayerMovement : MonoBehaviour
         if(!playerScript.playerCollision.knockback)
             playerScript.rb.velocity = new Vector2(playerScript.inputManager.move.x, playerScript.inputManager.move.y) * playerScript.speed;
         else
-            playerScript.rb.velocity = playerScript.gameManager.bossManager.knockbackDirection * playerScript.gameManager.bossManager.knockbackForce;
+            playerScript.rb.velocity = playerScript.gameManager.bossManager.knockbackDirection.normalized * playerScript.gameManager.bossManager.knockbackForce;
     }
 }

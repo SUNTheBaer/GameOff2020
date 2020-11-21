@@ -145,13 +145,17 @@ public class GarbombzoSam : MonoBehaviour
         gameManager.bossManager.bossAttackDamage = bombThrowDamage;
         gameManager.bossManager.knockbackTime = bombThrowKnockbackTime;
         gameManager.bossManager.knockbackForce = bombThrowKnockbackForce;
-        gameManager.bossManager.knockbackDirection = Vector2.zero;
         anim.SetTrigger("throw");
+
         yield return new WaitForSeconds(0.5f);
+
         GameObject projectile = Instantiate(garbomzoSamProjectile, new Vector2(transform.position.x, transform.position.y - 1), Quaternion.identity);
-        StartCoroutine(projectile.GetComponent<GarbombzoSamProjectile>().Shoot(new Vector2
-            (player.transform.position.x - transform.position.x, player.transform.position.y - transform.position.y + 1)));
+        GarbombzoSamProjectile projectileScript = projectile.GetComponent<GarbombzoSamProjectile>();
+        StartCoroutine(projectileScript.Shoot(new Vector2(player.transform.position.x - transform.position.x, 
+            player.transform.position.y - transform.position.y + 1)));
+
         yield return new WaitForSeconds(2.0f);
+
         PickAttack(whirlwind, bombThrow, circleZones, hammerSwipe);
     }
 

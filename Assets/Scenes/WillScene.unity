@@ -2181,9 +2181,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b6d10885c1499f84e83501bf1cb2986e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isDamagable: 1
   playerScript: {fileID: 1485491585}
+  isDamagable: 1
   invulTime: 0.2
+  shieldKnockbackMultiplier: 0.6
   knockback: 0
 --- !u!114 &1485491584
 MonoBehaviour:

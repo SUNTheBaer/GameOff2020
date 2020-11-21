@@ -5,16 +5,12 @@ using UnityEngine.SceneManagement;
 
 public class PlayerCollision : MonoBehaviour
 {
-    public bool isDamagable = true;
-
     [SerializeField] private PlayerScript playerScript = null;
-    [SerializeField] private float invulTime = 0;
-    //[SerializeField] private float knockbackDuration = 0;
-    //private float t = 0;
-    //[SerializeField] private float threshold = 0;
-    //private Vector2 startPos = Vector2.zero;
 
-    public bool knockback = false;
+    [HideInInspector] public bool isDamagable = true;
+    [SerializeField] private float invulTime = 0;
+    [SerializeField] private float shieldKnockbackMultiplier = 0;
+    [HideInInspector] public bool knockback = false;
 
 
     private void Start() 
@@ -26,31 +22,11 @@ public class PlayerCollision : MonoBehaviour
         //playerScript.audioSrc.volume = 0f;
     }
 
-    private void Update()
+    private IEnumerator Knockback(bool shieldOnHit)
     {
-        /*if (knockback)
-        {
-            print(startPos);
-            t += Time.deltaTime;
+        if (shieldOnHit)
+            playerScript.gameManager.bossManager.knockbackForce *= shieldKnockbackMultiplier;
 
-            gameObject.transform.position = Vector3.Lerp(gameObject.transform.position, startPos + new Vector2(0,-2), t / knockbackDuration);
-        }
-        if (t > 2)
-        {
-            knockback = false;
-            t = 0;
-        }*/
-
-        /*if (knockback)
-        {
-            playerScript.rb.AddForce(gameManager.bossManager.knockback);
-            if ((Mathf.Abs(playerScript.rb.velocity.x) < threshold) && (Mathf.Abs(playerScript.rb.velocity.y) < threshold))
-                knockback = false;
-        }*/
-    }
-
-    private IEnumerator Knockback()
-    {
         knockback = true;
         yield return new WaitForSeconds(playerScript.gameManager.bossManager.knockbackTime);
         knockback = false;
@@ -60,10 +36,13 @@ public class PlayerCollision : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("BossAttack") || collision.gameObject.CompareTag("ProjectileAttack"))
         {
-            StartCoroutine(Knockback());
-
             if (isDamagable)
+            {
                 StartCoroutine(TakeDamage(playerScript.gameManager.bossManager.bossAttackDamage, invulTime));
+                StartCoroutine(Knockback(false));
+            }
+            else
+                StartCoroutine(Knockback(true));
 
             if (collision.gameObject.CompareTag("ProjectileAttack"))
                 Destroy(collision.gameObject);

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class GarbombzoSamProjectile : MonoBehaviour
 {
-    [SerializeField] private Rigidbody2D rb = null;
+    public Rigidbody2D rb = null;
     [SerializeField] private float destroyTime = 0;
     [SerializeField] private float homingDuration = 0;
 
@@ -30,13 +30,14 @@ public class GarbombzoSamProjectile : MonoBehaviour
         {
             rb.velocity = Vector2.Lerp(rb.velocity, gameManagerScript.bossManager.playerPosition - (Vector2)transform.position, homingDuration * Time.deltaTime);
             rb.velocity = rb.velocity.normalized * 5;
+            gameManagerScript.bossManager.knockbackDirection = rb.velocity;
         }
     }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.tag == "Wall")
-            Destroy(gameObject);
+            Destroy(gameObject); 
     }
 
     public IEnumerator Shoot(Vector2 velocity)
