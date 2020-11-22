@@ -11,7 +11,8 @@ public class PlayerScript : MonoBehaviour
     public PlayerCollision playerCollision;
     public GameManager gameManager;
     public ZeeMana zeeMana;
-    public ZeeNewShield zeeShield;
+    public ZeeShield zeeShield;
+    public ZeePosture zeePosture;
     public Aiming aimingScript;
 
     [Header("Components")]

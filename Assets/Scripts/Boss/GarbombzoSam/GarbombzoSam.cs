@@ -13,7 +13,6 @@ public class GarbombzoSam : MonoBehaviour
     private int colliderPriority;
 
     [Header("Whirlwind Attack")]
-    [SerializeField] private GameObject whirlwindAttack = null;
     [SerializeField] private float whirlwindDamage = 0;
     [SerializeField] private float whirlwindKnockbackTime = 0;
     [SerializeField] private float whirlwindKnockbackForce = 0;
@@ -34,6 +33,7 @@ public class GarbombzoSam : MonoBehaviour
     [SerializeField] private float hammerKnockbackTime = 0;
     [SerializeField] private float hammerKnockbackForce = 0;
     [SerializeField] private float hammerReelTime = 0;
+    [SerializeField] private float hammerMaxAngle = 0;
     [SerializeField] private float hammerWaitForNextAttack = 0;
     private AttackChances hammerSwipe = new AttackChances(0.0f, "HammerSwipe");
 
@@ -79,19 +79,28 @@ public class GarbombzoSam : MonoBehaviour
 
     private void Update()
     {
+        print(angleAxis);
         //Hammer Lerping
         time += Time.deltaTime;
 
-        if (swingingHammer)
+        if (swingingHammer && (Mathf.Abs(angleAxis) < hammerMaxAngle))
         {
             angleAxis = 0;
             angleAxis = Mathf.Lerp(0, playerScript.angle + 5, time / lerpDuration);
             transform.rotation = Quaternion.AngleAxis(angleAxis, Vector3.forward);
         }
-        else
+        else if (!swingingHammer)
         {
-            angleAxis = Mathf.Lerp(playerScript.angle + 5, 0, time / reverseLerpDuration);
+            angleAxis = Mathf.Lerp(angleAxis, 0, time / reverseLerpDuration);
             transform.rotation = Quaternion.AngleAxis(angleAxis, Vector3.forward);
+        }
+
+        if (Mathf.Abs(angleAxis) >= hammerMaxAngle)
+        {
+            if (angleAxis < 0)
+                angleAxis = -hammerMaxAngle;
+            else
+                angleAxis = hammerMaxAngle;
         }
         //----------------------------------------------------------------------------
 
@@ -110,6 +119,7 @@ public class GarbombzoSam : MonoBehaviour
 
     private void PickAttack(AttackChances whirlwind, AttackChances bombThrow, AttackChances circleZones, AttackChances hammerSwipe)
     {
+        playerScript.playerCollision.alreadyHit = false;
         AttackChances[] chances = new AttackChances[] {whirlwind, bombThrow, circleZones, hammerSwipe};
         float runningChance = 0;
         float chance = Random.value;
@@ -135,13 +145,8 @@ public class GarbombzoSam : MonoBehaviour
         gameManager.bossManager.knockbackDirection = Vector2.zero;
         anim.SetBool("whirlwind", true);
 
-        yield return new WaitForSeconds(1.5f); //too long?
-
-        whirlwindAttack.SetActive(true);
-
         yield return new WaitForSeconds(whirlwindAttackLength);
 
-        whirlwindAttack.SetActive(false);
         anim.SetBool("whirlwind", false);
 
         yield return new WaitForSeconds(whirlwindWaitForNextAttack);
@@ -182,7 +187,7 @@ public class GarbombzoSam : MonoBehaviour
         anim.SetTrigger("hammer punch");
         gameManager.bossManager.knockbackDirection = new Vector2(Mathf.Cos((angleAxis - 90) * Mathf.Deg2Rad), Mathf.Sin((angleAxis - 90) * Mathf.Deg2Rad));
 
-        yield return new WaitForSeconds(.9f); //can be hit multiple times
+        yield return new WaitForSeconds(.9f);
 
         swingingHammer = false;
         time = 0;
