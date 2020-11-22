@@ -318,7 +318,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &203569650
 MonoBehaviour:
@@ -618,7 +618,7 @@ RectTransform:
   - {fileID: 1643066585}
   - {fileID: 553821501}
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -875,17 +875,23 @@ MonoBehaviour:
   whirlwindDamage: 15
   whirlwindKnockbackTime: 0.25
   whirlwindKnockbackForce: 3
+  whirlwindAttackLength: 3
+  whirlwindWaitForNextAttack: 0.75
   garbomzoSamProjectile: {fileID: 808040022032421048, guid: f13add5a31d790d45a5ae21032ba2c6e,
     type: 3}
   bombThrowDamage: 30
   bombThrowKnockbackTime: 0.25
   bombThrowKnockbackForce: 2
+  bombThrowWaitForNextAttack: 2
   hammerDamage: 20
   hammerKnockbackTime: 0.5
   hammerKnockbackForce: 5
+  hammerReelTime: 1.5
+  hammerWaitForNextAttack: 1
   circleZonesDamage: 0
   circleZonesKnockbackTime: 0
   circleZonesKnockbackForce: 0
+  circleZonesWaitForNextAttack: 0
   bossHealthBar: {fileID: 553821503}
   lerpDuration: 0.75
   reverseLerpDuration: 0.5
@@ -1148,7 +1154,7 @@ Transform:
   - {fileID: 2101087105}
   - {fileID: 1220900393}
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &776040772
 GameObject:
@@ -1897,6 +1903,7 @@ Transform:
   m_Children:
   - {fileID: 220747772}
   - {fileID: 366764922}
+  - {fileID: 1617071059}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2221,7 +2228,7 @@ MonoBehaviour:
   aimingScript: {fileID: 1683391878}
   rb: {fileID: 1485491581}
   anim: {fileID: 1485491582}
-  speed: 2
+  speed: 3
   currentHealth: 0
   maxHealth: 100
   healthBar: {fileID: 2136979311}
@@ -2244,7 +2251,7 @@ Transform:
   - {fileID: 862232256}
   - {fileID: 1683391877}
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1485491587
 MonoBehaviour:
@@ -2301,7 +2308,7 @@ MonoBehaviour:
     type: 3}
   cooldownTime: 0.5
   speed: 3
-  manaCost: 10
+  manaCost: 35
 --- !u!1 &1617071058
 GameObject:
   m_ObjectHideFlags: 0
@@ -2326,12 +2333,12 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1617071058}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2.6815, y: 1.288, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.8614999, y: -0.5164701, z: 34.872158}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_Father: {fileID: 1138672030}
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1617071060
 MonoBehaviour:
@@ -2892,7 +2899,7 @@ Transform:
   - {fileID: 395721056}
   - {fileID: 898218899}
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2101087102
 GameObject:

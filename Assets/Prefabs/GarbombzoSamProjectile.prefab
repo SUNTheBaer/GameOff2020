@@ -50,7 +50,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rb: {fileID: 808040022032421031}
   destroyTime: 2
-  homingDuration: 25
+  homingDuration: 35
 --- !u!114 &-5026225407243454825
 MonoBehaviour:
   m_ObjectHideFlags: 0
