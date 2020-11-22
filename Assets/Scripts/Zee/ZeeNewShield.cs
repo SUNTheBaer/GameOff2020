@@ -6,7 +6,7 @@ public class ZeeNewShield : MonoBehaviour
 {
     [SerializeField] private PlayerScript playerScript = null;
     [SerializeField] private GameManager gameManager = null;
-    [SerializeField] private GameObject shield;
+    [SerializeField] private GameObject shield = null;
 
     [SerializeField] private float blockInvincibility = 0;
     [SerializeField] private float manaGained = 0;
@@ -22,9 +22,7 @@ public class ZeeNewShield : MonoBehaviour
         {
             if (t < .10)
                 JustBlock();
-            else if (t < .25)
-                NormalBlock();
-            else
+            else if (t > 0.25f)
                 ChipBlock();
 
             StartCoroutine(GeneralBlock());
@@ -58,25 +56,19 @@ public class ZeeNewShield : MonoBehaviour
             chipBlocked = false; //Invul is handled via PlayerCollision for ChipBlock
         else
             playerScript.playerCollision.isDamagable = true;
+
+        playerScript.zeeMana.canDoMagic = true;
     }
 
     private void JustBlock()
     {
-        //Debug.LogWarning("just blocked");
-
         playerScript.currentMana += manaGained;
         playerScript.manaBar.SetCurrent(playerScript.currentMana);
-    }
-
-    private void NormalBlock()
-    {
-        //Debug.LogWarning("normal blocked");
     }
 
     private void ChipBlock()
     {
         chipBlocked = true;
-        //Debug.LogWarning("chip blocked");
         StartCoroutine(playerScript.playerCollision.TakeDamage(gameManager.bossManager.bossAttackDamage * chipBlockMultiplier, blockInvincibility));
     }
 
@@ -84,6 +76,7 @@ public class ZeeNewShield : MonoBehaviour
     {
         if (playerScript.currentMana > 0 && playerScript.zeeMana.canDoMagic)
         {
+            playerScript.zeeMana.canDoMagic = false;
             shield.SetActive(true);
             playerScript.inputManager.holdingShield = true;
             playerScript.playerCollision.isDamagable = false;

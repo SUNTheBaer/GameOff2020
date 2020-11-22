@@ -5,16 +5,12 @@ using UnityEngine.SceneManagement;
 
 public class PlayerCollision : MonoBehaviour
 {
-    public bool isDamagable = true;
-
     [SerializeField] private PlayerScript playerScript = null;
-    [SerializeField] private GameManager gameManager = null;
-    [SerializeField] private float invulTime = 0;
-    [SerializeField] private float knockbackDuration = 0;
-    private float t = 0;
-    private Vector2 startPos;
 
-    public bool knockback = false;
+    [HideInInspector] public bool isDamagable = true;
+    [SerializeField] private float invulTime = 0;
+    [SerializeField] private float shieldKnockbackMultiplier = 0;
+    [HideInInspector] public bool knockback = false;
 
 
     private void Start() 
@@ -26,39 +22,43 @@ public class PlayerCollision : MonoBehaviour
         //playerScript.audioSrc.volume = 0f;
     }
 
-    private void Update()
+    private IEnumerator Knockback(bool shieldOnHit)
     {
-        if (knockback)
-        {
-            print(startPos);
-            t += Time.deltaTime;
+        if (shieldOnHit)
+            playerScript.gameManager.bossManager.knockbackForce *= shieldKnockbackMultiplier;
 
-            gameObject.transform.position = Vector3.Lerp(gameObject.transform.position, startPos + new Vector2(0,-2), t / knockbackDuration);
-        }
-        if (t > 2)
-        {
-            knockback = false;
-            t = 0;
-        }
-    }
-    private void Knockback()
-    {
-        startPos = gameObject.transform.position;
         knockback = true;
+        yield return new WaitForSeconds(playerScript.gameManager.bossManager.knockbackTime);
+        knockback = false;
     }
+
     private void OnTriggerEnter2D(Collider2D collision) 
     {
-        if (collision.gameObject.CompareTag("BossAttack") && isDamagable)
+        if (collision.gameObject.CompareTag("BossAttack") || collision.gameObject.CompareTag("ProjectileAttack"))
         {
-            Knockback();
-            StartCoroutine(TakeDamage(gameManager.bossManager.bossAttackDamage, invulTime));
+            if (isDamagable)
+            {
+                StartCoroutine(TakeDamage(playerScript.gameManager.bossManager.bossAttackDamage, invulTime));
+                StartCoroutine(Knockback(false));
+            }
+            else
+                StartCoroutine(Knockback(true));
+
+            if (collision.gameObject.CompareTag("ProjectileAttack"))
+                Destroy(collision.gameObject);
+        }
+
+        /*if (collision.gameObject.CompareTag("BossAttack") && isDamagable)
+        {
+            StartCoroutine(Knockback());
+            StartCoroutine(TakeDamage(playerScript.gameManager.bossManager.bossAttackDamage, invulTime));
         }
         if (collision.gameObject.CompareTag("ProjectileAttack"))
         {
             if(isDamagable)
-                StartCoroutine(TakeDamage(gameManager.bossManager.bossAttackDamage, invulTime));
+                StartCoroutine(TakeDamage(playerScript.gameManager.bossManager.bossAttackDamage, invulTime));
             Destroy(collision.gameObject);
-        }
+        }*/
     }
 
     public IEnumerator TakeDamage(float damage, float invulTime)
@@ -77,9 +77,9 @@ public class PlayerCollision : MonoBehaviour
     
     private IEnumerator Perish()
     {
-        // playerScript.ChangeAnimationState("Death");
-      //  playerScript.audioSrc.volume = 0.25f;
-       // playerScript.audioSrc.Play();
+        //playerScript.ChangeAnimationState("Death");
+        //playerScript.audioSrc.volume = 0.25f;
+        //playerScript.audioSrc.Play();
         yield return new WaitForSeconds(1.5f);
         
         gameObject.SetActive(false); // Custom death

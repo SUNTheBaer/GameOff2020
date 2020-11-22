@@ -23,4 +23,7 @@ public class BossManager
     public Vector2 playerPosition;
     public Vector2 bossPosition;
     public Vector2 knockback;
+    public float knockbackTime;
+    public float knockbackForce;
+    public Vector2 knockbackDirection;
 }
