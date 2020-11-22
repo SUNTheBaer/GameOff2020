@@ -38,9 +38,9 @@ public class PlayerMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if(!playerScript.playerCollision.knockback)
+        if(!playerScript.playerCollision.knockback && !playerScript.zeePosture.brokenPosture)
             playerScript.rb.velocity = new Vector2(playerScript.inputManager.move.x, playerScript.inputManager.move.y) * playerScript.speed;
-        else
+        else if (playerScript.playerCollision.knockback)
             playerScript.rb.velocity = playerScript.gameManager.bossManager.knockbackDirection.normalized * playerScript.gameManager.bossManager.knockbackForce;
     }
 }

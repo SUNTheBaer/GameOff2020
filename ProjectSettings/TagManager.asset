@@ -58,6 +58,9 @@ TagManager:
   - name: Magic
     uniqueID: 2301075801
     locked: 0
+  - name: Boss
+    uniqueID: 1334199807
+    locked: 0
   - name: Cursor
     uniqueID: 2432919997
     locked: 0

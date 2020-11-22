@@ -5,7 +5,7 @@ using UnityEngine.InputSystem;
 
 public class InputManager : MonoBehaviour
 {
-    private Inputs inputs;
+    [HideInInspector] public Inputs inputs;
     [SerializeField] private PlayerScript playerScript = null;
     [HideInInspector] public Vector2 move;
     [HideInInspector] public bool onShoot;

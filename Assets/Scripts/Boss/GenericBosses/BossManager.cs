@@ -26,4 +26,5 @@ public class BossManager
     public float knockbackTime;
     public float knockbackForce;
     public Vector2 knockbackDirection;
+    public bool alreadyHit;
 }

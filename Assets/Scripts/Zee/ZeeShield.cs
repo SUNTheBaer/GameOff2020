@@ -5,75 +5,87 @@ using UnityEngine;
 public class ZeeShield : MonoBehaviour
 {
     [SerializeField] private PlayerScript playerScript = null;
+    [SerializeField] private GameManager gameManager = null;
+    [SerializeField] private GameObject shield = null;
+
     [SerializeField] private float blockInvincibility = 0;
+    public float manaCost = 0;
     [SerializeField] private float manaGained = 0;
-    [SerializeField] private float manaCost = 0;
-
-    public IEnumerator coroutine;
-    public int blockPhase = 0;
-
-    private void Update()
-    {
-        print(blockPhase);
-    }
+    [SerializeField] private float chipBlockMultiplier = 0;
+    private bool chipBlocked = false;
+    
+    private float t;
+    private float shieldHoldDelay = 0;
+    
+    [HideInInspector] public bool successfulBlock = false;
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.tag == "BossAttack" && blockPhase > 0)
+        if ((other.tag == "ProjectileAttack" || other.tag == "BossAttack") && playerScript.inputManager.holdingShield)
         {
-            if (blockPhase == 1)
+            if (t < .10)
                 JustBlock();
-            else if (blockPhase == 2)
-                NormalBlock();
-            else if (blockPhase == 3)
+            else if (t > 0.25f)
                 ChipBlock();
 
             StartCoroutine(GeneralBlock());
         }
     }
 
-    public IEnumerator StartShieldCoroutine()
+    private void Update()
     {
-        print("start shield coroutine");
-        playerScript.playerCollision.isDamagable = false;
-        playerScript.currentMana -= manaCost;
-        playerScript.manaBar.SetCurrent(playerScript.currentMana);
+        if (playerScript.inputManager.holdingShield)
+            t += Time.deltaTime;
+        else
+            t = 0;
         
-        blockPhase = 1;
-        yield return new WaitForSeconds(1.0f);
-        if (blockPhase == 0)
-            yield break;
-        blockPhase = 2;
-        yield return new WaitForSeconds(1.0f);
-        if (blockPhase == 0)
-            yield break;
-        blockPhase = 3;
-        yield return new WaitUntil(() => blockPhase == 0);
+        if (!playerScript.inputManager.holdingShield)
+        {
+            shieldHoldDelay += Time.deltaTime;
+            if(shieldHoldDelay > .20)
+            {
+                shield.SetActive(false);
+                playerScript.playerCollision.isDamagable = true;
+                shieldHoldDelay = 0;
+            }
+        }
     }
 
     private IEnumerator GeneralBlock()
     {
-        print("start general block");
-        StopCoroutine(coroutine);
-        blockPhase = 0;
+        successfulBlock = true;
+        playerScript.inputManager.holdingShield = false;
         yield return new WaitForSeconds(blockInvincibility);
-        playerScript.playerCollision.isDamagable = true;
+        if (chipBlocked)
+            chipBlocked = false; //Invul is handled via PlayerCollision for ChipBlock
+        else
+            playerScript.playerCollision.isDamagable = true;
+
+        playerScript.zeeMana.canDoMagic = true;
     }
 
     private void JustBlock()
     {
-        print("start just block");
         playerScript.currentMana += manaGained;
         playerScript.manaBar.SetCurrent(playerScript.currentMana);
     }
 
-    private void NormalBlock()
-    {
-        print("start normal block");
-    }
-
     private void ChipBlock()
     {
-        print("start chip block");
+        chipBlocked = true;
+        StartCoroutine(playerScript.playerCollision.TakeDamage(gameManager.bossManager.bossAttackDamage * chipBlockMultiplier, blockInvincibility));
+    }
+
+    public void StartShield()
+    {
+        if (playerScript.currentMana > 0 && playerScript.zeeMana.canDoMagic)
+        {
+            playerScript.zeeMana.canDoMagic = false;
+            shield.SetActive(true);
+            playerScript.inputManager.holdingShield = true;
+            playerScript.playerCollision.isDamagable = false;
+            playerScript.currentMana -= playerScript.zeeShield.manaCost;
+            playerScript.manaBar.SetCurrent(playerScript.currentMana);
+        }
     }
 }
