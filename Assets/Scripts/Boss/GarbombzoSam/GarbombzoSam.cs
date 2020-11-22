@@ -89,7 +89,6 @@ public class GarbombzoSam : MonoBehaviour
 
     private void Update()
     {
-        print(angleAxis);
         //Hammer Lerping
         time += Time.deltaTime;
 
@@ -117,6 +116,7 @@ public class GarbombzoSam : MonoBehaviour
         if (trackingBombActive)
         {
             trackingBombIndicator.transform.position = player.transform.position;
+        }
         //----------------------------------------------------------------------------
 
         gameManager.bossManager.bossPosition = transform.position;
