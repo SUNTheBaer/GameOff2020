@@ -95,6 +95,9 @@ public class GarbombzoSam : MonoBehaviour
         }
         //----------------------------------------------------------------------------
 
+        gameManager.bossManager.bossPosition = transform.position;
+        gameManager.bossManager.playerPosition = player.transform.position;
+
         whirlwind.chance = garbombzoSam.attackChances[0];
         bombThrow.chance = garbombzoSam.attackChances[1];
         circleZones.chance = garbombzoSam.attackChances[2];
