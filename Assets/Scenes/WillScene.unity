@@ -840,8 +840,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 1334199807
+  m_SortingLayer: 3
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 89844cddf6c29364c8119bcb2baef109, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -871,22 +871,22 @@ MonoBehaviour:
   garbombzoSam: {fileID: 11400000, guid: 882492277770c8a488c0f9cdba1db50f, type: 2}
   anim: {fileID: 395721058}
   player: {fileID: 1485491578}
-  whirlwindAttack: {fileID: 2141452992}
   whirlwindDamage: 15
   whirlwindKnockbackTime: 0.25
-  whirlwindKnockbackForce: 3
-  whirlwindAttackLength: 3
+  whirlwindKnockbackForce: 5
+  whirlwindAttackLength: 2
   whirlwindWaitForNextAttack: 0.75
   garbomzoSamProjectile: {fileID: 808040022032421048, guid: f13add5a31d790d45a5ae21032ba2c6e,
     type: 3}
   bombThrowDamage: 30
   bombThrowKnockbackTime: 0.25
   bombThrowKnockbackForce: 2
-  bombThrowWaitForNextAttack: 2
+  bombThrowWaitForNextAttack: 1.5
   hammerDamage: 20
-  hammerKnockbackTime: 0.5
-  hammerKnockbackForce: 5
+  hammerKnockbackTime: 0.1
+  hammerKnockbackForce: 25
   hammerReelTime: 1.5
+  hammerMaxAngle: 75
   hammerWaitForNextAttack: 1
   circleZonesDamage: 0
   circleZonesKnockbackTime: 0
@@ -2049,6 +2049,7 @@ GameObject:
   - component: {fileID: 1485491583}
   - component: {fileID: 1485491589}
   - component: {fileID: 1485491587}
+  - component: {fileID: 1485491590}
   - component: {fileID: 1485491580}
   - component: {fileID: 1485491581}
   - component: {fileID: 1485491582}
@@ -2155,7 +2156,7 @@ Rigidbody2D:
   m_Material: {fileID: 0}
   m_Interpolate: 1
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 4
 --- !u!95 &1485491582
 Animator:
@@ -2193,6 +2194,7 @@ MonoBehaviour:
   invulTime: 0.2
   shieldKnockbackMultiplier: 0.6
   knockback: 0
+  alreadyHit: 0
 --- !u!114 &1485491584
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2225,6 +2227,7 @@ MonoBehaviour:
   gameManager: {fileID: 203569650}
   zeeMana: {fileID: 1485491588}
   zeeShield: {fileID: 1485491587}
+  zeePosture: {fileID: 1485491590}
   aimingScript: {fileID: 1683391878}
   rb: {fileID: 1485491581}
   anim: {fileID: 1485491582}
@@ -2269,9 +2272,10 @@ MonoBehaviour:
   gameManager: {fileID: 203569650}
   shield: {fileID: 862232255}
   blockInvincibility: 1
+  manaCost: 20
   manaGained: 20
   chipBlockMultiplier: 0.5
-  manaCost: 20
+  successfulBlock: 0
 --- !u!114 &1485491588
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2309,6 +2313,26 @@ MonoBehaviour:
   cooldownTime: 0.5
   speed: 3
   manaCost: 35
+--- !u!114 &1485491590
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1485491578}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c44aea9b76f902440a2d6763e737597c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerScript: {fileID: 1485491585}
+  postureRegenRate: 1
+  postureCostOnBlock: 1
+  initialRegen: 3
+  fastRegen: 0.5
+  maxPosture: 5
+  postureBreakTime: 2
+  brokenPosture: 0
 --- !u!1 &1617071058
 GameObject:
   m_ObjectHideFlags: 0
@@ -2550,7 +2574,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1862047299
-  m_SortingLayer: 3
+  m_SortingLayer: 4
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 6c1effc944a25604389925041bbc00b4, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -3124,6 +3148,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2141452993}
+  - component: {fileID: 2141452995}
   - component: {fileID: 2141452994}
   m_Layer: 0
   m_Name: Whirlwind
@@ -3162,3 +3187,17 @@ CapsuleCollider2D:
   m_Offset: {x: 0.0069821747, y: -0.059437156}
   m_Size: {x: 1.3631325, y: 1.0122695}
   m_Direction: 1
+--- !u!114 &2141452995
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2141452992}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ef7463795e292c349afd4b3bba01d7cc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameManager: {fileID: 203569650}
+  player: {fileID: 1485491578}

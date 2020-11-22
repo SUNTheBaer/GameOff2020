@@ -11,6 +11,7 @@ public class PlayerCollision : MonoBehaviour
     [SerializeField] private float invulTime = 0;
     [SerializeField] private float shieldKnockbackMultiplier = 0;
     [HideInInspector] public bool knockback = false;
+    public bool alreadyHit = false;
 
 
     private void Start() 
@@ -34,8 +35,10 @@ public class PlayerCollision : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision) 
     {
-        if (collision.gameObject.CompareTag("BossAttack") || collision.gameObject.CompareTag("ProjectileAttack"))
+        if ((collision.gameObject.CompareTag("BossAttack") || collision.gameObject.CompareTag("ProjectileAttack")) && !alreadyHit)
         {
+            alreadyHit = true;
+            
             if (isDamagable)
             {
                 StartCoroutine(TakeDamage(playerScript.gameManager.bossManager.bossAttackDamage, invulTime));
@@ -47,18 +50,6 @@ public class PlayerCollision : MonoBehaviour
             if (collision.gameObject.CompareTag("ProjectileAttack"))
                 Destroy(collision.gameObject);
         }
-
-        /*if (collision.gameObject.CompareTag("BossAttack") && isDamagable)
-        {
-            StartCoroutine(Knockback());
-            StartCoroutine(TakeDamage(playerScript.gameManager.bossManager.bossAttackDamage, invulTime));
-        }
-        if (collision.gameObject.CompareTag("ProjectileAttack"))
-        {
-            if(isDamagable)
-                StartCoroutine(TakeDamage(playerScript.gameManager.bossManager.bossAttackDamage, invulTime));
-            Destroy(collision.gameObject);
-        }*/
     }
 
     public IEnumerator TakeDamage(float damage, float invulTime)

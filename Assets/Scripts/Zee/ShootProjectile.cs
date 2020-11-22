@@ -19,7 +19,8 @@ public class ShootProjectile : MonoBehaviour
 
     void Update()
     {
-        if (playerScript.inputManager.onShoot && !isShooting && playerScript.currentMana > 0 && playerScript.zeeMana.canDoMagic)
+        if (playerScript.inputManager.onShoot && !isShooting && (playerScript.currentMana > 0) && playerScript.zeeMana.canDoMagic && 
+            !playerScript.zeePosture.brokenPosture)
             StartCoroutine(OnShoot());
     }
 
