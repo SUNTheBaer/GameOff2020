@@ -5,4 +5,5 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     public BossManager bossManager = new BossManager();
+    public SoundManager soundManager;
 }

@@ -7,6 +7,7 @@ public class PlayerMovement : MonoBehaviour
 {
     [SerializeField] private PlayerScript playerScript = null;
     [SerializeField] private SpriteRenderer spriteRenderer = null;
+    private bool canWalk = true;
     private float angle;
 
     private void Update()
@@ -34,13 +35,51 @@ public class PlayerMovement : MonoBehaviour
             spriteRenderer.flipX = true;
         
         //--------------------------------------------------------
+
+        if (!playerScript.playerCollision.knockback && !playerScript.zeePosture.brokenPosture)
+            canWalk = true;
+        else
+            canWalk = false;
+
+        /*
+            if canWalk and startWalking
+                palyclip
+            if playing and !canwalk
+                stopclip
+            if stopwalking
+                sotpclip
+            if !canwalk and startwlaking
+                waituntilcanwalk
+        */
+
+        /*
+            if canPlay and startClip
+                Play()
+                startClip = false
+                canPlay = false
+            if stopClip
+                Stop()
+                canPlay = true
+                stopClip = false;
+        */
     }
 
     private void FixedUpdate()
     {
-        if(!playerScript.playerCollision.knockback && !playerScript.zeePosture.brokenPosture)
+        if(canWalk)
             playerScript.rb.velocity = new Vector2(playerScript.inputManager.move.x, playerScript.inputManager.move.y) * playerScript.speed;
         else if (playerScript.playerCollision.knockback)
             playerScript.rb.velocity = playerScript.gameManager.bossManager.knockbackDirection.normalized * playerScript.gameManager.bossManager.knockbackForce;
     }
+
+    /*public void StartWalk()
+    {
+        if (canWalk)
+            playerScript.gameManager.soundManager.Play("Walk");
+    }
+
+    public void StopWalk()
+    {
+        playerScript.gameManager.soundManager.Stop("Walk");
+    }*/
 }

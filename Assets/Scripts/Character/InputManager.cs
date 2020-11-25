@@ -18,8 +18,10 @@ public class InputManager : MonoBehaviour
     {
         inputs = new Inputs();
 
+        //inputs.Player.Movement.started += context => playerScript.playerMovement.StartWalk();
         inputs.Player.Movement.performed += context => move = context.ReadValue<Vector2>();
         inputs.Player.Movement.canceled += context => move = Vector2.zero;
+        //inputs.Player.Movement.canceled += context => playerScript.playerMovement.StopWalk();
 
         inputs.Player.Shield.started += context => playerScript.zeeShield.StartShield();
         inputs.Player.Shield.canceled += context => holdingShield = false;

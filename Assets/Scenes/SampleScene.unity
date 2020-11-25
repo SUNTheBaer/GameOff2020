@@ -207,6 +207,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerScript: {fileID: 223611186}
+  spriteRenderer: {fileID: 0}
 --- !u!4 &223611181
 Transform:
   m_ObjectHideFlags: 0
@@ -300,6 +301,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerScript: {fileID: 223611186}
+  isDamagable: 1
+  invulTime: 0
+  shieldKnockbackMultiplier: 0
+  knockback: 0
+  alreadyHit: 0
 --- !u!114 &223611186
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -315,11 +321,22 @@ MonoBehaviour:
   inputManager: {fileID: 1780451585}
   playerMovement: {fileID: 223611180}
   playerCollision: {fileID: 223611185}
+  gameManager: {fileID: 0}
+  zeeMana: {fileID: 0}
+  zeeShield: {fileID: 0}
+  zeePosture: {fileID: 0}
+  aimingScript: {fileID: 0}
   rb: {fileID: 0}
-  spriteRenderer: {fileID: 0}
+  anim: {fileID: 0}
   speed: 2
-  isIdle: 0
-  isMovingRight: 0
+  currentHealth: 0
+  maxHealth: 100
+  healthBar: {fileID: 0}
+  currentMana: 0
+  maxMana: 0
+  manaBar: {fileID: 0}
+  aimIndicator: {fileID: 0}
+  angle: 0
 --- !u!1 &253015021
 GameObject:
   m_ObjectHideFlags: 3
@@ -467,7 +484,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 339161005}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.8510002, y: -1.8044701, z: 24.872158}
+  m_LocalPosition: {x: 0.85099995, y: -1.8044701, z: 24.872158}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 253015022}
@@ -586,7 +603,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 519420028}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.8510002, y: -1.8044701, z: 24.872158}
+  m_LocalPosition: {x: 0.85099995, y: -1.8044701, z: 24.872158}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1410651481}
@@ -653,7 +670,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 229f5a098cf2ade42aea1d336ffe826d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerScript: {fileID: 0}
   move: {x: 0, y: 0}
+  onShoot: 0
+  mouseAimPosition: {x: 0, y: 0}
+  padAimPosition: {x: 0, y: 0}
+  onController: 0
+  holdingShield: 0
 --- !u!4 &1780451586
 Transform:
   m_ObjectHideFlags: 0

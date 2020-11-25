@@ -220,6 +220,7 @@ MonoBehaviour:
   gameManager: {fileID: 6740265613968759246}
   zeeMana: {fileID: 6740265613103181240}
   zeeShield: {fileID: 6740265613103181247}
+  zeePosture: {fileID: 0}
   aimingScript: {fileID: 6740265613292725690}
   rb: {fileID: 6740265613103181121}
   anim: {fileID: 6740265613103181122}
@@ -263,6 +264,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerScript: {fileID: 6740265613103181245}
   spriteRenderer: {fileID: 6740265613103181127}
+  walkClip: {fileID: 0}
 --- !u!114 &6740265613103181123
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -280,6 +282,7 @@ MonoBehaviour:
   invulTime: 0.2
   shieldKnockbackMultiplier: 0.6
   knockback: 0
+  alreadyHit: 0
 --- !u!114 &6740265613103181241
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -316,9 +319,10 @@ MonoBehaviour:
   gameManager: {fileID: 6740265613968759246}
   shield: {fileID: 6740265614619049603}
   blockInvincibility: 1
+  manaCost: 20
   manaGained: 20
   chipBlockMultiplier: 0.5
-  manaCost: 20
+  successfulBlock: 0
 --- !u!61 &6740265613103181120
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -660,7 +664,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1862047299
-  m_SortingLayer: 3
+  m_SortingLayer: 4
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 6c1effc944a25604389925041bbc00b4, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -1248,6 +1252,7 @@ GameObject:
   - component: {fileID: 6740265613968759245}
   - component: {fileID: 6740265613968759244}
   - component: {fileID: 6740265613968759246}
+  - component: {fileID: 2364094770272999266}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: GameManager
@@ -1300,6 +1305,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c774c6fbd320d684bbfa99ec283ad9db, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &2364094770272999266
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6740265613968759251}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c43f968c2fd859349a5f3eff538767f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  universalSounds: []
+  levelSounds: {fileID: 0}
 --- !u!1 &6740265613985920967
 GameObject:
   m_ObjectHideFlags: 0

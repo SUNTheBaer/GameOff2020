@@ -26,7 +26,7 @@ public class GarbombzoSam : MonoBehaviour
     [SerializeField] private float bombThrowKnockbackTime = 0;
     [SerializeField] private float bombThrowKnockbackForce = 0;
     [SerializeField] private float bombThrowWaitForNextAttack = 0;
-    private AttackChances bombThrow = new AttackChances(0.8f, "BombThrow");
+    private AttackChances bombThrow = new AttackChances(1.0f, "BombThrow");
 
     [Header("Hammer Attack")]
     [SerializeField] private float hammerDamage = 0;
@@ -37,22 +37,22 @@ public class GarbombzoSam : MonoBehaviour
     [SerializeField] private float hammerWaitForNextAttack = 0;
     private AttackChances hammerSwipe = new AttackChances(0.0f, "HammerSwipe");
 
-    [Header("Circle Zones Attack")]
-    [SerializeField] private float circleZonesDamage = 0;
-    [SerializeField] private float circleZonesKnockbackTime = 0;
-    [SerializeField] private float circleZonesKnockbackForce = 0;
-    [SerializeField] private float circleZonesWaitForNextAttack = 0;
-    private AttackChances circleZones = new AttackChances(0.2f, "CircleZones");
+    [Header("Sit Down Attack")]
+    [SerializeField] private float sitDownDamage = 0;
+    [SerializeField] private float sitDownKnockbackTime = 0;
+    [SerializeField] private float sitDownKnockbackForce = 0;
+    [SerializeField] private float sitDownWaitForNextAttack = 0;
+    private AttackChances sitDown = new AttackChances(0.0f, "SitDown");
 
     [Header("Tracking Bomb Attack")]
     [SerializeField] private GameObject trackingBombIndicator = null;
+    [SerializeField] private CapsuleCollider2D trackingBombCollider = null;
     [SerializeField] private float trackingBombAttackDamage = 0;
     [SerializeField] private float trackingBombAttackKnockbackTime = 0;
     [SerializeField] private float trackingBombAttackKnockbackForce = 0;
     [SerializeField] private float trackingBombAttackWaitForNextAttack = 0;
-    private AttackChances trackingBombAttack = new AttackChances(1.0f, "TrackingBombAttack");
+    private AttackChances trackingBombAttack = new AttackChances(0.0f, "TrackingBombAttack");
     private bool trackingBombActive = false;
-    private Collider2D trackingBombCollider;
 
     [Header("Health")]
     [SerializeField] private Bar bossHealthBar = null;
@@ -72,7 +72,7 @@ public class GarbombzoSam : MonoBehaviour
 
         gameManager.bossManager.playerAttackDamage = 20;
 
-        PickAttack(whirlwind, bombThrow, circleZones, hammerSwipe, trackingBombAttack);
+        PickAttack(whirlwind, bombThrow, sitDown, hammerSwipe, trackingBombAttack);
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -91,8 +91,7 @@ public class GarbombzoSam : MonoBehaviour
     {
         //Hammer Lerping
         time += Time.deltaTime;
-
-        if (swingingHammer && (Mathf.Abs(angleAxis) < hammerMaxAngle))
+        if (swingingHammer && (Mathf.Abs(playerScript.angle + 5) < hammerMaxAngle))
         {
             angleAxis = 0;
             angleAxis = Mathf.Lerp(0, playerScript.angle + 5, time / lerpDuration);
@@ -103,8 +102,7 @@ public class GarbombzoSam : MonoBehaviour
             angleAxis = Mathf.Lerp(angleAxis, 0, time / reverseLerpDuration);
             transform.rotation = Quaternion.AngleAxis(angleAxis, Vector3.forward);
         }
-
-        if (Mathf.Abs(angleAxis) >= hammerMaxAngle)
+        else if (Mathf.Abs(playerScript.angle + 5) >= hammerMaxAngle)
         {
             if (angleAxis < 0)
                 angleAxis = -hammerMaxAngle;
@@ -119,12 +117,14 @@ public class GarbombzoSam : MonoBehaviour
         }
         //----------------------------------------------------------------------------
 
+
+
         gameManager.bossManager.bossPosition = transform.position;
         gameManager.bossManager.playerPosition = player.transform.position;
 
         whirlwind.chance = garbombzoSam.attackChances[0];
         bombThrow.chance = garbombzoSam.attackChances[1];
-        circleZones.chance = garbombzoSam.attackChances[2];
+        sitDown.chance = garbombzoSam.attackChances[2];
         hammerSwipe.chance = garbombzoSam.attackChances[3];
         trackingBombAttack.chance = garbombzoSam.attackChances[4];
         colliderPriority = garbombzoSam.colliderPriority;
@@ -133,9 +133,10 @@ public class GarbombzoSam : MonoBehaviour
             StartCoroutine(TakeDamage());
     }
 
-    private void PickAttack(AttackChances whirlwind, AttackChances bombThrow, AttackChances circleZones, AttackChances hammerSwipe, AttackChances trackingBombAttack)
+    private void PickAttack(AttackChances whirlwind, AttackChances bombThrow, AttackChances sitDown, AttackChances hammerSwipe, AttackChances trackingBombAttack)
     {
-        AttackChances[] chances = new AttackChances[] {whirlwind, bombThrow, circleZones, hammerSwipe, trackingBombAttack};
+        playerScript.playerCollision.alreadyHit = false;
+        AttackChances[] chances = new AttackChances[] {whirlwind, bombThrow, sitDown, hammerSwipe, trackingBombAttack};
         float runningChance = 0;
         float chance = Random.value;
 
@@ -166,7 +167,7 @@ public class GarbombzoSam : MonoBehaviour
 
         yield return new WaitForSeconds(whirlwindWaitForNextAttack);
 
-        PickAttack(whirlwind, bombThrow, circleZones, hammerSwipe, trackingBombAttack);
+        PickAttack(whirlwind, bombThrow, sitDown, hammerSwipe, trackingBombAttack);
     }
 
     private IEnumerator BombThrow()
@@ -185,7 +186,7 @@ public class GarbombzoSam : MonoBehaviour
 
         yield return new WaitForSeconds(bombThrowWaitForNextAttack);
 
-        PickAttack(whirlwind, bombThrow, circleZones, hammerSwipe, trackingBombAttack);
+        PickAttack(whirlwind, bombThrow, sitDown, hammerSwipe, trackingBombAttack);
     }
 
     private IEnumerator HammerSwipe()
@@ -197,33 +198,41 @@ public class GarbombzoSam : MonoBehaviour
         gameManager.bossManager.knockbackForce = hammerKnockbackForce;
         anim.SetTrigger("hammer reel");
 
-        yield return new WaitForSeconds(hammerReelTime);
+        yield return new WaitForSeconds(hammerReelTime); //Initial hit wait time
         
         anim.SetTrigger("hammer punch");
         gameManager.bossManager.knockbackDirection = new Vector2(Mathf.Cos((angleAxis - 90) * Mathf.Deg2Rad), Mathf.Sin((angleAxis - 90) * Mathf.Deg2Rad));
 
-        yield return new WaitForSeconds(.9f);
+        yield return new WaitForSeconds(.833f); //Length of punch anim
 
-        swingingHammer = false;
+        anim.SetTrigger("hammer reel");
+        playerScript.playerCollision.alreadyHit = false;
+
+        yield return new WaitForSeconds(.333f); //Speed up second hit
+        
+        anim.SetTrigger("hammer punch");
+        gameManager.bossManager.knockbackDirection = new Vector2(Mathf.Cos((angleAxis - 90) * Mathf.Deg2Rad), Mathf.Sin((angleAxis - 90) * Mathf.Deg2Rad));
+
+        yield return new WaitForSeconds(.833f); //Length of punch anim
+
         time = 0;
+        swingingHammer = false;
 
         yield return new WaitForSeconds(hammerWaitForNextAttack);
 
-        //Add multiple hits?
-
-        PickAttack(whirlwind, bombThrow, circleZones, hammerSwipe, trackingBombAttack);
+        PickAttack(whirlwind, bombThrow, sitDown, hammerSwipe, trackingBombAttack);
     }
 
-    private IEnumerator CircleZones()
+    private IEnumerator SitDown()
     {
-        gameManager.bossManager.bossAttackDamage = circleZonesDamage;
-        gameManager.bossManager.knockbackTime = circleZonesKnockbackTime;
-        gameManager.bossManager.knockbackForce = circleZonesKnockbackForce;
+        gameManager.bossManager.bossAttackDamage = sitDownDamage;
+        gameManager.bossManager.knockbackTime = sitDownKnockbackTime;
+        gameManager.bossManager.knockbackForce = sitDownKnockbackForce;
         gameManager.bossManager.knockbackDirection = Vector2.zero;
 
         yield return null;
 
-        PickAttack(whirlwind, bombThrow, circleZones, hammerSwipe, trackingBombAttack);
+        PickAttack(whirlwind, bombThrow, sitDown, hammerSwipe, trackingBombAttack);
     }
 
     private IEnumerator TrackingBombAttack()
@@ -238,8 +247,6 @@ public class GarbombzoSam : MonoBehaviour
         // 2 seconds of shadow tracking player
         trackingBombActive = true;
         trackingBombIndicator.SetActive(true);
-        trackingBombCollider = trackingBombIndicator.GetComponent<Collider2D>();
-        trackingBombCollider.enabled = false;
 
         yield return new WaitForSeconds(2.0f);
 
@@ -250,13 +257,19 @@ public class GarbombzoSam : MonoBehaviour
 
         // Bomb landing Boom - beeg damages and knockback!!! (Activate collider)
         trackingBombCollider.enabled = true;
-        gameManager.bossManager.knockbackDirection = (Vector2)(player.transform.position - trackingBombIndicator.transform.position);
+        if ((Vector2)(player.transform.position - trackingBombIndicator.transform.position) != Vector2.zero)
+            gameManager.bossManager.knockbackDirection = (Vector2)(player.transform.position - trackingBombIndicator.transform.position);
+        else
+            gameManager.bossManager.knockbackDirection = Vector2.down;
 
         yield return new WaitForSeconds(0.35f); // Amount of bomb exploding time (make variable?)
-        trackingBombActive = false;
-        trackingBombIndicator.SetActive(false);
 
-        PickAttack(whirlwind, bombThrow, circleZones, hammerSwipe, trackingBombAttack);
+        trackingBombIndicator.SetActive(false);
+        trackingBombCollider.enabled = false;
+
+        yield return new WaitForSeconds(trackingBombAttackWaitForNextAttack);
+
+        PickAttack(whirlwind, bombThrow, sitDown, hammerSwipe, trackingBombAttack);
     }
     // ------------------------------------------------------------------
 
