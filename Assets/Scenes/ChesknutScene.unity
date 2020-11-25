@@ -1093,7 +1093,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1862047299
-  m_SortingLayer: 3
+  m_SortingLayer: 4
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 6c1effc944a25604389925041bbc00b4, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -1485,6 +1485,7 @@ GameObject:
   - component: {fileID: 964940491}
   - component: {fileID: 964940495}
   - component: {fileID: 964940489}
+  - component: {fileID: 964940496}
   - component: {fileID: 964940494}
   - component: {fileID: 964940488}
   - component: {fileID: 964940487}
@@ -1514,6 +1515,7 @@ MonoBehaviour:
   gameManager: {fileID: 1293956888}
   zeeMana: {fileID: 964940490}
   zeeShield: {fileID: 964940489}
+  zeePosture: {fileID: 964940496}
   aimingScript: {fileID: 789336402}
   rb: {fileID: 964940488}
   anim: {fileID: 964940487}
@@ -1598,9 +1600,10 @@ MonoBehaviour:
   gameManager: {fileID: 1293956888}
   shield: {fileID: 884454821}
   blockInvincibility: 1
+  manaCost: 20
   manaGained: 20
   chipBlockMultiplier: 0.5
-  manaCost: 20
+  successfulBlock: 0
 --- !u!114 &964940490
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1635,6 +1638,7 @@ MonoBehaviour:
   invulTime: 0.2
   shieldKnockbackMultiplier: 0.6
   knockback: 0
+  alreadyHit: 0
 --- !u!114 &964940492
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1745,6 +1749,26 @@ MonoBehaviour:
   cooldownTime: 0.5
   speed: 3
   manaCost: 35
+--- !u!114 &964940496
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 964940484}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c44aea9b76f902440a2d6763e737597c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerScript: {fileID: 964940485}
+  postureRegenRate: 1
+  postureCostOnBlock: 1
+  initialRegen: 4
+  fastRegen: 0.5
+  maxPosture: 5
+  postureBreakTime: 2
+  brokenPosture: 0
 --- !u!1 &1055192129
 GameObject:
   m_ObjectHideFlags: 0
@@ -3259,7 +3283,6 @@ MonoBehaviour:
   garbombzoSam: {fileID: 11400000, guid: 882492277770c8a488c0f9cdba1db50f, type: 2}
   anim: {fileID: 1985782490}
   player: {fileID: 964940484}
-  whirlwindAttack: {fileID: 662006514}
   whirlwindDamage: 15
   whirlwindKnockbackTime: 0.25
   whirlwindKnockbackForce: 3
@@ -3275,6 +3298,7 @@ MonoBehaviour:
   hammerKnockbackTime: 0.5
   hammerKnockbackForce: 5
   hammerReelTime: 1.5
+  hammerMaxAngle: 0
   hammerWaitForNextAttack: 1
   circleZonesDamage: 0
   circleZonesKnockbackTime: 0
