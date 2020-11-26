@@ -7,7 +7,11 @@ public class PlayerMovement : MonoBehaviour
 {
     [SerializeField] private PlayerScript playerScript = null;
     [SerializeField] private SpriteRenderer spriteRenderer = null;
+    [HideInInspector] public bool startWalking = false;
+    [HideInInspector] public bool stopWalking = false;
     private bool canWalk = true;
+    private bool playingClip = false;
+    private bool isTryingToWalk = false;
     private float angle;
 
     private void Update()
@@ -36,32 +40,46 @@ public class PlayerMovement : MonoBehaviour
         
         //--------------------------------------------------------
 
+        //Walking logic
         if (!playerScript.playerCollision.knockback && !playerScript.zeePosture.brokenPosture)
             canWalk = true;
         else
             canWalk = false;
 
-        /*
-            if canWalk and startWalking
-                palyclip
-            if playing and !canwalk
-                stopclip
-            if stopwalking
-                sotpclip
-            if !canwalk and startwlaking
-                waituntilcanwalk
-        */
+        if (startWalking)
+            isTryingToWalk = true;
+        if (stopWalking)
+            isTryingToWalk = false;
+        //------------------------------------------------------------------------------------------
 
-        /*
-            if canPlay and startClip
-                Play()
-                startClip = false
-                canPlay = false
-            if stopClip
-                Stop()
-                canPlay = true
-                stopClip = false;
-        */
+        //Sound logic
+        if (canWalk && startWalking) //Normal walk
+        {
+            startWalking = false;
+            playingClip = true;
+            playerScript.gameManager.soundManager.Play("Walk");
+        }
+        else if (stopWalking) //Stopped walk
+        {
+            stopWalking = false;
+            playingClip = false;
+            playerScript.gameManager.soundManager.Stop("Walk");
+        }
+        else if (!canWalk && startWalking) //Attempt walking while can't
+        {
+            StartCoroutine(WaitUntilCanWalk());
+        }
+        else if (playingClip && !canWalk) //Interrupted walk
+        {
+            playingClip = false;
+            playerScript.gameManager.soundManager.Stop("Walk");
+        }
+        else if (!playingClip && canWalk && isTryingToWalk) //Normal walk into interrupt into still holding button
+        {
+            playingClip = true;
+            playerScript.gameManager.soundManager.Play("Walk");
+        }
+        //-----------------------------------------------------------------------------------------------------------
     }
 
     private void FixedUpdate()
@@ -72,14 +90,9 @@ public class PlayerMovement : MonoBehaviour
             playerScript.rb.velocity = playerScript.gameManager.bossManager.knockbackDirection.normalized * playerScript.gameManager.bossManager.knockbackForce;
     }
 
-    /*public void StartWalk()
+    private IEnumerator WaitUntilCanWalk()
     {
-        if (canWalk)
-            playerScript.gameManager.soundManager.Play("Walk");
+        yield return new WaitUntil(() => canWalk == true);
+        playerScript.gameManager.soundManager.Play("Walk");
     }
-
-    public void StopWalk()
-    {
-        playerScript.gameManager.soundManager.Stop("Walk");
-    }*/
 }
