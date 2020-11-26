@@ -334,6 +334,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c774c6fbd320d684bbfa99ec283ad9db, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  soundManager: {fileID: 203569651}
 --- !u!114 &203569651
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -349,9 +350,9 @@ MonoBehaviour:
   universalSounds:
   - name: Walk
     clip: {fileID: 8300000, guid: 169ae9c1da18487458cbe22136f944aa, type: 3}
-    volume: 0.5
-    pitch: 0
-    loop: 0
+    volume: 0.1
+    pitch: 1.7
+    loop: 1
     source: {fileID: 0}
   levelSounds: {fileID: 11400000, guid: e9145b297e8b4f74891a51d2c245dbe8, type: 2}
 --- !u!1 &220747771
@@ -2426,7 +2427,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerScript: {fileID: 1485491585}
   spriteRenderer: {fileID: 1485491579}
-  walkClip: {fileID: 0}
+  startWalking: 0
+  stopWalking: 0
 --- !u!114 &1485491585
 MonoBehaviour:
   m_ObjectHideFlags: 0
