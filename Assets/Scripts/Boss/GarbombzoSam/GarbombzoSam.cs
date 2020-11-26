@@ -72,7 +72,7 @@ public class GarbombzoSam : MonoBehaviour
 
         gameManager.bossManager.playerAttackDamage = 20;
 
-        PickAttack(whirlwind, bombThrow, sitDown, hammerSwipe, trackingBombAttack);
+        PickAttack(whirlwind, bombThrow, hammerSwipe, sitDown, trackingBombAttack);
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -117,15 +117,13 @@ public class GarbombzoSam : MonoBehaviour
         }
         //----------------------------------------------------------------------------
 
-
-
         gameManager.bossManager.bossPosition = transform.position;
         gameManager.bossManager.playerPosition = player.transform.position;
 
         whirlwind.chance = garbombzoSam.attackChances[0];
         bombThrow.chance = garbombzoSam.attackChances[1];
-        sitDown.chance = garbombzoSam.attackChances[2];
-        hammerSwipe.chance = garbombzoSam.attackChances[3];
+        hammerSwipe.chance = garbombzoSam.attackChances[2];
+        sitDown.chance = garbombzoSam.attackChances[3];
         trackingBombAttack.chance = garbombzoSam.attackChances[4];
         colliderPriority = garbombzoSam.colliderPriority;
 
@@ -133,10 +131,10 @@ public class GarbombzoSam : MonoBehaviour
             StartCoroutine(TakeDamage());
     }
 
-    private void PickAttack(AttackChances whirlwind, AttackChances bombThrow, AttackChances sitDown, AttackChances hammerSwipe, AttackChances trackingBombAttack)
+    private void PickAttack(AttackChances whirlwind, AttackChances bombThrow, AttackChances hammerSwipe, AttackChances sitDown, AttackChances trackingBombAttack)
     {
         playerScript.playerCollision.alreadyHit = false;
-        AttackChances[] chances = new AttackChances[] {whirlwind, bombThrow, sitDown, hammerSwipe, trackingBombAttack};
+        AttackChances[] chances = new AttackChances[] {whirlwind, bombThrow, hammerSwipe, sitDown, trackingBombAttack};
         float runningChance = 0;
         float chance = Random.value;
 
