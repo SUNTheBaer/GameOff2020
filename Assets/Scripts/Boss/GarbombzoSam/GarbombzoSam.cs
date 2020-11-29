@@ -91,10 +91,10 @@ public class GarbombzoSam : MonoBehaviour
     {
         //Hammer Lerping
         time += Time.deltaTime;
-        if (swingingHammer && (Mathf.Abs(playerScript.angle + 5) < hammerMaxAngle))
+        if (swingingHammer && (Mathf.Abs(playerScript.angle + 7) < hammerMaxAngle))
         {
             angleAxis = 0;
-            angleAxis = Mathf.Lerp(0, playerScript.angle + 5, time / lerpDuration);
+            angleAxis = Mathf.Lerp(0, playerScript.angle + 7, time / lerpDuration);
             transform.rotation = Quaternion.AngleAxis(angleAxis, Vector3.forward);
         }
         else if (!swingingHammer)
@@ -102,7 +102,7 @@ public class GarbombzoSam : MonoBehaviour
             angleAxis = Mathf.Lerp(angleAxis, 0, time / reverseLerpDuration);
             transform.rotation = Quaternion.AngleAxis(angleAxis, Vector3.forward);
         }
-        else if (Mathf.Abs(playerScript.angle + 5) >= hammerMaxAngle)
+        else if (Mathf.Abs(playerScript.angle + 7) >= hammerMaxAngle)
         {
             if (angleAxis < 0)
                 angleAxis = -hammerMaxAngle;
@@ -271,7 +271,7 @@ public class GarbombzoSam : MonoBehaviour
     }
     // ------------------------------------------------------------------
 
-    private IEnumerator TakeDamage()
+    public IEnumerator TakeDamage()
     {
         gameManager.bossManager.bossCurrentHealth -= gameManager.bossManager.playerAttackDamage;
         yield return null;

@@ -117,8 +117,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rb2d: {fileID: 6702045951609046743}
-  direction: {x: -1.8885541, y: 0.65830374}
-  rotation: {x: 0, y: 0, z: 0.5791581, w: 0.81521523}
+  direction: {x: 0.8922928, y: 2.8642302}
+  rotation: {x: -0, y: -0, z: -0.15042719, w: 0.9886211}
   selfDestructTime: 0.5
 --- !u!50 &6702045951609046743
 Rigidbody2D:
