@@ -35,7 +35,8 @@ public class PlayerCollision : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision) 
     {
-        if ((collision.gameObject.CompareTag("BossAttack") || collision.gameObject.CompareTag("ProjectileAttack")) && !alreadyHit)
+        if ((collision.gameObject.CompareTag("PhysicalBossAttack") || collision.gameObject.CompareTag("ProjectileBossAttack")
+            || collision.gameObject.CompareTag("DisjointedBossAttack")) && !alreadyHit)
         {
             alreadyHit = true;
             
@@ -47,7 +48,7 @@ public class PlayerCollision : MonoBehaviour
             else
                 StartCoroutine(Knockback(true));
 
-            if (collision.gameObject.CompareTag("ProjectileAttack"))
+            if (collision.gameObject.CompareTag("ProjectileBossAttack"))
                 Destroy(collision.gameObject);
         }
     }
@@ -69,12 +70,12 @@ public class PlayerCollision : MonoBehaviour
     private IEnumerator Perish()
     {
         //playerScript.ChangeAnimationState("Death");
-        //playerScript.audioSrc.volume = 0.25f;
-        //playerScript.audioSrc.Play();
+
+        
         yield return new WaitForSeconds(1.5f);
         
         gameObject.SetActive(false); // Custom death
 
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name); //change to load to hub
     }
 }

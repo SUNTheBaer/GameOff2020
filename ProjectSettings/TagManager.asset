@@ -12,6 +12,9 @@ TagManager:
   - Shield
   - ProjectileAttack
   - Boss
+  - PhysicalBossAttack
+  - DisjointedBossAttack
+  - ProjectileBossAttack
   layers:
   - Default
   - TransparentFX

@@ -56,7 +56,7 @@ public class GarbombzoSam : MonoBehaviour
 
     [Header("Health")]
     [SerializeField] private Bar bossHealthBar = null;
-    private bool playerHitBoss = false;
+    [HideInInspector] public bool playerHitBoss = false;
     
     [Header("Lerp")]
     [SerializeField] private float lerpDuration = 0;

@@ -821,7 +821,7 @@ GameObject:
   - component: {fileID: 375736989}
   m_Layer: 0
   m_Name: Tracking Bomb Indicator
-  m_TagString: BossAttack
+  m_TagString: DisjointedBossAttack
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1040,6 +1040,7 @@ MonoBehaviour:
   trackingBombAttackKnockbackForce: 2
   trackingBombAttackWaitForNextAttack: 0
   bossHealthBar: {fileID: 553821503}
+  playerHitBoss: 0
   lerpDuration: 0.75
   reverseLerpDuration: 3
 --- !u!4 &395721056
@@ -3002,7 +3003,7 @@ GameObject:
   - component: {fileID: 1814025119}
   m_Layer: 0
   m_Name: HammerHitBox
-  m_TagString: BossAttack
+  m_TagString: PhysicalBossAttack
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3069,7 +3070,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1814025116}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 51736b6599ffb9047b2ae2be2ad2fc31, type: 3}
+  m_Script: {fileID: 11500000, guid: ae45491a6dda1024d8dccfeccb790730, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   garbombzoSam: {fileID: 395721055}
@@ -3193,7 +3194,7 @@ GameObject:
   - component: {fileID: 2056912684}
   m_Layer: 0
   m_Name: SitDown
-  m_TagString: Untagged
+  m_TagString: DisjointedBossAttack
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3219,7 +3220,7 @@ PolygonCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2056912682}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 0
@@ -3472,7 +3473,7 @@ GameObject:
   - component: {fileID: 2141452994}
   m_Layer: 0
   m_Name: Whirlwind
-  m_TagString: BossAttack
+  m_TagString: PhysicalBossAttack
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
