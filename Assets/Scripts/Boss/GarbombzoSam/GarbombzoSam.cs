@@ -58,6 +58,7 @@ public class GarbombzoSam : MonoBehaviour
     [Header("Health")]
     [SerializeField] private Bar bossHealthBar = null;
     [HideInInspector] public bool playerHitBoss = false;
+    private bool battleStarted = false;
     
     [Header("Lerp")]
     [SerializeField] private float lerpDuration = 0;
@@ -69,12 +70,11 @@ public class GarbombzoSam : MonoBehaviour
     private void Start()
     {
         dialogueTrigger.TriggerDialogue();
+
         gameManager.bossManager.bossCurrentHealth = garbombzoSam.bossMaxHealth;
         bossHealthBar.SetMax(garbombzoSam.bossMaxHealth);
 
         gameManager.bossManager.playerAttackDamage = 20;
-
-        PickAttack(whirlwind, bombThrow, hammerSwipe, sitDown, trackingBombAttack);
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -91,6 +91,11 @@ public class GarbombzoSam : MonoBehaviour
 
     private void Update()
     {
+        //Waiting for dialogue
+        if (!playerScript.dialogueManager.dialogueOccurring && !battleStarted)
+            StartBattle();
+        //----------------------------------------------------------------------------
+
         //Hammer Lerping
         time += Time.deltaTime;
         if (swingingHammer && (Mathf.Abs(playerScript.angle + 7) < hammerMaxAngle))
@@ -111,6 +116,7 @@ public class GarbombzoSam : MonoBehaviour
             else
                 angleAxis = hammerMaxAngle;
         }
+        //----------------------------------------------------------------------------
 
         // Tracking bomb attack
         if (trackingBombActive)
@@ -131,6 +137,12 @@ public class GarbombzoSam : MonoBehaviour
 
         if(playerHitBoss)
             StartCoroutine(TakeDamage());
+    }
+
+    private void StartBattle()
+    {
+        battleStarted = true;
+        PickAttack(whirlwind, bombThrow, hammerSwipe, sitDown, trackingBombAttack);
     }
 
     private void PickAttack(AttackChances whirlwind, AttackChances bombThrow, AttackChances hammerSwipe, AttackChances sitDown, AttackChances trackingBombAttack)

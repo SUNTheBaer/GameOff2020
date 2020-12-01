@@ -7,6 +7,7 @@ public class PlayerScript : MonoBehaviour
 {
     [Header("Scripts")]
     public InputManager inputManager;
+    public DialogueManager dialogueManager;
     public PlayerMovement playerMovement;
     public PlayerCollision playerCollision;
     public GameManager gameManager;

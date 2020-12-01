@@ -6,8 +6,11 @@ using TMPro;
 
 public class DialogueManager : MonoBehaviour
 {
+    [SerializeField] private PlayerScript playerScript = null;
+    [SerializeField] private GameObject dialogueSystem = null;
     [SerializeField] private TextMeshProUGUI nameText = null;
     [SerializeField] private TextMeshProUGUI dialogueText = null;
+    [HideInInspector] public bool dialogueOccurring = false;
     private Queue<string> sentences;
 
     private void Start() 
@@ -15,32 +18,40 @@ public class DialogueManager : MonoBehaviour
         sentences = new Queue<string>();
     }
 
+    private void Update()
+    {
+        if (dialogueOccurring && playerScript.inputManager.onSelect)
+            DisplayNextSentence();
+    }
+
     public void StartDialogue(Dialogue dialogue)
     {
         nameText.text = dialogue.name;
 
         sentences.Clear();
+        dialogueOccurring = true;
+        playerScript.inputManager.inputs.Player.Disable();
+        playerScript.inputManager.inputs.UI.Enable();
+        dialogueSystem.SetActive(true);
 
         foreach (string sentence in dialogue.sentences)
             sentences.Enqueue(sentence);
 
-            DisplayNextSentence();
+        DisplayNextSentence();
     }
 
     public void DisplayNextSentence()
     {
         if (sentences.Count == 0)
         {
-            EndDialogue();
+            dialogueOccurring = false;
+            playerScript.inputManager.inputs.Player.Enable();
+            playerScript.inputManager.inputs.UI.Disable();
+            dialogueSystem.SetActive(false);
             return;
         }
 
         string sentence = sentences.Dequeue();
         dialogueText.text = sentence;
-    }
-
-    private void EndDialogue()
-    {
-        print("End of convo");
     }
 }

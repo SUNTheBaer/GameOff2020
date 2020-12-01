@@ -13,6 +13,7 @@ public class InputManager : MonoBehaviour
     [HideInInspector] public Vector2 padAimPosition;
     [HideInInspector] public bool onController = false;
     [HideInInspector] public bool holdingShield = false;
+    [HideInInspector] public bool onSelect = false;
     
     private void Awake()
     {
@@ -36,20 +37,14 @@ public class InputManager : MonoBehaviour
 
         inputs.Player.PadAim.performed += context => padAimPosition = context.ReadValue<Vector2>();
         inputs.Player.PadAim.performed += context => onController = true;
+
+        inputs.UI.Select.performed += context => onSelect = true;
     }
 
-    /*private void StartShield()
-    {
-        playerScript.zeeShield.coroutine = playerScript.zeeShield.StartShieldCoroutine();
-        StartCoroutine(playerScript.zeeShield.coroutine);
+    private void LateUpdate() {
+        if (onSelect)
+            onSelect = false;
     }
-
-    private void StopShield()
-    {
-        StopCoroutine(playerScript.zeeShield.coroutine);
-        playerScript.playerCollision.damagable = true;
-        playerScript.zeeShield.blockPhase = 0;
-    }*/
 
     private void OnEnable()
     {
@@ -59,5 +54,6 @@ public class InputManager : MonoBehaviour
     private void OnDisable()
     {
         inputs.Player.Disable();
+        inputs.UI.Disable();
     }
 }
