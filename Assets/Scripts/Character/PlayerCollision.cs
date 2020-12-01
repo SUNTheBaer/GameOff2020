@@ -2,10 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using Cinemachine;
 
 public class PlayerCollision : MonoBehaviour
 {
     [SerializeField] private PlayerScript playerScript = null;
+    [SerializeField] private CinemachineVirtualCamera deathCam = null;
+    //[SerializeField] private GameObject deathText = null;
+    [SerializeField] private GameObject deathTransition = null;
 
     [HideInInspector] public bool isDamagable = true;
     [SerializeField] private float invulTime = 0;
@@ -69,12 +73,16 @@ public class PlayerCollision : MonoBehaviour
     
     private IEnumerator Perish()
     {
+        deathCam.Priority = 11;
         //playerScript.ChangeAnimationState("Death");
+        
+        yield return new WaitForSeconds(0.5f); //A bit into the animation
 
+        //deathText.SetActive(true); //bloody death text
+
+        yield return new WaitForSeconds(1.5f); //hold
         
-        yield return new WaitForSeconds(1.5f);
-        
-        gameObject.SetActive(false); // Custom death
+        deathTransition.SetActive(true); //fade
 
         SceneManager.LoadScene(SceneManager.GetActiveScene().name); //change to load to hub
     }

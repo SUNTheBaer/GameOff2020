@@ -10,6 +10,7 @@ public class GarbombzoSam : MonoBehaviour
     [SerializeField] private ScriptableBoss garbombzoSam = null;
     [SerializeField] private Animator anim = null;
     [SerializeField] private GameObject player = null;
+    [SerializeField] private DialogueTrigger dialogueTrigger = null;
     private int colliderPriority;
 
     [Header("Whirlwind Attack")]
@@ -67,6 +68,7 @@ public class GarbombzoSam : MonoBehaviour
 
     private void Start()
     {
+        dialogueTrigger.TriggerDialogue();
         gameManager.bossManager.bossCurrentHealth = garbombzoSam.bossMaxHealth;
         bossHealthBar.SetMax(garbombzoSam.bossMaxHealth);
 
@@ -284,6 +286,10 @@ public class GarbombzoSam : MonoBehaviour
 
     private IEnumerator Death()
     {
+        //death anim
+        //player win sihlouette or vignette or somethin
+        //maybe dying dialogue
+        //send player back to hub
         gameObject.SetActive(false);
         yield return null;
     }
