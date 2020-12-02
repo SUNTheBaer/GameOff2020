@@ -73,6 +73,7 @@ public class PlayerCollision : MonoBehaviour
     
     private IEnumerator Perish()
     {
+        playerScript.inputManager.inputs.Disable();
         deathCam.Priority = 11;
         //playerScript.ChangeAnimationState("Death");
         

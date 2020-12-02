@@ -47,11 +47,11 @@ public class GarbombzoSam : MonoBehaviour
 
     [Header("Tracking Bomb Attack")]
     [SerializeField] private GameObject trackingBombIndicator = null;
-    [SerializeField] private CapsuleCollider2D trackingBombCollider = null;
     [SerializeField] private float trackingBombAttackDamage = 0;
     [SerializeField] private float trackingBombAttackKnockbackTime = 0;
     [SerializeField] private float trackingBombAttackKnockbackForce = 0;
     [SerializeField] private float trackingBombAttackWaitForNextAttack = 0;
+    [SerializeField] private float timeToStopTrack = 0;
     private AttackChances trackingBombAttack = new AttackChances(0.0f, "TrackingBombAttack");
     private bool trackingBombActive = false;
 
@@ -116,6 +116,8 @@ public class GarbombzoSam : MonoBehaviour
             else
                 angleAxis = hammerMaxAngle;
         }
+
+
         //----------------------------------------------------------------------------
 
         // Tracking bomb attack
@@ -240,9 +242,10 @@ public class GarbombzoSam : MonoBehaviour
         gameManager.bossManager.bossAttackDamage = sitDownDamage;
         gameManager.bossManager.knockbackTime = sitDownKnockbackTime;
         gameManager.bossManager.knockbackForce = sitDownKnockbackForce;
-        gameManager.bossManager.knockbackDirection = Vector2.zero;
+        gameManager.bossManager.knockbackDirection = (Vector2)(player.transform.position - transform.position);
+        anim.SetTrigger("sit yourself");
 
-        yield return null;
+        yield return new WaitForSeconds(sitDownWaitForNextAttack);
 
         PickAttack(whirlwind, bombThrow, sitDown, hammerSwipe, trackingBombAttack);
     }
@@ -256,28 +259,25 @@ public class GarbombzoSam : MonoBehaviour
 
         // yield return new WaitForSeconds(0.5f); // Might not need this? Or maybe play animation of launching bomb into air before this
 
-        // 2 seconds of shadow tracking player
+        //shadow tracking player
         trackingBombActive = true;
         trackingBombIndicator.SetActive(true);
 
-        yield return new WaitForSeconds(2.0f);
+        yield return new WaitForSeconds(timeToStopTrack);
 
         // Biggest shadow circle - Pick player's current position and wait ie. 0.25 seconds before bomb lands
         trackingBombActive = false;
 
-        yield return new WaitForSeconds(0.25f);
+        yield return new WaitForSeconds(1.4f - timeToStopTrack);
 
-        // Bomb landing Boom - beeg damages and knockback!!! (Activate collider)
-        trackingBombCollider.enabled = true;
         if ((Vector2)(player.transform.position - trackingBombIndicator.transform.position) != Vector2.zero)
             gameManager.bossManager.knockbackDirection = (Vector2)(player.transform.position - trackingBombIndicator.transform.position);
         else
             gameManager.bossManager.knockbackDirection = Vector2.down;
 
-        yield return new WaitForSeconds(0.35f); // Amount of bomb exploding time (make variable?)
+        yield return new WaitForSeconds(0.833f);
 
         trackingBombIndicator.SetActive(false);
-        trackingBombCollider.enabled = false;
 
         yield return new WaitForSeconds(trackingBombAttackWaitForNextAttack);
 
