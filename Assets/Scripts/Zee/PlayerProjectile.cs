@@ -19,7 +19,7 @@ public class PlayerProjectile : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.CompareTag("Wall") || collision.gameObject.CompareTag("Enemy"))
+        if (collision.gameObject.CompareTag("Wall") || collision.gameObject.CompareTag("Boss") || collision.gameObject.CompareTag("PhysicalBossAttack"))
             StartCoroutine(DestroySelfCoroutine());
     }
 
@@ -33,6 +33,4 @@ public class PlayerProjectile : MonoBehaviour
     {
         Destroy(gameObject);
     }
-
-    //vector2, rotation
 }

@@ -8,6 +8,13 @@ TagManager:
   - BossAttack
   - Wall
   - Enemy
+  - GameManager
+  - Shield
+  - ProjectileAttack
+  - Boss
+  - PhysicalBossAttack
+  - DisjointedBossAttack
+  - ProjectileBossAttack
   layers:
   - Default
   - TransparentFX
@@ -47,4 +54,16 @@ TagManager:
     locked: 0
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Player
+    uniqueID: 815425057
+    locked: 0
+  - name: Magic
+    uniqueID: 2301075801
+    locked: 0
+  - name: Boss
+    uniqueID: 1334199807
+    locked: 0
+  - name: Cursor
+    uniqueID: 2432919997
     locked: 0

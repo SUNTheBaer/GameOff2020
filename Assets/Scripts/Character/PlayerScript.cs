@@ -7,36 +7,51 @@ public class PlayerScript : MonoBehaviour
 {
     [Header("Scripts")]
     public InputManager inputManager;
+    public DialogueManager dialogueManager;
     public PlayerMovement playerMovement;
     public PlayerCollision playerCollision;
-    public ZeeMana zeeMana = null;
-    public ZeeNewShield zeeShield = null;
-    public Aiming aimingScript = null;
+    public GameManager gameManager;
+    public ZeeMana zeeMana;
+    public ZeeShield zeeShield;
+    public ZeePosture zeePosture;
+    public Aiming aimingScript;
 
     [Header("Components")]
-    [HideInInspector] public Rigidbody2D rb;
-    [HideInInspector] public SpriteRenderer spriteRenderer;
-    private Animator anim;
-    public GameObject aimIndicator;
+    public Rigidbody2D rb;
+    [SerializeField] private Animator anim = null;
     
     [Header("Player Attributes")]
     public float speed;
-    public float currentMana;
-    [HideInInspector] public bool isIdle;
-    [HideInInspector] public bool isMovingRight;
-    private string currentState;
+    [HideInInspector] public float currentHealth;
     public float maxHealth = 100;
-    public float currentHealth;
     public Bar healthBar;
-    public Bar manaBar;
+    [HideInInspector] public float currentMana;
     public float maxMana = 0;
+    public Bar manaBar;
+    private string currentState;
+    public GameObject aimIndicator;
+
+    [Header("Angle")]
+    [HideInInspector] public float angle;
+    private float deltaX;
+    private float deltaY;
+    private GameObject currentBoss;
 
     private void Start()
     {
-        rb = gameObject.GetComponent<Rigidbody2D>();
-        anim = gameObject.GetComponent<Animator>();
-        spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
+        currentBoss = GameObject.FindGameObjectWithTag("Boss");
         currentMana = maxMana;
+    }
+
+    private void Update()
+    {
+        if (currentMana > maxMana)
+            currentMana = maxMana;
+
+        deltaX = currentBoss.transform.position.x - transform.position.x;
+        deltaY = currentBoss.transform.position.y - transform.position.y;
+
+        angle = Mathf.Atan2(deltaY, deltaX) * Mathf.Rad2Deg - 90;
     }
 
     public void ChangeAnimationState(string newState)

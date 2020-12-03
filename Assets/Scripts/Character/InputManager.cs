@@ -5,7 +5,7 @@ using UnityEngine.InputSystem;
 
 public class InputManager : MonoBehaviour
 {
-    private Inputs inputs;
+    [HideInInspector] public Inputs inputs;
     [SerializeField] private PlayerScript playerScript = null;
     [HideInInspector] public Vector2 move;
     [HideInInspector] public bool onShoot;
@@ -13,16 +13,20 @@ public class InputManager : MonoBehaviour
     [HideInInspector] public Vector2 padAimPosition;
     [HideInInspector] public bool onController = false;
     [HideInInspector] public bool holdingShield = false;
+    [HideInInspector] public bool onSelect = false;
     
     private void Awake()
     {
         inputs = new Inputs();
 
+        inputs.Player.Movement.started += context => playerScript.playerMovement.startWalking = true;
         inputs.Player.Movement.performed += context => move = context.ReadValue<Vector2>();
         inputs.Player.Movement.canceled += context => move = Vector2.zero;
+        inputs.Player.Movement.canceled += context => playerScript.playerMovement.stopWalking = true;
 
         inputs.Player.Shield.started += context => playerScript.zeeShield.StartShield();
         inputs.Player.Shield.canceled += context => holdingShield = false;
+        inputs.Player.Shield.canceled += context => playerScript.zeeMana.canDoMagic = true;
 
         inputs.Player.Shoot.started += context => onShoot = true;
         inputs.Player.Shoot.canceled += context => onShoot = false;
@@ -33,20 +37,14 @@ public class InputManager : MonoBehaviour
 
         inputs.Player.PadAim.performed += context => padAimPosition = context.ReadValue<Vector2>();
         inputs.Player.PadAim.performed += context => onController = true;
+
+        inputs.UI.Select.performed += context => onSelect = true;
     }
 
-    /*private void StartShield()
-    {
-        playerScript.zeeShield.coroutine = playerScript.zeeShield.StartShieldCoroutine();
-        StartCoroutine(playerScript.zeeShield.coroutine);
+    private void LateUpdate() {
+        if (onSelect)
+            onSelect = false;
     }
-
-    private void StopShield()
-    {
-        StopCoroutine(playerScript.zeeShield.coroutine);
-        playerScript.playerCollision.damagable = true;
-        playerScript.zeeShield.blockPhase = 0;
-    }*/
 
     private void OnEnable()
     {
@@ -56,5 +54,6 @@ public class InputManager : MonoBehaviour
     private void OnDisable()
     {
         inputs.Player.Disable();
+        inputs.UI.Disable();
     }
 }
