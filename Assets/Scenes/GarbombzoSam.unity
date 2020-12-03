@@ -1321,6 +1321,10 @@ MonoBehaviour:
   anim: {fileID: 395721058}
   player: {fileID: 1485491578}
   dialogueTrigger: {fileID: 395721059}
+  closeRange: {fileID: 0}
+  mediumRange: {fileID: 0}
+  longRange: {fileID: 0}
+  backRange: {fileID: 0}
   whirlwindDamage: 15
   whirlwindKnockbackTime: 0.25
   whirlwindKnockbackForce: 5
@@ -3325,7 +3329,7 @@ MonoBehaviour:
   playerCollision: {fileID: 1485491583}
   gameManager: {fileID: 203569650}
   zeeMana: {fileID: 1485491588}
-  zeeShield: {fileID: 1485491587}
+  zeeShield: {fileID: 0}
   zeePosture: {fileID: 1485491590}
   aimingScript: {fileID: 1683391878}
   rb: {fileID: 1485491581}
