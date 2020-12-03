@@ -508,12 +508,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   boss: {fileID: 11400000, guid: 882492277770c8a488c0f9cdba1db50f, type: 2}
+  attackNames:
+  - Whirlwind
+  - Bomb Throw
+  - Hammer
+  - Sit Down
+  - Tracking Bomb
   attackChances:
   - 0.4
   - 0
   - 0.4
   - 0
   - 0.2
+  defaultAttackChances: []
   colliderPriority: 3
 --- !u!70 &166014508
 CapsuleCollider2D:
@@ -1314,6 +1321,10 @@ MonoBehaviour:
   anim: {fileID: 395721058}
   player: {fileID: 1485491578}
   dialogueTrigger: {fileID: 395721059}
+  closeRange: {fileID: 0}
+  mediumRange: {fileID: 0}
+  longRange: {fileID: 0}
+  backRange: {fileID: 0}
   whirlwindDamage: 15
   whirlwindKnockbackTime: 0.25
   whirlwindKnockbackForce: 5
@@ -1672,12 +1683,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   boss: {fileID: 11400000, guid: 882492277770c8a488c0f9cdba1db50f, type: 2}
+  attackNames:
+  - Whirlwind
+  - Bomb Throw
+  - Hammer
+  - Sit Down
+  - Tracking Bomb
   attackChances:
   - 0
   - 0
   - 0
   - 1
   - 0
+  defaultAttackChances: []
   colliderPriority: 4
 --- !u!70 &634660402
 CapsuleCollider2D:
@@ -2147,12 +2165,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   boss: {fileID: 11400000, guid: 882492277770c8a488c0f9cdba1db50f, type: 2}
+  attackNames:
+  - Whirlwind
+  - Bomb Throw
+  - Hammer
+  - Sit Down
+  - Tracking Bomb
   attackChances:
   - 0
   - 0
   - 0
   - 0
   - 1
+  defaultAttackChances: []
   colliderPriority: 1
 --- !u!1 &862232255
 GameObject:
@@ -2636,12 +2661,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   boss: {fileID: 11400000, guid: 882492277770c8a488c0f9cdba1db50f, type: 2}
+  attackNames:
+  - Whirlwind
+  - Bomb Throw
+  - Hammer
+  - Sit Down
+  - Tracking Bomb
   attackChances:
   - 0
   - 0
   - 0.7
   - 0
   - 0.3
+  defaultAttackChances: []
   colliderPriority: 2
 --- !u!70 &1037635648
 CapsuleCollider2D:
@@ -3297,7 +3329,7 @@ MonoBehaviour:
   playerCollision: {fileID: 1485491583}
   gameManager: {fileID: 203569650}
   zeeMana: {fileID: 1485491588}
-  zeeShield: {fileID: 1485491587}
+  zeeShield: {fileID: 0}
   zeePosture: {fileID: 1485491590}
   aimingScript: {fileID: 1683391878}
   rb: {fileID: 1485491581}
@@ -3336,15 +3368,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 1485491578}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: de3a60acf4a4fe244b869f986483a4af, type: 3}
+  m_Script: {fileID: 11500000, guid: ffda71dcce92a9a479d02f7a2b6a0103, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   playerScript: {fileID: 1485491585}
   gameManager: {fileID: 203569650}
   shield: {fileID: 862232255}
-  blockInvincibility: 0.333333
-  manaCost: 33.333332
-  manaGained: 33.33333
+  blockInvincibility: 0.5
+  manaCost: 30
+  manaGained: 10
   chipBlockMultiplier: 0.5
   successfulBlock: 0
 --- !u!114 &1485491588

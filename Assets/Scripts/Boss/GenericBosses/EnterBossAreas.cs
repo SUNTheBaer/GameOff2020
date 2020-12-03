@@ -1,33 +1,39 @@
-﻿using System.Collections;
+﻿#pragma warning disable 0414
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
-
 
 public class EnterBossAreas : MonoBehaviour
 {
     [SerializeField] private ScriptableBoss boss = null;
-    [SerializeField] private float[] attackChances = null;
+    [SerializeField] private string[] attackNames = null;
+    public float[] attackChances = null;
+    public float[] defaultAttackChances;
     [SerializeField] private int colliderPriority = 0;
-    private float[] defaultAttackChances;
 
     private void Start()
     {
-        defaultAttackChances = boss.attackChances;
+        defaultAttackChances = new float[attackChances.Length];
+        for (int i = 0; i < attackChances.Length; i++)
+            defaultAttackChances[i] = attackChances[i];
     }
 
     private void OnTriggerStay2D(Collider2D other)
     {
-        if (boss.colliderPriority <= colliderPriority)
+        if (other.gameObject.CompareTag("Player"))
         {
-            boss.attackChances = attackChances;
-            boss.colliderPriority = colliderPriority;
+            if (boss.colliderPriority <= colliderPriority)
+            {
+                boss.attackChances = attackChances;
+                boss.colliderPriority = colliderPriority;
+            }
         }
     }
 
     private void OnTriggerExit2D(Collider2D other)
     {
-        OnReset();
+        if (other.gameObject.CompareTag("Player"))
+            OnReset();
     }
 
     private void OnDisable()
@@ -37,7 +43,12 @@ public class EnterBossAreas : MonoBehaviour
 
     private void OnReset()
     {
-        boss.attackChances = defaultAttackChances;
         boss.colliderPriority = 0;
+    }
+
+    public void ResetProbabilities()
+    {
+        for (int i = 0; i < attackChances.Length; i++)
+            attackChances[i] = defaultAttackChances[i];
     }
 }

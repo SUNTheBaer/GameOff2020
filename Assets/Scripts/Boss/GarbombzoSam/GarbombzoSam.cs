@@ -11,6 +11,10 @@ public class GarbombzoSam : MonoBehaviour
     [SerializeField] private Animator anim = null;
     [SerializeField] private GameObject player = null;
     [SerializeField] private DialogueTrigger dialogueTrigger = null;
+    /*[SerializeField] private EnterBossAreas closeRange = null;
+    [SerializeField] private EnterBossAreas mediumRange = null;
+    [SerializeField] private EnterBossAreas longRange = null;
+    [SerializeField] private EnterBossAreas backRange = null;*/
     private int colliderPriority;
 
     [Header("Whirlwind Attack")]
@@ -116,8 +120,6 @@ public class GarbombzoSam : MonoBehaviour
             else
                 angleAxis = hammerMaxAngle;
         }
-
-
         //----------------------------------------------------------------------------
 
         // Tracking bomb attack
@@ -234,6 +236,7 @@ public class GarbombzoSam : MonoBehaviour
 
         yield return new WaitForSeconds(hammerWaitForNextAttack);
 
+
         PickAttack(whirlwind, bombThrow, sitDown, hammerSwipe, trackingBombAttack);
     }
 
@@ -256,8 +259,6 @@ public class GarbombzoSam : MonoBehaviour
         gameManager.bossManager.knockbackTime = trackingBombAttackKnockbackTime;
         gameManager.bossManager.knockbackForce = trackingBombAttackKnockbackForce;
         gameManager.bossManager.knockbackDirection = Vector2.zero;
-
-        // yield return new WaitForSeconds(0.5f); // Might not need this? Or maybe play animation of launching bomb into air before this
 
         //shadow tracking player
         trackingBombActive = true;
