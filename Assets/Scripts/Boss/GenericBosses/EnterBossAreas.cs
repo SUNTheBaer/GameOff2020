@@ -5,10 +5,10 @@ using UnityEngine;
 
 public class EnterBossAreas : MonoBehaviour
 {
-    [SerializeField] private ScriptableBoss boss = null;
+    [SerializeField] private BossProbability boss = null;
     [SerializeField] private string[] attackNames = null;
     public float[] attackChances = null;
-    public float[] defaultAttackChances;
+    private float[] defaultAttackChances;
     [SerializeField] private int colliderPriority = 0;
 
     private void Start()

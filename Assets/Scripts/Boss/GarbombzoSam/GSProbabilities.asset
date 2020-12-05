@@ -10,16 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: af9cc0255461e98418e2fa9cfe18afd9, type: 3}
-  m_Name: GarbombzoSam
+  m_Name: GSProbabilities
   m_EditorClassIdentifier: 
-  bossMaxHealth: 300
-  bossCurrentHealth: 0
-  bossName: Garbombzo Sam
   attackChances:
   - 0
-  - 0
-  - 0
-  - 0
   - 1
+  - 0
+  - 0
   - 0
   colliderPriority: 0

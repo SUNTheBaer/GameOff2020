@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ef6e3ac833ec61b46b213eda0f5d60e3, type: 3}
-  m_Name: GarbombzoSamLevelSounds
+  m_Name: GSLevelSounds
   m_EditorClassIdentifier: 
   sounds:
   - name: Whirlwind

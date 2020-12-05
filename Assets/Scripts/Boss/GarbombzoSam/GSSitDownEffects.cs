@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Cinemachine;
 
-public class SitDownEffects : MonoBehaviour
+public class GSSitDownEffects : MonoBehaviour
 {
     [SerializeField] CinemachineVirtualCamera explodeShake = null;
     [SerializeField] int camPriority = 0;

@@ -7,17 +7,27 @@ public class PlayerMovement : MonoBehaviour
 {
     [SerializeField] private PlayerScript playerScript = null;
     [SerializeField] private SpriteRenderer spriteRenderer = null;
+
     [HideInInspector] public bool startWalking = false;
     [HideInInspector] public bool stopWalking = false;
     private bool canWalk = true;
     private bool playingClip = false;
     private bool isTryingToWalk = false;
+
     private float angle;
+
+    [SerializeField] private float shieldKnockbackMultiplier = 0;
+    private bool knockback;
+    private Vector2 knockbackDirection;
+    private float knockbackForce;
+    private float knockbackTime;
+    private float t;
 
     private void Update()
     {
         angle = Vector2.Angle(new Vector2(playerScript.inputManager.move.x, playerScript.inputManager.move.y), Vector2.right);
 
+        //Walk Animations
         if (playerScript.inputManager.move.x == 0 && playerScript.inputManager.move.y == 0)
             playerScript.ChangeAnimationState("Idle");
 
@@ -29,19 +39,15 @@ public class PlayerMovement : MonoBehaviour
             playerScript.ChangeAnimationState("Side");
         else if (playerScript.inputManager.move.y > 0 && ((angle < 75 && angle > 15) || (angle < 165 && angle > 105)))
             playerScript.ChangeAnimationState("Up Side");
-
-
+        //------------------------------------------------------------------------------------------------------------------------
         //Flip Character
-
         if (angle <= 105)
             spriteRenderer.flipX = false;
         else
             spriteRenderer.flipX = true;
-        
         //--------------------------------------------------------
-
         //Walking logic
-        if (!playerScript.playerCollision.knockback && !playerScript.zeePosture.brokenPosture)
+        if (!knockback && !playerScript.zeePosture.brokenPosture)
             canWalk = true;
         else
             canWalk = false;
@@ -51,7 +57,6 @@ public class PlayerMovement : MonoBehaviour
         if (stopWalking)
             isTryingToWalk = false;
         //------------------------------------------------------------------------------------------
-
         //Sound logic
         if (canWalk && startWalking) //Normal walk
         {
@@ -86,8 +91,26 @@ public class PlayerMovement : MonoBehaviour
     {
         if(canWalk)
             playerScript.rb.velocity = new Vector2(playerScript.inputManager.move.x, playerScript.inputManager.move.y) * playerScript.speed;
-        else if (playerScript.playerCollision.knockback)
-            playerScript.rb.velocity = playerScript.gameManager.bossManager.knockbackDirection.normalized * playerScript.gameManager.bossManager.knockbackForce;
+        else if (knockback)
+            {
+                t += Time.deltaTime;
+                playerScript.rb.velocity = knockbackDirection * knockbackForce;
+
+                if (t > knockbackTime)
+                    knockback = false;
+            }
+    }
+
+    public void Knockback(Vector2 direction, float force, float time)
+    {
+        knockback = true;
+        knockbackDirection = direction;
+        if (playerScript.zeeShield.successfulBlock)
+            knockbackForce = force * shieldKnockbackMultiplier;
+        else
+            knockbackForce = force;
+        knockbackTime = time;
+        t = 0;
     }
 
     private IEnumerator WaitUntilCanWalk()

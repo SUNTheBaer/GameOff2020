@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 6702045951609046742}
   m_Layer: 0
   m_Name: ZeeMagicProjectile
-  m_TagString: PlayerAttack
+  m_TagString: ZeeAttack
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -117,8 +117,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rb2d: {fileID: 6702045951609046743}
-  direction: {x: 0.8922928, y: 2.8642302}
-  rotation: {x: -0, y: -0, z: -0.15042719, w: 0.9886211}
+  direction: {x: 2.5997825, y: -1.4970411}
+  rotation: {x: -0, y: -0, z: -0.86574066, w: 0.5004929}
   selfDestructTime: 0.5
 --- !u!50 &6702045951609046743
 Rigidbody2D:

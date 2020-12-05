@@ -25,7 +25,6 @@ public class ZeeMana : MonoBehaviour
     private void Update()
     {
         //it's all to lerp and it's all ugly and bad but idk it wasn't working and now it kinda is
-
         if (playerScript.currentMana >= playerScript.maxMana - 5)
         {
             playerScript.manaBar.SetCurrent(playerScript.maxMana);

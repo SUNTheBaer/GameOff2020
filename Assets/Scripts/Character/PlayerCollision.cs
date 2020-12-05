@@ -13,62 +13,36 @@ public class PlayerCollision : MonoBehaviour
 
     [HideInInspector] public bool isDamagable = true;
     [SerializeField] private float invulTime = 0;
-    [SerializeField] private float shieldKnockbackMultiplier = 0;
-    [HideInInspector] public bool knockback = false;
-    public bool alreadyHit = false;
 
-
-    private void Start() 
+    private void Start()
     {
         playerScript.currentHealth = playerScript.maxHealth;
         playerScript.healthBar.SetMax(playerScript.maxHealth);
-
-        //playerScript.audioSrc = GetComponent<AudioSource>();
-        //playerScript.audioSrc.volume = 0f;
-    }
-    
-    private IEnumerator Knockback(bool shieldOnHit)
-    {
-        if (shieldOnHit)
-            playerScript.gameManager.bossManager.knockbackForce *= shieldKnockbackMultiplier;
-
-        knockback = true;
-        yield return new WaitForSeconds(playerScript.gameManager.bossManager.knockbackTime);
-        knockback = false;
     }
 
-    private void OnTriggerEnter2D(Collider2D collision) 
+    public IEnumerator TakeDamage(float damage)
     {
-        if ((collision.gameObject.CompareTag("PhysicalBossAttack") || collision.gameObject.CompareTag("ProjectileBossAttack")
-            || collision.gameObject.CompareTag("DisjointedBossAttack")) && !alreadyHit)
+        if (isDamagable)
         {
-            alreadyHit = true;
-            
-            if (isDamagable)
-            {
-                StartCoroutine(TakeDamage(playerScript.gameManager.bossManager.bossAttackDamage, invulTime));
-                StartCoroutine(Knockback(false));
-            }
+            isDamagable = false;
+
+            if (playerScript.zeeShield.chipBlocked)
+                playerScript.currentHealth -= damage * playerScript.zeeShield.chipBlockMultiplier;
             else
-                StartCoroutine(Knockback(true));
+                playerScript.currentHealth -= damage;
 
-            if (collision.gameObject.CompareTag("ProjectileBossAttack"))
-                Destroy(collision.gameObject);
+            playerScript.healthBar.SetCurrent(playerScript.currentHealth);
+
+            if (playerScript.currentHealth <= 0)
+                StartCoroutine(Perish());
+            
+            if (playerScript.zeeShield.holdingShield)
+                yield return new WaitForSeconds(playerScript.zeeShield.blockInvincibility);
+            else
+                yield return new WaitForSeconds(invulTime);
+            
+            isDamagable = true;
         }
-    }
-
-    public IEnumerator TakeDamage(float damage, float invulTime)
-    {
-        isDamagable = false;
-        playerScript.currentHealth -= damage;
-
-        playerScript.healthBar.SetCurrent(playerScript.currentHealth);
-
-        if (playerScript.currentHealth <= 0)
-            StartCoroutine(Perish());
-
-        yield return new WaitForSeconds(invulTime);
-        isDamagable = true;
     }
     
     private IEnumerator Perish()

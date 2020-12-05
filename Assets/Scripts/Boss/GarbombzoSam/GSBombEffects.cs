@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Cinemachine;
 
-public class BombEffects : MonoBehaviour
+public class GSBombEffects : MonoBehaviour
 {
     [SerializeField]  CinemachineVirtualCamera explodeShake = null;
     [SerializeField]  GameObject flashFx = null;

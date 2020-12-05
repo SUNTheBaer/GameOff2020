@@ -507,7 +507,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d13e0d7d7d1d10443930cb259d94cc50, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  boss: {fileID: 11400000, guid: 882492277770c8a488c0f9cdba1db50f, type: 2}
+  boss: {fileID: 11400000, guid: 1fcd9d4f3c7038942a63fa9d42e4ed97, type: 2}
   attackNames:
   - Whirlwind
   - Bomb Throw
@@ -518,9 +518,8 @@ MonoBehaviour:
   - 0.4
   - 0
   - 0.4
-  - 0
+  - 1
   - 0.2
-  defaultAttackChances: []
   colliderPriority: 3
 --- !u!70 &166014508
 CapsuleCollider2D:
@@ -576,7 +575,6 @@ MonoBehaviour:
   mouseAimPosition: {x: 0, y: 0}
   padAimPosition: {x: 0, y: 0}
   onController: 0
-  holdingShield: 0
   onSelect: 0
 --- !u!4 &203569649
 Transform:
@@ -590,7 +588,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &203569650
 MonoBehaviour:
@@ -962,7 +960,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 366764921}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.026000023, y: -0.51646996, z: 23.872158}
+  m_LocalPosition: {x: 0.86150014, y: -0.51646996, z: 23.872158}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1684817760}
@@ -1104,6 +1102,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 375736992}
+  - component: {fileID: 375736994}
   - component: {fileID: 375736993}
   - component: {fileID: 375736991}
   - component: {fileID: 375736990}
@@ -1232,6 +1231,25 @@ MonoBehaviour:
   camPriority: 0
   flash: 0
   play: 0
+--- !u!114 &375736994
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 375736988}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 47e803c0baa4f374f8699e202928b350, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  garbombzoSam: {fileID: 395721055}
+  trackingBombIndicator: {fileID: 375736988}
+  attackDamage: 30
+  knockbackForce: 3
+  knockbackTime: 0.5
+  waitForNextAttack: 0
+  timeToStopTrack: 1
 --- !u!1 &395721053
 GameObject:
   m_ObjectHideFlags: 0
@@ -1242,10 +1260,11 @@ GameObject:
   m_Component:
   - component: {fileID: 395721056}
   - component: {fileID: 395721055}
+  - component: {fileID: 395721060}
   - component: {fileID: 395721059}
+  - component: {fileID: 395721057}
   - component: {fileID: 395721054}
   - component: {fileID: 395721058}
-  - component: {fileID: 395721057}
   m_Layer: 0
   m_Name: GarbombzoSam
   m_TagString: Boss
@@ -1315,43 +1334,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6853f67ce94bc8343907a83628145fe9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameManager: {fileID: 203569650}
-  playerScript: {fileID: 1485491585}
-  garbombzoSam: {fileID: 11400000, guid: 882492277770c8a488c0f9cdba1db50f, type: 2}
-  anim: {fileID: 395721058}
   player: {fileID: 1485491578}
+  playerScript: {fileID: 1485491585}
+  anim: {fileID: 395721058}
+  bossProbability: {fileID: 11400000, guid: 1fcd9d4f3c7038942a63fa9d42e4ed97, type: 2}
   dialogueTrigger: {fileID: 395721059}
-  whirlwindDamage: 15
-  whirlwindKnockbackTime: 0.25
-  whirlwindKnockbackForce: 5
-  whirlwindAttackLength: 2
-  whirlwindWaitForNextAttack: 0.75
-  garbomzoSamProjectile: {fileID: 808040022032421048, guid: f13add5a31d790d45a5ae21032ba2c6e,
-    type: 3}
-  bombThrowDamage: 30
-  bombThrowKnockbackTime: 0.25
-  bombThrowKnockbackForce: 2
-  bombThrowWaitForNextAttack: 1.5
-  hammerDamage: 25
-  hammerKnockbackTime: 0.1
-  hammerKnockbackForce: 25
-  hammerReelTime: 1.5
-  hammerMaxAngle: 75
-  hammerWaitForNextAttack: 1
-  sitDownDamage: 50
-  sitDownKnockbackTime: 0.25
-  sitDownKnockbackForce: 10
-  sitDownWaitForNextAttack: 2
-  trackingBombIndicator: {fileID: 375736988}
-  trackingBombAttackDamage: 60
-  trackingBombAttackKnockbackTime: 0.25
-  trackingBombAttackKnockbackForce: 2
-  trackingBombAttackWaitForNextAttack: 0.5
-  timeToStopTrack: 0.8
+  garbombzoSamWhirlwind: {fileID: 2141452995}
+  garbombzoSamBombThrow: {fileID: 395721060}
+  garbombzoSamPunch: {fileID: 1814025119}
+  garbomzoSamSitDown: {fileID: 2056912686}
+  garbombzoSamTrackingBomb: {fileID: 375736994}
+  bossMaxHealth: 300
   bossHealthBar: {fileID: 553821503}
-  playerHitBoss: 0
   lerpDuration: 0.75
   reverseLerpDuration: 3
+  time: 0
+  angleAxis: 0
+  swingingHammer: 0
 --- !u!4 &395721056
 Transform:
   m_ObjectHideFlags: 0
@@ -1445,6 +1444,26 @@ MonoBehaviour:
     - sugma
     - ligma
     - steve jobs
+--- !u!114 &395721060
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 395721053}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ce54d4ca6b90d744e97ab5b4df68f15b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  garbombzoSam: {fileID: 395721055}
+  garbomzoSamProjectile: {fileID: 808040022032421048, guid: f13add5a31d790d45a5ae21032ba2c6e,
+    type: 3}
+  attackDamage: 30
+  knockbackForce: 0.7
+  knockbackDirection: {x: 0, y: 0}
+  knockbackTime: 0.25
+  waitForNextAttack: 1
 --- !u!1 &553821500
 GameObject:
   m_ObjectHideFlags: 0
@@ -1678,7 +1697,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d13e0d7d7d1d10443930cb259d94cc50, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  boss: {fileID: 11400000, guid: 882492277770c8a488c0f9cdba1db50f, type: 2}
+  boss: {fileID: 11400000, guid: 1fcd9d4f3c7038942a63fa9d42e4ed97, type: 2}
   attackNames:
   - Whirlwind
   - Bomb Throw
@@ -1691,7 +1710,6 @@ MonoBehaviour:
   - 0
   - 1
   - 0
-  defaultAttackChances: []
   colliderPriority: 4
 --- !u!70 &634660402
 CapsuleCollider2D:
@@ -2160,7 +2178,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d13e0d7d7d1d10443930cb259d94cc50, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  boss: {fileID: 11400000, guid: 882492277770c8a488c0f9cdba1db50f, type: 2}
+  boss: {fileID: 11400000, guid: 1fcd9d4f3c7038942a63fa9d42e4ed97, type: 2}
   attackNames:
   - Whirlwind
   - Bomb Throw
@@ -2169,11 +2187,10 @@ MonoBehaviour:
   - Tracking Bomb
   attackChances:
   - 0
-  - 0
-  - 0
-  - 0
   - 1
-  defaultAttackChances: []
+  - 0
+  - 0
+  - 0
   colliderPriority: 1
 --- !u!1 &862232255
 GameObject:
@@ -2656,7 +2673,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d13e0d7d7d1d10443930cb259d94cc50, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  boss: {fileID: 11400000, guid: 882492277770c8a488c0f9cdba1db50f, type: 2}
+  boss: {fileID: 11400000, guid: 1fcd9d4f3c7038942a63fa9d42e4ed97, type: 2}
   attackNames:
   - Whirlwind
   - Bomb Throw
@@ -2669,7 +2686,6 @@ MonoBehaviour:
   - 0.7
   - 0
   - 0.3
-  defaultAttackChances: []
   colliderPriority: 2
 --- !u!70 &1037635648
 CapsuleCollider2D:
@@ -2894,7 +2910,7 @@ Transform:
   - {fileID: 569858608}
   - {fileID: 1620731536}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1220900390
 GameObject:
@@ -3138,9 +3154,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1485491586}
   - component: {fileID: 1485491585}
-  - component: {fileID: 1485491588}
   - component: {fileID: 1485491584}
-  - component: {fileID: 1485491583}
+  - component: {fileID: 1485491591}
+  - component: {fileID: 1485491588}
   - component: {fileID: 1485491589}
   - component: {fileID: 1485491587}
   - component: {fileID: 1485491590}
@@ -3271,26 +3287,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &1485491583
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1485491578}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b6d10885c1499f84e83501bf1cb2986e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playerScript: {fileID: 1485491585}
-  deathCam: {fileID: 569858610}
-  deathTransition: {fileID: 2131365873}
-  isDamagable: 1
-  invulTime: 0.2
-  shieldKnockbackMultiplier: 0.6
-  knockback: 0
-  alreadyHit: 0
 --- !u!114 &1485491584
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3307,6 +3303,7 @@ MonoBehaviour:
   spriteRenderer: {fileID: 1485491579}
   startWalking: 0
   stopWalking: 0
+  shieldKnockbackMultiplier: 0.5
 --- !u!114 &1485491585
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3322,7 +3319,7 @@ MonoBehaviour:
   inputManager: {fileID: 203569648}
   dialogueManager: {fileID: 203569652}
   playerMovement: {fileID: 1485491584}
-  playerCollision: {fileID: 1485491583}
+  playerCollision: {fileID: 1485491591}
   gameManager: {fileID: 203569650}
   zeeMana: {fileID: 1485491588}
   zeeShield: {fileID: 1485491587}
@@ -3331,6 +3328,7 @@ MonoBehaviour:
   rb: {fileID: 1485491581}
   anim: {fileID: 1485491582}
   speed: 3
+  damage: 20
   currentHealth: 0
   maxHealth: 100
   healthBar: {fileID: 2136979311}
@@ -3368,13 +3366,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerScript: {fileID: 1485491585}
-  gameManager: {fileID: 203569650}
   shield: {fileID: 862232255}
-  blockInvincibility: 0.5
+  holdingShield: 0
+  successfulBlock: 0
+  chipBlocked: 0
   manaCost: 30
   manaGained: 10
+  blockInvincibility: 0.5
   chipBlockMultiplier: 0.5
-  successfulBlock: 0
 --- !u!114 &1485491588
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3432,6 +3431,23 @@ MonoBehaviour:
   maxPosture: 5
   postureBreakTime: 2
   brokenPosture: 0
+--- !u!114 &1485491591
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1485491578}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6d5387001560f364986e3d44f7038575, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerScript: {fileID: 1485491585}
+  deathCam: {fileID: 569858610}
+  deathTransition: {fileID: 2131365873}
+  isDamagable: 1
+  invulTime: 0.5
 --- !u!1 &1617071058
 GameObject:
   m_ObjectHideFlags: 0
@@ -3546,7 +3562,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1620731534}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.026000023, y: -0.51646996, z: 23.872158}
+  m_LocalPosition: {x: 0.026000023, y: -0.5164701, z: 23.872158}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1314303598}
@@ -4089,10 +4105,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1814025117}
-  - component: {fileID: 1814025118}
   - component: {fileID: 1814025119}
+  - component: {fileID: 1814025118}
   m_Layer: 0
-  m_Name: HammerHitBox
+  m_Name: Punch
   m_TagString: PhysicalBossAttack
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4164,6 +4180,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   garbombzoSam: {fileID: 395721055}
+  attackDamage: 30
+  knockbackForce: 10
+  knockbackTime: 0.25
+  waitForNextAttack: 0.5
+  reelTime: 0.83
+  hammerMaxAngle: 70
 --- !u!1 &1842397040
 GameObject:
   m_ObjectHideFlags: 0
@@ -4439,6 +4461,7 @@ GameObject:
   - component: {fileID: 2056912683}
   - component: {fileID: 2056912684}
   - component: {fileID: 2056912685}
+  - component: {fileID: 2056912686}
   m_Layer: 0
   m_Name: SitDown
   m_TagString: DisjointedBossAttack
@@ -4491,6 +4514,23 @@ MonoBehaviour:
   explodeShake: {fileID: 1620731535}
   camPriority: 0
   play: 0
+--- !u!114 &2056912686
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2056912682}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 43bdfdda8065a1b409c86e78b52cff6f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  garbombzoSam: {fileID: 395721055}
+  attackDamage: 30
+  knockbackForce: 2
+  knockbackTime: 0.5
+  waitForNextAttack: 1.667
 --- !u!1 &2101087102
 GameObject:
   m_ObjectHideFlags: 0
@@ -4800,8 +4840,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ef7463795e292c349afd4b3bba01d7cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameManager: {fileID: 203569650}
-  player: {fileID: 1485491578}
+  garbombzoSam: {fileID: 395721055}
+  attackDamage: 50
+  knockbackForce: 4
+  knockbackTime: 0.5
+  attackLength: 1
+  waitForNextAttack: 0.5
 --- !u!95 &4459258699101961467
 Animator:
   serializedVersion: 3

@@ -22,6 +22,7 @@ public class PlayerScript : MonoBehaviour
     
     [Header("Player Attributes")]
     public float speed;
+    public float damage;
     [HideInInspector] public float currentHealth;
     public float maxHealth = 100;
     public Bar healthBar;
@@ -40,7 +41,6 @@ public class PlayerScript : MonoBehaviour
     private void Start()
     {
         currentBoss = GameObject.FindGameObjectWithTag("Boss");
-        currentMana = maxMana;
     }
 
     private void Update()

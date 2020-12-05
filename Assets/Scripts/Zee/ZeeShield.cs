@@ -5,29 +5,30 @@ using UnityEngine;
 public class ZeeShield : MonoBehaviour
 {
     [SerializeField] private PlayerScript playerScript = null;
-    [SerializeField] private GameManager gameManager = null;
     [SerializeField] private GameObject shield = null;
 
-    [SerializeField] private float blockInvincibility = 0;
+    [HideInInspector] public bool holdingShield = false;
+    [HideInInspector] public bool successfulBlock = false;
+    [HideInInspector] public bool chipBlocked = false;
+
     public float manaCost = 0;
     [SerializeField] private float manaGained = 0;
-    [SerializeField] private float chipBlockMultiplier = 0;
-    private bool chipBlocked = false;
-    
+    public float blockInvincibility = 0;
+    public float chipBlockMultiplier = 0;
     private float t;
     private float shieldHoldDelay = 0;
-    
-    [HideInInspector] public bool successfulBlock = false;
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if ((other.gameObject.CompareTag("PhysicalBossAttack") || other.gameObject.CompareTag("ProjectileBossAttack")
-            || other.gameObject.CompareTag("DisjointedBossAttack")) && playerScript.inputManager.holdingShield)
+        if ((other.gameObject.CompareTag("PhysicalBossAttack") || other.gameObject.CompareTag("DisjointedBossAttack")) && holdingShield)
         {
             if (t < .10)
                 JustBlock();
             else if (t > 0.25f)
+            {
+                playerScript.playerCollision.isDamagable = true;
                 ChipBlock();
+            }
 
             StartCoroutine(GeneralBlock());
         }
@@ -35,18 +36,17 @@ public class ZeeShield : MonoBehaviour
 
     private void Update()
     {
-        if (playerScript.inputManager.holdingShield)
+        if (holdingShield)
             t += Time.deltaTime;
         else
             t = 0;
         
-        if (!playerScript.inputManager.holdingShield)
+        if (!holdingShield)
         {
             shieldHoldDelay += Time.deltaTime;
             if(shieldHoldDelay > .20)
             {
                 shield.SetActive(false);
-                playerScript.playerCollision.isDamagable = true;
                 shieldHoldDelay = 0;
             }
         }
@@ -55,7 +55,9 @@ public class ZeeShield : MonoBehaviour
     private IEnumerator GeneralBlock()
     {
         successfulBlock = true;
-        playerScript.inputManager.holdingShield = false;
+        playerScript.zeePosture.OnBlock();
+
+        holdingShield = false;
         yield return new WaitForSeconds(blockInvincibility);
         if (chipBlocked)
             chipBlocked = false; //Invul is handled via PlayerCollision for ChipBlock
@@ -63,6 +65,7 @@ public class ZeeShield : MonoBehaviour
             playerScript.playerCollision.isDamagable = true;
 
         playerScript.zeeMana.canDoMagic = true;
+        successfulBlock = false;
     }
 
     private void JustBlock()
@@ -74,7 +77,6 @@ public class ZeeShield : MonoBehaviour
     private void ChipBlock()
     {
         chipBlocked = true;
-        StartCoroutine(playerScript.playerCollision.TakeDamage(gameManager.bossManager.bossAttackDamage * chipBlockMultiplier, blockInvincibility));
     }
 
     public void StartShield()
@@ -83,10 +85,17 @@ public class ZeeShield : MonoBehaviour
         {
             playerScript.zeeMana.canDoMagic = false;
             shield.SetActive(true);
-            playerScript.inputManager.holdingShield = true;
+            holdingShield = true;
             playerScript.playerCollision.isDamagable = false;
             playerScript.currentMana -= playerScript.zeeShield.manaCost;
             playerScript.manaBar.SetCurrent(playerScript.currentMana);
         }
+    }
+
+    public void StopShield()
+    {
+        holdingShield = false;
+        playerScript.playerCollision.isDamagable = true;
+        playerScript.zeeMana.canDoMagic = true;
     }
 }

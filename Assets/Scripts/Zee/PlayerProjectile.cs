@@ -8,6 +8,7 @@ public class PlayerProjectile : MonoBehaviour
     public Vector2 direction;
     public Quaternion rotation;
     public float selfDestructTime;
+    private bool canBeDestroyedByWall = false;
 
     private void Start()
     {
@@ -17,9 +18,21 @@ public class PlayerProjectile : MonoBehaviour
         Invoke("DestroySelf", selfDestructTime);
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnTriggerEnter2D(Collider2D other)
     {
-        if (collision.gameObject.CompareTag("Wall") || collision.gameObject.CompareTag("Boss") || collision.gameObject.CompareTag("PhysicalBossAttack"))
+        if (other.gameObject.CompareTag("Boss") || other.gameObject.CompareTag("PhysicalBossAttack"))
+            StartCoroutine(DestroySelfCoroutine());
+    }
+
+    private void OnTriggerExit2D(Collider2D other)
+    {
+        if (other.gameObject.CompareTag("Player"))
+            canBeDestroyedByWall = true;
+    }
+
+    private void OnTriggerStay2D(Collider2D other)
+    {
+        if (other.gameObject.CompareTag("Wall") && canBeDestroyedByWall)
             StartCoroutine(DestroySelfCoroutine());
     }
 

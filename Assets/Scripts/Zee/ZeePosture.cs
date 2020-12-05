@@ -24,14 +24,6 @@ public class ZeePosture : MonoBehaviour
 
     private void Update()
     {
-        if (playerScript.zeeShield.successfulBlock)
-        {
-            playerScript.zeeShield.successfulBlock = false;
-            currentPosture -= postureCostOnBlock;
-            currentRegen = initialRegen;
-            t = 0;
-        }
-
         t += Time.deltaTime;
 
         if (t > currentRegen && (currentPosture < maxPosture))
@@ -63,5 +55,12 @@ public class ZeePosture : MonoBehaviour
         yield return new WaitUntil(() => currentPosture == maxPosture);
         
         playerScript.inputManager.inputs.Player.Shield.Enable();
+    }
+
+    public void OnBlock()
+    {
+        currentPosture -= postureCostOnBlock;
+        currentRegen = initialRegen;
+        t = 0;
     }
 }

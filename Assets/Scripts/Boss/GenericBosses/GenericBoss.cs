@@ -6,56 +6,52 @@ using UnityEngine;
 public class GenericBoss : MonoBehaviour
 {
     [Header("Scripts and Refs")]
+    public GameObject player = null;
+    public PlayerScript playerScript = null;
+    public Animator anim = null;
     [SerializeField] private GameManager gameManager = null;
-    [SerializeField] private PlayerScript playerScript = null;
-    [SerializeField] private ScriptableBoss bossName = null;
-    [SerializeField] private Animator anim = null;
-    [SerializeField] private GameObject player = null;
+    //[SerializeField] private ScriptableBoss bossName = null;
+    [SerializeField] private DialogueTrigger dialogueTrigger = null;
+    //[SerializeField] private AttackOneScript attackOneScript = null;
     private int colliderPriority;
 
-    [Header("Attack One")]
-    [SerializeField] private float attackOneDamage = 0;
-    [SerializeField] private float attackOneKnockbackTime = 0;
-    [SerializeField] private float attackOneKnockbackForce = 0;
-    [SerializeField] private float attackOneWaitForNextAttack = 0;
-    private AttackChances attackOne = new AttackChances(0.0f, "AttackOne");
+    [Header("Attack Chances")]
+    private AttackChances attackOne = new AttackChances(1.0f, "AttackOne");
 
     [Header("Health")]
+    [SerializeField] private float bossMaxHealth = 0;
+    private float bossCurrentHealth = 0;
     [SerializeField] private Bar bossHealthBar = null;
-    private bool playerHitBoss = false;
+    [HideInInspector] public bool playerHitBoss = false;
+    private bool battleStarted = false;
 
     private void Start()
     {
-        gameManager.bossManager.bossCurrentHealth = bossName.bossMaxHealth;
-        bossHealthBar.SetMax(bossName.bossMaxHealth);
+        dialogueTrigger.TriggerDialogue();
 
-        gameManager.bossManager.playerAttackDamage = 20;
-
-        PickAttack(attackOne);
+        bossCurrentHealth = bossMaxHealth;
+        bossHealthBar.SetMax(bossMaxHealth);
     }
 
-    private void OnTriggerEnter2D(Collider2D other)
+    private void StartBattle()
     {
-        if (other.tag == "PlayerAttack")
-            playerHitBoss = true;
-    }
-
-    private void OnTriggerExit2D(Collider2D other)
-    {
-        if (other.gameObject.CompareTag("PlayerAttack"))
-            playerHitBoss = false;
+        battleStarted = true;
+        PickAttack();
     }
 
     private void Update()
     {
-        attackOne.chance = bossName.attackChances[0];
-        colliderPriority = bossName.colliderPriority;
-
-        if(playerHitBoss)
-            StartCoroutine(TakeDamage());
+        //attackOne.chance = bossName.attackChances[0];
+        //colliderPriority = bossName.colliderPriority;
     }
 
-    private void PickAttack(AttackChances attackOne)
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.gameObject.CompareTag("ZeeAttack"))
+            StartCoroutine(TakeDamage(playerScript.damage));
+    }
+
+    public void PickAttack()
     {
         AttackChances[] chances = new AttackChances[] {attackOne};
         float runningChance = 0;
@@ -63,10 +59,9 @@ public class GenericBoss : MonoBehaviour
 
         foreach (AttackChances probability in chances)
         {
-            Debug.Log(probability.attackName);
             if (chance <= probability.chance + runningChance)
             {
-                StartCoroutine(probability.attackName);
+                Invoke(probability.attackName, 0f);
                 break;
             }
             else
@@ -75,32 +70,30 @@ public class GenericBoss : MonoBehaviour
     }
 
     //Attacks
-    private IEnumerator AttackOne()
+    private void AttackOne()
     {
-        gameManager.bossManager.bossAttackDamage = attackOneDamage;
-        gameManager.bossManager.knockbackTime = attackOneKnockbackTime;
-        gameManager.bossManager.knockbackForce = attackOneKnockbackForce;
-        gameManager.bossManager.knockbackDirection = Vector2.zero;
-
-        yield return null;
-
-        PickAttack(attackOne);
+        //StartCoroutine(attackOneScript.StartAttackOne());
     }
     //-------------------------------------------------------------
 
-    private IEnumerator TakeDamage()
+    private IEnumerator TakeDamage(float damage)
     {
-        gameManager.bossManager.bossCurrentHealth -= gameManager.bossManager.playerAttackDamage;
+        bossCurrentHealth -= damage;
+
         yield return null;
 
-        bossHealthBar.SetCurrent(gameManager.bossManager.bossCurrentHealth);
-
-        if (gameManager.bossManager.bossCurrentHealth <= 0)
+        bossHealthBar.SetCurrent(bossCurrentHealth);
+        
+        if (bossCurrentHealth <= 0)
             StartCoroutine(Death());
     }
 
     private IEnumerator Death()
     {
+        //death anim
+        //player win sihlouette or vignette or somethin
+        //maybe dying dialogue
+        //send player back to hub
         gameObject.SetActive(false);
         yield return null;
     }
